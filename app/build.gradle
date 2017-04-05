@@ -19,15 +19,62 @@ android {
     }
 
     productFlavors{
+        //Alex
         realm {
             applicationIdSuffix ".realm"
             versionNameSuffix "-realm"
             resValue "string", "app_name", "RealmBenchmark"
         }
+        greenDao {
+            applicationIdSuffix ".greenDao"
+            versionNameSuffix "-greenDao"
+            resValue "string", "app_name", "GeenDaoBenchmark"
+        }
+        ohibernate {
+            applicationIdSuffix ".ohibernate"
+            versionNameSuffix "-ohibernate"
+            resValue "string", "app_name", "OHibernateBenchmark"
+        }
+        memorm {
+            applicationIdSuffix ".memorm"
+            versionNameSuffix "-memorm"
+            resValue "string", "app_name", "MemoryORMBenchmark"
+        }
+        requery {
+            applicationIdSuffix ".requery"
+            versionNameSuffix "-requery"
+            resValue "string", "app_name", "RequeryBenchmark"
+        }
+        //Vlad
         dbflow {
             applicationIdSuffix ".dbflow"
             versionNameSuffix "-dbflow"
             resValue "string", "app_name", "DBFlowBenchmark"
+        }
+        freezer {
+            applicationIdSuffix ".freezer"
+            versionNameSuffix "-freezer"
+            resValue "string", "app_name", "FreezerBenchmark"
+        }
+        sqllite{
+            applicationIdSuffix ".sqllite"
+            versionNameSuffix "-sqllite"
+            resValue "string", "app_name", "SQLLiteBenchmark"
+        }
+        ormlite{
+            applicationIdSuffix ".ormlite"
+            versionNameSuffix "-ormlite"
+            resValue "string", "app_name", "ORMLiteBenchmark"
+        }
+        sugarOrm{
+            applicationIdSuffix ".sugarOrm"
+            versionNameSuffix "-sugarOrm"
+            resValue "string", "app_name", "SugarORMBenchmark"
+        }
+        androidOrm{
+            applicationIdSuffix ".androidOrm"
+            versionNameSuffix "-androidOrm"
+            resValue "string", "app_name", "AORMBenchmark"
         }
     }
 }
