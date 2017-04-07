@@ -26,9 +26,13 @@ android {
             resValue "string", "app_name", "RealmBenchmark"
         }
         greenDao {
+            apply plugin: 'org.greenrobot.greendao'
             applicationIdSuffix ".greenDao"
             versionNameSuffix "-greenDao"
             resValue "string", "app_name", "GeenDaoBenchmark"
+            greendao {
+                schemaVersion 1
+            }
         }
         ohibernate {
             applicationIdSuffix ".ohibernate"
@@ -44,6 +48,11 @@ android {
             applicationIdSuffix ".requery"
             versionNameSuffix "-requery"
             resValue "string", "app_name", "RequeryBenchmark"
+        }
+        active {
+            applicationIdSuffix ".active"
+            versionNameSuffix "-active"
+            resValue "string", "app_name", "ActiveAndroidBenchmark"
         }
         //Vlad
         dbflow {
@@ -89,4 +98,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:7.0.1'
     realmCompile 'io.realm:realm-android:0.82.1'
+    activeCompile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    ohibernateCompile 'com.github.10uroi:OHibernate:1.0.5'
+    greenDaoCompile 'org.greenrobot:greendao:3.2.2'
 }

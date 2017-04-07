@@ -17,4 +17,5 @@ public class BenchmarkApplication extends Application{
                     .build();
             Realm.setDefaultConfiguration(realmConfiguration);
         }
+
 }
