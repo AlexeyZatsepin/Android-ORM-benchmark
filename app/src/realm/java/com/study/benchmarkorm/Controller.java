@@ -6,7 +6,7 @@ import com.study.benchmarkorm.model.Book;
 
 import io.realm.RealmList;
 
-public class IterableController extends RealmController{
+public class Controller extends RealmController{
     @Override
     public long testRead(int instances) {
         if (isEmpty(Book.class)){

@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Log.v("TAG", new Person().toString());
-        tc = new IterableController();
+        tc = new Controller();
         etCounter.setText(String.valueOf(1000));
     }
 

@@ -26,23 +26,23 @@ android {
             resValue "string", "app_name", "RealmBenchmark"
         }
         greenDao {
-            apply plugin: 'org.greenrobot.greendao'
-            applicationIdSuffix ".greenDao"
-            versionNameSuffix "-greenDao"
-            resValue "string", "app_name", "GeenDaoBenchmark"
-            greendao {
-                schemaVersion 1
-            }
+//            applicationIdSuffix ".greenDao"
+//            versionNameSuffix "-greenDao"
+//            resValue "string", "app_name", "GeenDaoBenchmark"
+//            apply plugin: 'org.greenrobot.greendao'
+//            greendao {
+//                schemaVersion 1
+//            }
         }
         ohibernate {
             applicationIdSuffix ".ohibernate"
             versionNameSuffix "-ohibernate"
             resValue "string", "app_name", "OHibernateBenchmark"
         }
-        memorm {
-            applicationIdSuffix ".memorm"
-            versionNameSuffix "-memorm"
-            resValue "string", "app_name", "MemoryORMBenchmark"
+        sprinkles {
+            applicationIdSuffix ".sprinkles"
+            versionNameSuffix "-sprinkles"
+            resValue "string", "app_name", "SprinklesBenchmark"
         }
         requery {
             applicationIdSuffix ".requery"
@@ -101,4 +101,6 @@ dependencies {
     activeCompile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     ohibernateCompile 'com.github.10uroi:OHibernate:1.0.5'
     greenDaoCompile 'org.greenrobot:greendao:3.2.2'
+    sprinklesCompile 'se.emilsjolander:sprinkles:1.3.1'
+
 }

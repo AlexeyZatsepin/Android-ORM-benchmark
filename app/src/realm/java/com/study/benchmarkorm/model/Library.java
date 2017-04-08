@@ -7,17 +7,28 @@ import io.realm.annotations.PrimaryKey;
 public class Library extends RealmObject{
 
     @PrimaryKey
-    private int id;
+    private long id;
     private String address;
     private String name;
     private RealmList<Person> employees;
     private RealmList<Book> books;
 
-    public int getId() {
+    public Library() {
+    }
+
+    public Library(long id, String address, String name, RealmList<Person> employees, RealmList<Book> books) {
+        this.id = id;
+        this.address = address;
+        this.name = name;
+        this.employees = employees;
+        this.books = books;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -1,22 +1,36 @@
 package com.study.benchmarkorm.model;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+import se.emilsjolander.sprinkles.Model;
+import se.emilsjolander.sprinkles.annotations.AutoIncrement;
+import se.emilsjolander.sprinkles.annotations.Column;
+import se.emilsjolander.sprinkles.annotations.Key;
+import se.emilsjolander.sprinkles.annotations.Table;
 
-public class Book extends RealmObject{
+@Table("Book")
+public class Book extends Model{
 
-    @PrimaryKey
+    @AutoIncrement
+    @Key
+    @Column("id")
     private long id;
 
+    @Column("author")
     private String author;
+
+    @Column("title")
     private String title;
+
+    @Column("pagesCount")
     private int pagesCount;
+
+    @Column("bookID")
     private int bookId;
 
     public Book() {
     }
 
-    public Book(long id,String author, String title, int pagesCount, int bookId) {
+    public Book(long id,String author,String title,
+            int pagesCount, int bookId) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -28,7 +42,7 @@ public class Book extends RealmObject{
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -62,5 +76,9 @@ public class Book extends RealmObject{
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

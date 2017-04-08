@@ -1,26 +1,30 @@
 package com.study.benchmarkorm.model;
 
+import android.graphics.PorterDuff;
 
 import java.util.Date;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+import se.emilsjolander.sprinkles.Model;
+import se.emilsjolander.sprinkles.annotations.AutoIncrement;
+import se.emilsjolander.sprinkles.annotations.Column;
+import se.emilsjolander.sprinkles.annotations.Key;
+import se.emilsjolander.sprinkles.annotations.Table;
 
-public class Person extends RealmObject{
+@Table("Person")
+public class Person extends Model {
 
-    @PrimaryKey
-    private long id;
+    @AutoIncrement @Key @Column("id") private int id;
 
-    private String firstName;
-    private String secondName;
-    private Date birthdayDate;
-    private String gender;
-    private long phone;
+    @Column("firstName") private String firstName;
+    @Column("secondName") private String secondName;
+    @Column("bd") private Date birthdayDate;
+    @Column("gender") private String gender;
+    @Column("phone") private long phone;
 
     public Person() {
     }
 
-    public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+    public Person(int id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -29,11 +33,11 @@ public class Person extends RealmObject{
         this.phone = phone;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
