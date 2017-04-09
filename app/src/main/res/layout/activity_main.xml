@@ -7,80 +7,260 @@
     android:gravity="center_horizontal"
     tools:context="com.study.benchmarkorm.MainActivity">
 
-    <EditText
-        android:id="@+id/et_count"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:ems="10"
-        android:inputType="number" />
+        android:baselineAligned="false">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_write_simple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test write (simple)" />
 
-    <Button
-        android:id="@+id/button_write"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="Test write"
-        tools:layout_editor_absoluteX="147dp"
-        android:layout_weight="1"
-        tools:layout_editor_absoluteY="44dp" />
+            <TextView
+                android:id="@+id/tv_write_simple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_write_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test write (complex)" />
 
-    <TextView
-        android:id="@+id/tv_write"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="107dp" />
+            <TextView
+                android:id="@+id/tv_write_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_write_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test write (balanced)" />
 
-    <Button
-        android:id="@+id/button_read"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="Test read"
-        android:layout_weight="1"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="154dp" />
+            <TextView
+                android:id="@+id/tv_write_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_read"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="220dp" />
+        android:layout_weight="1"
+        android:baselineAligned="false">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_read_simple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test read (simple)" />
 
-    <Button
-        android:id="@+id/button_update"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="Test update"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="260dp" />
+            <TextView
+                android:id="@+id/tv_read_simple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_read_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test read (complex)" />
 
-    <TextView
-        android:id="@+id/tv_update"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="337dp" />
+            <TextView
+                android:id="@+id/tv_read_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_read_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test read (balanced)" />
 
-    <Button
-        android:id="@+id/button_delete"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="Test delete"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="384dp" />
+            <TextView
+                android:id="@+id/tv_read_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_delete"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="458dp" />
+        android:layout_weight="1"
+        android:baselineAligned="false">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_update_simple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test update (simple)" />
+
+            <TextView
+                android:id="@+id/tv_update_simple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_update_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test update (complex)" />
+
+            <TextView
+                android:id="@+id/tv_update_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_update_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test udpate (balanced)" />
+
+            <TextView
+                android:id="@+id/tv_update_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:baselineAligned="false">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_delete_simple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test delete (simple)" />
+
+            <TextView
+                android:id="@+id/tv_delete_simple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_delete_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test delete (complex)" />
+
+            <TextView
+                android:id="@+id/tv_delete_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_delete_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test delete (balanced)" />
+
+            <TextView
+                android:id="@+id/tv_delete_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
