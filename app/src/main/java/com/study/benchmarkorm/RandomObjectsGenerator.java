@@ -11,14 +11,11 @@ import java.util.Random;
 
 public class RandomObjectsGenerator {
     private static Random random = new Random();
-    private static RandomString randomString = new RandomString(150);
-
-    public RandomObjectsGenerator() {
-
-    }
+    private static RandomString randomString = new RandomString(40);
 
     public Book nextBook() {
-        return new Book(randomString.nextString(), randomString.nextString(), random.nextInt(), random.nextInt());
+        return new Book(randomString.nextString(), randomString.nextString(),
+                Math.abs(random.nextInt()) + 1, Math.abs(random.nextInt()) + 1);
     }
 
     public List<Book> generateBooks(int quantity) {
@@ -47,6 +44,13 @@ public class RandomObjectsGenerator {
         return new Library(randomString.nextString(), randomString.nextString(), persons, books);
     }
 
+    public String nextString() {
+        return randomString.nextString();
+    }
+
+    public int nextInt() {
+        return random.nextInt();
+    }
 
     public static class RandomString {
 

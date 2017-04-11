@@ -63,61 +63,61 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_write_simple)
     public void testWriteSimple(){
-        tvWriteSimple.setText(String.format("%dms", ormTest.writeSimple()) + "ms");
+        tvWriteSimple.setText(String.format("%dms", ormTest.writeSimple()));
     }
 
     @OnClick(R.id.button_write_complex)
     public void testWriteComplex(){
-        tvWriteComplex.setText(String.format("%dms", ormTest.writeComplex()) + "ms");
+        tvWriteComplex.setText(String.format("%dms", ormTest.writeComplex()));
     }
 
     @OnClick(R.id.button_write_balanced)
     public void testWriteBalanced(){
-        tvWriteBalanced.setText(String.format("%dms", ormTest.writeBalanced()) + "ms");
+        tvWriteBalanced.setText(String.format("%dms", ormTest.writeBalanced()));
     }
 
     @OnClick(R.id.button_read_simple)
     public void testReadSimple(){
-        tvReadSimple.setText(String.format("%dms", ormTest.readSimple()) + "ms");
+        tvReadSimple.setText(String.format("%dms", ormTest.readSimple()));
     }
 
     @OnClick(R.id.button_read_complex)
     public void testReadComplex(){
-        tvReadComplex.setText(String.format("%dms", ormTest.readComplex()) + "ms");
+        tvReadComplex.setText(String.format("%dms", ormTest.readComplex()));
     }
 
     @OnClick(R.id.button_read_balanced)
     public void testReadBalanced(){
-        tvReadBalanced.setText(String.format("%dms", ormTest.readBalanced()) + "ms");
+        tvReadBalanced.setText(String.format("%dms", ormTest.readBalanced()));
     }
 
     @OnClick(R.id.button_update_simple)
     public void testUpdateSimple(){
-        tvUpdateSimple.setText(String.format("%dms", ormTest.updateSimple()) + "ms");
+        tvUpdateSimple.setText(String.format("%dms", ormTest.updateSimple()));
     }
 
     @OnClick(R.id.button_update_complex)
     public void testUpdateComplex(){
-        tvUpdateComplex.setText(String.format("%dms", ormTest.updateComplex()) + "ms");
+        tvUpdateComplex.setText(String.format("%dms", ormTest.updateComplex()));
     }
 
     @OnClick(R.id.button_update_balanced)
     public void testUpdateBalanced(){
-        tvUpdateBalanced.setText(String.format("%dms", ormTest.updateBalanced()) + "ms");
+        tvUpdateBalanced.setText(String.format("%dms", ormTest.updateBalanced()));
     }
 
     @OnClick(R.id.button_delete_simple)
     public void testDeleteSimple(){
-        tvDeleteSimple.setText(String.format("%dms", ormTest.deleteSimple()) + "ms");
+        tvDeleteSimple.setText(String.format("%dms", ormTest.deleteSimple()));
     }
 
     @OnClick(R.id.button_delete_complex)
     public void testDeleteComplex(){
-        tvDeleteComplex.setText(String.format("%dms", ormTest.writeComplex()) + "ms");
+        tvDeleteComplex.setText(String.format("%dms", ormTest.deleteComplex()));
     }
 
     @OnClick(R.id.button_delete_balanced)
     public void testDeleteBalanced(){
-        tvDeleteBalanced.setText(String.format("%dms", ormTest.deleteBalanced()) + "ms");
+        tvDeleteBalanced.setText(String.format("%dms", ormTest.deleteBalanced()));
     }
 }
