@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
-
+apply plugin: 'android-apt'
 
 def dbflow_version = "3.1.1"
 
@@ -142,6 +141,7 @@ dependencies {
 
     //DBFlow
     apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    dbflowCompile group: 'com.google.code.gson', name: 'gson', version: '2.7'
     dbflowCompile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     dbflowCompile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
     // sql-cipher database encryption (optional)
@@ -162,9 +162,7 @@ dependencies {
 
     //Freezer
     freezerCompile 'fr.xebia.android.freezer:freezer:2.0.6'
-    provided 'fr.xebia.android.freezer:freezer-annotations:2.0.6'
+    freezerProvided 'fr.xebia.android.freezer:freezer-annotations:2.0.6'
     apt 'fr.xebia.android.freezer:freezer-compiler:2.0.6'
 
-
-    compile 'com.google.code.gson:gson:2.7'
 }
