@@ -2,13 +2,11 @@ package com.study.benchmarkorm.dao;
 
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.study.benchmarkorm.db.CursorWrappers.BookCursorWrapper;
-import com.study.benchmarkorm.db.DatabaseHelper;
-import com.study.benchmarkorm.db.LibraryDbSchema.*;
+import com.study.benchmarkorm.db.LibraryDbSchema.BookTable;
 import com.study.benchmarkorm.model.Book;
 
 import java.util.ArrayList;

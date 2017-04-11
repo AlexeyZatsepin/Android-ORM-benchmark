@@ -7,7 +7,7 @@ import com.study.benchmarkorm.dao.BookDao;
 import com.study.benchmarkorm.dao.LibraryDao;
 import com.study.benchmarkorm.dao.PersonDao;
 
-class DatabaseManager {
+public class DatabaseManager {
     private static DatabaseManager ourInstance;
     private SQLiteDatabase mDatabase;
 

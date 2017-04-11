@@ -19,7 +19,13 @@ public class Person{
 
     public Person() {
     }
-
+    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthdayDate = birthdayDate;
+        this.gender = gender;
+        this.phone = phone;
+    }
     public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
         this.id = id;
         this.firstName = firstName;
@@ -35,8 +41,6 @@ public class Person{
     public void setLibrary(Library library) {
         this.library = library;
     }
-
-
 
     public long getId() {
         return id;

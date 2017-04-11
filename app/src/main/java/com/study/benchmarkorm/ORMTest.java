@@ -1,5 +1,6 @@
 package com.study.benchmarkorm;
 
+import android.content.Context;
 import android.util.Pair;
 
 import com.study.benchmarkorm.model.Book;
@@ -16,11 +17,11 @@ import java.util.List;
 public abstract class ORMTest {
     private RandomObjectsGenerator randomObjectsGenerator = new RandomObjectsGenerator();
 
-    public ORMTest() {
-        initDB();
+    public ORMTest(Context context) {
+        initDB(context);
     }
 
-    public abstract void initDB();
+    public abstract void initDB(Context context);
 
     public abstract void writeSimple(List<Book> books);
 

@@ -13,9 +13,16 @@ public class Book{
 
     private int bookId;
 
-    private Library library;
+    private Library library = new Library(0,"bla","bla"); //TODO remove
 
     public Book() {
+    }
+    public Book(String author,String title,
+                int pagesCount, int bookId) {
+        this.author = author;
+        this.title = title;
+        this.pagesCount = pagesCount;
+        this.bookId = bookId;
     }
 
     public Book(long id,String author,String title,

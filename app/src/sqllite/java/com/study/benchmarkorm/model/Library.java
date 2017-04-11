@@ -13,6 +13,13 @@ public class Library{
     public Library() {
     }
 
+    public Library(String address, String name,List<Person> persons, List<Book> books) {
+        this.address = address;
+        this.name = name;
+        this.books = books;
+        this.employees = persons;
+    }
+
     public Library(long id, String address, String name) {
         this.id = id;
         this.address = address;

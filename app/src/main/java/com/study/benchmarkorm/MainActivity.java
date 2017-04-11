@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ormTest = new ORMTestImpl();
+        ormTest = new ORMTestImpl(getApplicationContext());
         ButterKnife.bind(this);
     }
 

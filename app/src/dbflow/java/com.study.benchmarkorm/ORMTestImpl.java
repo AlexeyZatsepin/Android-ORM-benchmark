@@ -1,30 +1,26 @@
 package com.study.benchmarkorm;
 
-import android.util.Log;
+import android.content.Context;
 import android.util.Pair;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.runtime.DBBatchSaveQueue;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.Model;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
-import com.raizlabs.android.dbflow.structure.database.transaction.ProcessModelTransaction;
-import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 import com.study.benchmarkorm.model.Book;
 import com.study.benchmarkorm.model.Library;
 import com.study.benchmarkorm.model.Person;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by v.naminas on 4/6/2017.
- */
-
 public class ORMTestImpl extends ORMTest {
+
+    public ORMTestImpl(Context context) {
+        super(context);
+    }
+
     @Override
-    public void initDB() {
+    public void initDB(Context context) {
 
     }
 
