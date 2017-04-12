@@ -14,7 +14,7 @@ import java.util.Date;
 public class Person extends BaseModel{
     @Column
     @PrimaryKey(autoincrement = true)
-    int id;
+    long id;
 
     @Column
     String firstName;
@@ -40,6 +40,14 @@ public class Person extends BaseModel{
     }
 
     public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthdayDate = birthdayDate;
+        this.gender = gender;
+        this.phone = phone;
+    }
+    public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+        this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthdayDate = birthdayDate;

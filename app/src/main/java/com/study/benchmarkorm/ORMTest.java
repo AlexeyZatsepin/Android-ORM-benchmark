@@ -10,12 +10,8 @@ import com.study.benchmarkorm.model.Person;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by v.naminas on 4/3/2017.
- */
-
 public abstract class ORMTest {
-    private RandomObjectsGenerator randomObjectsGenerator = new RandomObjectsGenerator();
+    protected RandomObjectsGenerator randomObjectsGenerator = new RandomObjectsGenerator();
 
     public ORMTest(Context context) {
         initDB(context);
@@ -39,7 +35,14 @@ public abstract class ORMTest {
 
     public abstract void deleteComplex(List<Library> libraries, List<Book> books, List<Person> persons);
 
+    public abstract boolean isSimpleEmpty();
+
+    public abstract boolean isComplexEmpty();
+
     public long writeSimple() {
+        if (!isSimpleEmpty()){
+            deleteSimple();
+        }
         final int booksBatchNumber = 1000;
 
         final int numberOfPasses = 10;
@@ -48,6 +51,7 @@ public abstract class ORMTest {
             writeSimple(randomObjectsGenerator.generateBooks(booksBatchNumber));
             deleteSimple(readSimple(booksBatchNumber));
         }
+        randomObjectsGenerator.refresh();
 
         // main part
         long[] allTime = new long[numberOfPasses];
@@ -67,6 +71,9 @@ public abstract class ORMTest {
     }
 
     public long readSimple() {
+        if (isSimpleEmpty()){
+            writeSimple();
+        }
         final int booksBatchNumber = 1000;
         final int numberOfPasses = 10;
 
@@ -87,6 +94,9 @@ public abstract class ORMTest {
     }
 
     public long updateSimple() {
+        if (isSimpleEmpty()){
+            writeSimple();
+        }
         final int booksBatchNumber = 1000;
 
         final int numberOfPasses = 10;
@@ -120,6 +130,9 @@ public abstract class ORMTest {
     }
 
     public long deleteSimple() {
+        if(isSimpleEmpty()){
+            writeSimple();
+        }
         final int booksBatchNumber = 1000;
         final int numberOfPasses = 10;
 
@@ -140,6 +153,9 @@ public abstract class ORMTest {
     }
 
     public long writeBalanced() {
+        if (!isComplexEmpty()){
+            deleteBalanced();
+        }
         final int booksBatchNumber = 50;
         final int librariesBatchNumber = 50;
         final int personsBatchNumber = 50;
@@ -147,7 +163,10 @@ public abstract class ORMTest {
         return writeComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    private long writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected long writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+        if (!isComplexEmpty()){
+            deleteBalanced();
+        }
         final int numberOfPasses = 10;
         final List<Book> books = new ArrayList<>(booksBatchNumber * librariesBatchNumber);
         final List<Person> persons = new ArrayList<>(personsBatchNumber * librariesBatchNumber);
@@ -163,6 +182,7 @@ public abstract class ORMTest {
                 libraries.add(randomObjectsGenerator.nextLibrary(oneLibraryBooks, oneLibraryPersons));
                 books.addAll(oneLibraryBooks);
                 persons.addAll(oneLibraryPersons);
+                randomObjectsGenerator.refresh();
             }
             writeComplex(libraries, books, persons);
             deleteComplex(libraries, books, persons);
@@ -181,6 +201,7 @@ public abstract class ORMTest {
                 libraries.add(randomObjectsGenerator.nextLibrary(oneLibraryBooks, oneLibraryPersons));
                 books.addAll(oneLibraryBooks);
                 persons.addAll(oneLibraryPersons);
+                randomObjectsGenerator.refresh();
             }
 
             simpleProfiler.start();
@@ -200,6 +221,9 @@ public abstract class ORMTest {
     }
 
     public long readBalanced() {
+        if(isComplexEmpty()){
+           writeBalanced();
+        }
         final int booksBatchNumber = 50;
         final int librariesBatchNumber = 50;
         final int personsBatchNumber = 50;
@@ -207,9 +231,11 @@ public abstract class ORMTest {
         return readComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    private long readComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected long readComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+        if(isComplexEmpty()){
+            writeComplex();
+        }
         final int numberOfPasses = 10;
-
         long[] allTime = new long[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
@@ -227,6 +253,9 @@ public abstract class ORMTest {
     }
 
     public long updateBalanced() {
+        if(isComplexEmpty()){
+            writeBalanced();
+        }
         final int booksBatchNumber = 50;
         final int librariesBatchNumber = 50;
         final int personsBatchNumber = 50;
@@ -234,7 +263,10 @@ public abstract class ORMTest {
         return updateComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    private long updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected long updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+        if(isComplexEmpty()){
+            writeComplex();
+        }
         final int numberOfPasses = 10;
 
         // warming-up
@@ -295,6 +327,9 @@ public abstract class ORMTest {
     }
 
     public long deleteBalanced() {
+        if(isComplexEmpty()){
+            writeBalanced();
+        }
         final int booksBatchNumber = 50;
         final int librariesBatchNumber = 50;
         final int personsBatchNumber = 50;
@@ -302,7 +337,10 @@ public abstract class ORMTest {
         return deleteComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    private long deleteComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected long deleteComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+        if(isComplexEmpty()){
+            writeComplex();
+        }
         final int numberOfPasses = 10;
 
         long[] allTime = new long[numberOfPasses];
@@ -322,6 +360,9 @@ public abstract class ORMTest {
     }
 
     public long writeComplex() {
+        if(!isComplexEmpty()){
+            deleteComplex();
+        }
         final int booksBatchNumber = 500;
         final int librariesBatchNumber = 5;
         final int personsBatchNumber = 400;
@@ -330,6 +371,9 @@ public abstract class ORMTest {
     }
 
     public long readComplex() {
+        if(!isComplexEmpty()){
+            writeComplex();
+        }
         final int booksBatchNumber = 500;
         final int librariesBatchNumber = 5;
         final int personsBatchNumber = 400;
@@ -338,6 +382,9 @@ public abstract class ORMTest {
     }
 
     public long updateComplex() {
+        if(isComplexEmpty()){
+            writeComplex();
+        }
         final int booksBatchNumber = 500;
         final int librariesBatchNumber = 5;
         final int personsBatchNumber = 400;
@@ -346,6 +393,9 @@ public abstract class ORMTest {
     }
 
     public long deleteComplex() {
+        if(isComplexEmpty()){
+            writeComplex();
+        }
         final int booksBatchNumber = 500;
         final int librariesBatchNumber = 5;
         final int personsBatchNumber = 400;

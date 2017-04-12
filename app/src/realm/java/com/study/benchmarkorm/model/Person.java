@@ -20,6 +20,14 @@ public class Person extends RealmObject{
     public Person() {
     }
 
+    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthdayDate = birthdayDate;
+        this.gender = gender;
+        this.phone = phone;
+    }
+
     public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
         this.id = id;
         this.firstName = firstName;

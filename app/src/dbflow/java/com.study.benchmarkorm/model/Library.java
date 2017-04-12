@@ -34,6 +34,14 @@ public class Library extends BaseModel{
         this.books = books;
     }
 
+    public Library(long id, String address, String name, List<Person> employees, List<Book> books) {
+        this.id = id;
+        this.address = address;
+        this.name = name;
+        this.employees = (RealmList<Person>) employees;
+        this.books = (RealmList<Book>) books;
+    }
+
     public String getAddress() {
         return address;
     }

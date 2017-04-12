@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomObjectsGenerator {
-    private static Random random = new Random();
-    private static RandomString randomString = new RandomString(40);
+    protected static Random random = new Random();
+    protected static RandomString randomString = new RandomString(40);
+    protected long index=0;
 
     public Book nextBook() {
-        return new Book(randomString.nextString(), randomString.nextString(),
+        return new Book(index++,randomString.nextString(), randomString.nextString(),
                 Math.abs(random.nextInt()) + 1, Math.abs(random.nextInt()) + 1);
     }
 
@@ -27,8 +28,8 @@ public class RandomObjectsGenerator {
     }
 
     public Person nextPerson() {
-        return new Person(randomString.nextString(), randomString.nextString(),
-                new Date(Math.abs(random.nextLong())), random.nextBoolean()? "male": "female",
+        return new Person(index++,randomString.nextString(), randomString.nextString(),
+                new Date(System.currentTimeMillis()), random.nextBoolean()? "male": "female",
                 Math.abs(random.nextLong()) % ((int)Math.pow(10, 15)));
     }
 
@@ -41,7 +42,7 @@ public class RandomObjectsGenerator {
     }
 
     public Library nextLibrary(List<Book> books, List<Person> persons) {
-        return new Library(randomString.nextString(), randomString.nextString(), persons, books);
+        return new Library(index++, randomString.nextString(), randomString.nextString(), persons, books);
     }
 
     public String nextString() {
@@ -50,6 +51,10 @@ public class RandomObjectsGenerator {
 
     public int nextInt() {
         return random.nextInt();
+    }
+
+    public void refresh() {
+        index = 0;
     }
 
     public static class RandomString {

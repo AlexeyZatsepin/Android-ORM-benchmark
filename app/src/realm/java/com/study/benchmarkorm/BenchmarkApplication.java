@@ -12,7 +12,7 @@ public class BenchmarkApplication extends Application{
             super.onCreate();
             RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
                     .name(Realm.DEFAULT_REALM_NAME)
-                    .schemaVersion(0)
+                    .schemaVersion(1)
                     .deleteRealmIfMigrationNeeded()
                     .build();
             Realm.setDefaultConfiguration(realmConfiguration);
