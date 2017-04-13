@@ -12,7 +12,7 @@ import java.util.List;
 public class Library extends BaseModel{
     @Column
     @PrimaryKey(autoincrement = true)
-    int id;
+    long id;
 
     @Column
     String address;
@@ -38,8 +38,8 @@ public class Library extends BaseModel{
         this.id = id;
         this.address = address;
         this.name = name;
-        this.employees = (RealmList<Person>) employees;
-        this.books = (RealmList<Book>) books;
+        this.employees = employees;
+        this.books =  books;
     }
 
     public String getAddress() {

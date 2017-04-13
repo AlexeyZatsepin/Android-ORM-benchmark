@@ -23,15 +23,12 @@ public class PersonDao {
 
     public List<Person> getAll() {
         List<Person> persons = new ArrayList<>();
-        PersonCursorWrapper cursor = query(null, null);
-        try {
+        try (PersonCursorWrapper cursor = query(null, null)) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 persons.add(cursor.getPerson());
                 cursor.moveToNext();
             }
-        } finally {
-            cursor.close();
         }
         return persons;
     }
@@ -48,17 +45,14 @@ public class PersonDao {
     }
 
     public Person get(long id) {
-        PersonCursorWrapper cursor = query(
+        try (PersonCursorWrapper cursor = query(
                 PersonTable.Cols.ID + " = ?",
-        new String[] {String.valueOf(id)});
-        try {
+                new String[]{String.valueOf(id)})) {
             if (cursor.getCount() == 0) {
                 return null;
             }
             cursor.moveToFirst();
             return cursor.getPerson();
-        } finally {
-            cursor.close();
         }
     }
 

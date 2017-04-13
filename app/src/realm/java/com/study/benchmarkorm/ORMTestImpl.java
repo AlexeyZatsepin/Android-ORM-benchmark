@@ -98,35 +98,12 @@ public class ORMTestImpl extends ORMTest{
     }
 
     @Override
-    public boolean isSimpleEmpty() {
-        return realm.where(Book.class).count()==0;
-    }
-
-    @Override
-    public boolean isComplexEmpty() {
-        return (realm.where(Book.class).count()==0)&&(realm.where(Library.class).count()==0)&&(realm.where(Person.class).count()==0);
-    }
-
-    @Override
     public long updateSimple() {
-        if (isSimpleEmpty()){
+        if (realm.where(Book.class).count()==0){
             writeSimple();
         }
         final int booksBatchNumber = 1000;
-
         final int numberOfPasses = 10;
-        // warming-up
-        for (int i = 0; i < numberOfPasses; i++) {
-            List<Book> result = readSimple(booksBatchNumber);
-            List<Book> books = new ArrayList<>();
-            books.addAll(result);
-            realm.beginTransaction();
-            for (Book book: books) {
-                book.setAuthor(randomObjectsGenerator.nextString());
-            }
-            realm.commitTransaction();
-//            updateSimple(books);
-        }
 
         // main part
         long[] allTime = new long[numberOfPasses];
@@ -141,8 +118,6 @@ public class ORMTestImpl extends ORMTest{
                 book.setAuthor(randomObjectsGenerator.nextString());
             }
             realm.commitTransaction();
-//            updateSimple(books);
-
             allTime[i] = simpleProfiler.stop();
         }
 
@@ -156,33 +131,11 @@ public class ORMTestImpl extends ORMTest{
     @Override
     protected long updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
         final int numberOfPasses = 10;
-        // warming-up
-//        for (int i = 0; i < numberOfPasses; i++) {
-//            Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
-//            List<Library> libraries = readed.first;
-//            List<Book> books = readed.second.first;
-//            List<Person> persons = readed.second.second;
-//
-//            for (Library library: libraries) {
-//                library.setName(randomObjectsGenerator.nextString());
-//            }
-//
-//            for (Book book: books) {
-//                book.setAuthor(randomObjectsGenerator.nextString());
-//            }
-//
-//            for (Person person: persons) {
-//                person.setFirstName(randomObjectsGenerator.nextString());
-//                person.setSecondName(randomObjectsGenerator.nextString());
-//            }
-//            updateComplex(libraries, books, persons);
-//        }
 
         // main part
         long[] allTime = new long[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
-        simpleProfiler.start();
 
         for (int i = 0; i < numberOfPasses; i++) {
             List<Library> libraries = readed.first;
@@ -194,21 +147,25 @@ public class ORMTestImpl extends ORMTest{
             tempB.addAll(books);
             tempP.addAll(persons);
             tempL.addAll(libraries);
+            String r1 = randomObjectsGenerator.nextString(); //random data
+            String r2 = randomObjectsGenerator.nextString();
+            String r3 = randomObjectsGenerator.nextString();
+            String r4 = randomObjectsGenerator.nextString();
+            simpleProfiler.start();
             realm.beginTransaction();
             for (Library library: tempL) {
-                library.setName(randomObjectsGenerator.nextString());
+                library.setName(r1);
             }
 
             for (Book book: tempB) {
-                book.setAuthor(randomObjectsGenerator.nextString());
+                book.setAuthor(r2);
             }
 
             for (Person person: tempP) {
-                person.setFirstName(randomObjectsGenerator.nextString());
-                person.setSecondName(randomObjectsGenerator.nextString());
+                person.setFirstName(r3);
+                person.setSecondName(r4);
             }
             realm.commitTransaction();
-//            updateComplex(libraries, books, persons);
             allTime[i] = simpleProfiler.stop();
 
         }
@@ -223,32 +180,12 @@ public class ORMTestImpl extends ORMTest{
 
     @Override
     protected long writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
-        if (!isComplexEmpty()){
-            deleteComplex();
-        }
         final int numberOfPasses = 10;
         final List<Book> books = new RealmList<>();
         final List<Person> persons = new RealmList<>();
         final List<Library> libraries = new RealmList<>();
         List<Book> oneLibraryBooks;
         List<Person> oneLibraryPersons;
-
-        // warming-up
-//        for (int i = 0; i < numberOfPasses; i++) {
-//            for (int j = 0; j < librariesBatchNumber; j++) {
-//                oneLibraryBooks = randomObjectsGenerator.generateBooks(booksBatchNumber);
-//                oneLibraryPersons = randomObjectsGenerator.generatePersons(personsBatchNumber);
-//                libraries.add(randomObjectsGenerator.nextLibrary(oneLibraryBooks, oneLibraryPersons));
-//                books.addAll(oneLibraryBooks);
-//                persons.addAll(oneLibraryPersons);
-//                randomObjectsGenerator.refresh();
-//            }
-//            writeComplex(libraries, books, persons);
-//            deleteComplex(libraries, books, persons);
-//            libraries.clear();
-//            books.clear();
-//            persons.clear();
-//        }
 
         // main part
         long[] allTime = new long[numberOfPasses];

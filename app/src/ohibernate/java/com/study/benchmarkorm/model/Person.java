@@ -10,7 +10,7 @@ import java.util.Date;
 public class Person{
 
     @Id(PRIMARY_KEY_AUTOINCREMENT = true)
-    private int id;
+    private long id;
 
     private String firstName;
 
@@ -24,7 +24,7 @@ public class Person{
     public Person() {
     }
 
-    public Person(int id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+    public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -33,11 +33,11 @@ public class Person{
         this.phone = phone;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 public class Library{
 
     @Id(PRIMARY_KEY_AUTOINCREMENT = true)
-    private int id;
+    private long id;
 
     private String address;
     private String name;
@@ -24,16 +24,24 @@ public class Library{
     public Library() {
     }
 
-    public Library(int id, String address, String name) {
+    public Library(long id, String address, String name) {
         this.id = id;
         this.address = address;
         this.name = name;
     }
 
-    public int getId() {
+    public Library(long id, String address, String name, List<Person> persons, List<Book> books) {
+        this.id = id;
+        this.address = address;
+        this.name = name;
+        this.employees = persons;
+        this.books = books;
+    }
+
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public String getAddress() {

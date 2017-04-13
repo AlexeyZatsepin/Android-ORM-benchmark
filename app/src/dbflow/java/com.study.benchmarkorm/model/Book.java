@@ -12,7 +12,7 @@ import com.study.benchmarkorm.LibrariesDB;
 public class Book extends BaseModel{
     @Column
     @PrimaryKey(autoincrement = true)
-    int id;
+    long id;
 
     @Column
     String author;

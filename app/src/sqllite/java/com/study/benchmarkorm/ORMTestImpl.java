@@ -16,6 +16,10 @@ import java.util.List;
 
 public class ORMTestImpl extends ORMTest{
 
+    private BookDao bookDao;
+    private PersonDao personDao;
+    private LibraryDao libraryDao;
+
     public ORMTestImpl(Context context) {
         super(context);
     }
@@ -23,85 +27,71 @@ public class ORMTestImpl extends ORMTest{
     @Override
     public void initDB(Context context) {
         DatabaseManager.init(context);
+        bookDao = DatabaseManager.get().getBookDao();
+        personDao = DatabaseManager.get().getPersonDao();
+        libraryDao = DatabaseManager.get().getLibraryDao();
     }
 
     @Override
     public void writeSimple(List<Book> books) {
-        BookDao dao = DatabaseManager.get().getBookDao();
         for (Book book: books){
-            dao.add(book);
+            bookDao.add(book);
         }
     }
 
     @Override
     public List<Book> readSimple(int booksQuantity) {
-        BookDao dao = DatabaseManager.get().getBookDao();
-        return dao.getAll();
+        return bookDao.getAll();
     }
 
     @Override
     public void updateSimple(List<Book> books) {
-        BookDao dao = DatabaseManager.get().getBookDao();
-        for (Book book:books){
-            dao.update(book);
+        for (Book book: books){
+            bookDao.add(book);
         }
     }
 
     @Override
     public void deleteSimple(List<Book> books) {
-        BookDao dao = DatabaseManager.get().getBookDao();
-        for (Book book:books){
-            dao.delete(book);
+        for (Book book: books){
+            bookDao.delete(book);
         }
     }
 
     @Override
     public void writeComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
-        BookDao bookDao = DatabaseManager.get().getBookDao();
-        LibraryDao libraryDao = DatabaseManager.get().getLibraryDao();
-        PersonDao personDao = DatabaseManager.get().getPersonDao();
-        for (Book book:books){
+        for (Book book: books){
             bookDao.add(book);
         }
         for (Person person: persons){
             personDao.add(person);
         }
-        for (Library library:libraries){
+        for (Library library: libraries){
             libraryDao.add(library);
         }
     }
 
     @Override
     public Pair<List<Library>, Pair<List<Book>, List<Person>>> readComplex(int librariesQuantity, int booksQuantity, int personsQuantity) {
-        BookDao bookDao = DatabaseManager.get().getBookDao();
-        LibraryDao libraryDao = DatabaseManager.get().getLibraryDao();
-        PersonDao personDao = DatabaseManager.get().getPersonDao();
         return new Pair<>(libraryDao.getAll(), new Pair<>(bookDao.getAll(), personDao.getAll()));
     }
 
     @Override
     public void updateComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
-        BookDao bookDao = DatabaseManager.get().getBookDao();
-        LibraryDao libraryDao = DatabaseManager.get().getLibraryDao();
-        PersonDao personDao = DatabaseManager.get().getPersonDao();
-        for (Library library:libraries){
-            libraryDao.update(library);
-        }
-        for (Book book:books){
+        for (Book book: books){
             bookDao.update(book);
         }
         for (Person person: persons){
             personDao.update(person);
         }
-
+        for (Library library: libraries){
+            libraryDao.update(library);
+        }
     }
 
     @Override
     public void deleteComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
-        BookDao bookDao = DatabaseManager.get().getBookDao();
-        LibraryDao libraryDao = DatabaseManager.get().getLibraryDao();
-        PersonDao personDao = DatabaseManager.get().getPersonDao();
-        for (Book book:books){
+        for (Book book: books){
             bookDao.delete(book);
         }
         for (Person person: persons){
@@ -110,15 +100,5 @@ public class ORMTestImpl extends ORMTest{
         for (Library library:libraries){
             libraryDao.delete(library);
         }
-    }
-
-    @Override
-    public boolean isSimpleEmpty() {
-        return true;
-    }
-
-    @Override
-    public boolean isComplexEmpty() {
-        return true;
     }
 }

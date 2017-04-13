@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.onurciner.OHibernateConfig;
 
-public class HibernateApplication extends Application {
+public class BenchmarkApplication extends Application {
 
     @Override
     public void onCreate() {

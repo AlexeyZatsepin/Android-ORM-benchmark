@@ -130,13 +130,4 @@ public class ORMTestImpl extends ORMTest {
                 });
     }
 
-    @Override
-    public boolean isSimpleEmpty() {
-        return false;
-    }
-
-    @Override
-    public boolean isComplexEmpty() {
-        return false;
-    }
 }

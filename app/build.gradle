@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
+apply plugin: 'com.neenbedankt.android-apt'
 
 def dbflow_version = "3.1.1"
 
@@ -130,7 +130,7 @@ dependencies {
     activeCompile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 
     //OHibernate
-    ohibernateCompile 'com.github.10uroi:OHibernate:1.0.5'
+    ohibernateCompile 'com.github.10uroi:OHibernate:1.0.9'
 
     //GreenDAO
     greenDaoCompile 'org.greenrobot:greendao:3.2.2'
