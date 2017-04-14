@@ -1,8 +1,5 @@
 package com.study.benchmarkorm.model;
 
-
-import android.graphics.PorterDuff;
-
 import java.util.List;
 
 import se.emilsjolander.sprinkles.Model;
@@ -11,13 +8,13 @@ import se.emilsjolander.sprinkles.annotations.Column;
 import se.emilsjolander.sprinkles.annotations.Key;
 import se.emilsjolander.sprinkles.annotations.Table;
 
-@Table("Book")
+@Table("Library")
 public class Library extends Model{
 
     @AutoIncrement
     @Key
-    @Column("id")
-    private int id;
+    @Column("_id")
+    private long id;
 
     @Column("address")
     private String address;
@@ -34,16 +31,23 @@ public class Library extends Model{
     public Library() {
     }
 
-    public Library(int id, String address, String name) {
+    public Library(long id, String address, String name) {
         this.id = id;
         this.address = address;
         this.name = name;
     }
+    public Library(long id, String address, String name, List<Person> employees, List<Book> books) {
+        this.id = id;
+        this.address = address;
+        this.name = name;
+        this.employees = employees;
+        this.books =  books;
+    }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public String getAddress() {

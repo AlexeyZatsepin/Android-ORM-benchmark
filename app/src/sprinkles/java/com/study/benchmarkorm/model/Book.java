@@ -11,7 +11,7 @@ public class Book extends Model{
 
     @AutoIncrement
     @Key
-    @Column("id")
+    @Column("_id")
     private long id;
 
     @Column("author")

@@ -1,7 +1,5 @@
 package com.study.benchmarkorm.model;
 
-import android.graphics.PorterDuff;
-
 import java.util.Date;
 
 import se.emilsjolander.sprinkles.Model;
@@ -13,7 +11,7 @@ import se.emilsjolander.sprinkles.annotations.Table;
 @Table("Person")
 public class Person extends Model {
 
-    @AutoIncrement @Key @Column("id") private int id;
+    @AutoIncrement @Key @Column("_id") private long id;
 
     @Column("firstName") private String firstName;
     @Column("secondName") private String secondName;
@@ -24,7 +22,7 @@ public class Person extends Model {
     public Person() {
     }
 
-    public Person(int id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+    public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -33,11 +31,11 @@ public class Person extends Model {
         this.phone = phone;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
