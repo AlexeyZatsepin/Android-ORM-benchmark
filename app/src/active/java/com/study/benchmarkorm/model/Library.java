@@ -18,6 +18,13 @@ public class Library extends Model{
         this.address = address;
         this.name = name;
     }
+    public Library(long id, String address, String name, List<Person> employees, List<Book> books) {
+//        this.id = id;
+        this.address = address;
+        this.name = name;
+//        this.employees = employees;
+//        this.books =  books;
+    }
 
     public String getAddress() {
         return address;

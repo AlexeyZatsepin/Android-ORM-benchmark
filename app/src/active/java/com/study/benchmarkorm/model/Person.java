@@ -31,6 +31,14 @@ public class Person extends Model{
         this.gender = gender;
         this.phone = phone;
     }
+    public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthdayDate = birthdayDate;
+        this.gender = gender;
+        this.phone = phone;
+        this.library = null;
+    }
 
     public String getFirstName() {
         return firstName;

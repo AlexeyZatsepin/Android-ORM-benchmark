@@ -29,6 +29,14 @@ public class Book extends Model{
         this.bookId = bookId;
     }
 
+    public Book(long id,String author, String title, int pagesCount, int bookId) {
+        this.author = author;
+        this.title = title;
+        this.pagesCount = pagesCount;
+        this.bookId = bookId;
+        this.library = null;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -63,5 +71,13 @@ public class Book extends Model{
 
     public void setId(int id) {
         this.bookId = id;
+    }
+
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 }
