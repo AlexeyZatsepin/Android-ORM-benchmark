@@ -6,7 +6,7 @@ import com.onurciner.ohibernate.Id;
 
 import java.util.Date;
 
-@Entity
+@Entity(TABLE_NAME = "person", TABLE_OPERATION = Entity.TABLE_OPERATION_TYPE.DROP_AND_CREATE)
 public class Person{
 
     @Id(PRIMARY_KEY_AUTOINCREMENT = true)

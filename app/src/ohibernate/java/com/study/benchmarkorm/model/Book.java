@@ -4,7 +4,7 @@ package com.study.benchmarkorm.model;
 import com.onurciner.ohibernate.Entity;
 import com.onurciner.ohibernate.Id;
 
-@Entity
+@Entity(TABLE_NAME = "book", TABLE_OPERATION = Entity.TABLE_OPERATION_TYPE.DROP_AND_CREATE)
 public class Book{
 
     @Id(PRIMARY_KEY_AUTOINCREMENT = true)

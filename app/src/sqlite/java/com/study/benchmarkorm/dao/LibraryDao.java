@@ -5,7 +5,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.study.benchmarkorm.db.CursorWrappers;
 import com.study.benchmarkorm.db.CursorWrappers.LibraryCursorWrapper;
+import com.study.benchmarkorm.db.LibraryDbSchema;
 import com.study.benchmarkorm.db.LibraryDbSchema.LibraryTable;
 import com.study.benchmarkorm.model.Library;
 
@@ -13,30 +15,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LibraryDao {
-
-    private SQLiteDatabase mDatabase;
+public class LibraryDao extends AbstractDao<Library>{
 
     public LibraryDao(SQLiteDatabase db) {
         mDatabase = db;
     }
 
     public List<Library> getAll() {
-        List<Library> Librarys = new ArrayList<>();
-        LibraryCursorWrapper cursor = query(null, null);
-        try {
+        List<Library> libraries = new ArrayList<>();
+        try (LibraryCursorWrapper cursor = query(null, null)) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Librarys.add(cursor.getLibrary());
+                libraries.add(cursor.getLibrary());
                 cursor.moveToNext();
             }
-        } finally {
-            cursor.close();
         }
-        return Librarys;
+        return libraries;
+    }
+    public List<Library> get(int limit) {
+        mDatabase.beginTransaction();
+        List<Library> result = new ArrayList<>();
+        Cursor cursor = mDatabase.query(LibraryDbSchema.LibraryTable.NAME,null,null,null,null,null,null,String.valueOf(limit));
+        CursorWrappers.LibraryCursorWrapper libCursorWrapper = new CursorWrappers.LibraryCursorWrapper(cursor);
+        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            result.add(libCursorWrapper.getLibrary());
+        }
+        mDatabase.setTransactionSuccessful();
+        cursor.close();
+        mDatabase.endTransaction();
+        return result;
     }
 
-    public void add(Library c) {
+    public void save(Library c) {
         ContentValues values = getContentValues(c);
         mDatabase.insert(LibraryTable.NAME, null, values);
     }
@@ -48,17 +58,17 @@ public class LibraryDao {
     }
 
     public Library get(long id) {
-        LibraryCursorWrapper cursor = query(
+        mDatabase.beginTransaction();
+        try (LibraryCursorWrapper cursor = query(
                 LibraryTable.Cols.ID + " = ?",
-        new String[] {String.valueOf(id)});
-        try {
+                new String[]{String.valueOf(id)})) {
             if (cursor.getCount() == 0) {
                 return null;
             }
             cursor.moveToFirst();
+            mDatabase.setTransactionSuccessful();
+            mDatabase.endTransaction();
             return cursor.getLibrary();
-        } finally {
-            cursor.close();
         }
     }
 
@@ -79,7 +89,7 @@ public class LibraryDao {
         return values;
     }
 
-    private LibraryCursorWrapper query(String whereClause, String[] whereArgs) {
+    protected LibraryCursorWrapper query(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 LibraryTable.NAME,
                 null, // Columns - null выбирает все столбцы
@@ -91,4 +101,5 @@ public class LibraryDao {
         );
         return new LibraryCursorWrapper(cursor);
     }
+
 }

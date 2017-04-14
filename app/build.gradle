@@ -72,10 +72,10 @@ android {
             versionNameSuffix "-active"
             resValue "string", "app_name", "ActiveAndroidBenchmark"
         }
-        sqllite{
-            applicationIdSuffix ".sqllite"
-            versionNameSuffix "-sqllite"
-            resValue "string", "app_name", "SQLLiteBenchmark"
+        sqlite{
+            applicationIdSuffix ".sqlite"
+            versionNameSuffix "-sqlite"
+            resValue "string", "app_name", "SQLiteBenchmark"
         }
         //Vlad
         dbflow {

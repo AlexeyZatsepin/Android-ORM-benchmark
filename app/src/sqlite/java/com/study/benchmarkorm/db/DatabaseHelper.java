@@ -18,28 +18,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + LibraryTable.NAME + "(" +
-                " _id integer primary key autoincrement, " +
-                LibraryTable.Cols.ID + ", " +
+                LibraryTable.Cols.ID + " integer primary key autoincrement, " +
                 LibraryTable.Cols.ADDRESS + ", " +
-                LibraryTable.Cols.NAME +");");
+                LibraryTable.Cols.NAME + ");");
 
         db.execSQL("create table " + BookTable.NAME + "(" +
-                        " _id integer primary key autoincrement, " +
-                        BookTable.Cols.ID + ", " +
-                        BookTable.Cols.TITLE + ", " +
-                        BookTable.Cols.AUTHOR + ", " +
-                        BookTable.Cols.PAGES_COUNT + ", " +
-                        BookTable.Cols.BOOK_ID + ", " +
-                        BookTable.Cols.LIBRARY_ID + " integer,"
-                        + " FOREIGN KEY (" + BookTable.Cols.LIBRARY_ID + ") REFERENCES " + LibraryTable.NAME + "(" + LibraryTable.Cols.ID + "));");
+                BookTable.Cols.ID + " integer primary key autoincrement, " +
+                BookTable.Cols.TITLE + ", " +
+                BookTable.Cols.AUTHOR + ", " +
+                BookTable.Cols.PAGES_COUNT + ", " +
+                BookTable.Cols.BOOK_ID + ", " +
+                BookTable.Cols.LIBRARY_ID + " integer,"
+                + " FOREIGN KEY (" + BookTable.Cols.LIBRARY_ID + ") REFERENCES " + LibraryTable.NAME + "(" + LibraryTable.Cols.ID + "));");
         db.execSQL("create table " + PersonTable.NAME + "(" +
-                " _id integer primary key autoincrement, " +
-                PersonTable.Cols.ID + ", " +
+                PersonTable.Cols.ID+" integer primary key autoincrement, " +
                 PersonTable.Cols.F_NAME + ", " +
                 PersonTable.Cols.S_NAME + ", " +
                 PersonTable.Cols.DATE + ", " +
-                PersonTable.Cols.GENDER +", " +
-                PersonTable.Cols.PHONE +", " +
+                PersonTable.Cols.GENDER + ", " +
+                PersonTable.Cols.PHONE + ", " +
                 PersonTable.Cols.LIBRARY_ID + " integer,"
                 + " FOREIGN KEY (" + PersonTable.Cols.LIBRARY_ID + ") REFERENCES " + LibraryTable.NAME + "(" + LibraryTable.Cols.ID + "));");
 

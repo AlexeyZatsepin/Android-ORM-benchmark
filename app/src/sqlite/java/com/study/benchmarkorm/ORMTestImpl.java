@@ -34,50 +34,65 @@ public class ORMTestImpl extends ORMTest{
 
     @Override
     public void writeSimple(List<Book> books) {
+        bookDao.beginTransaction();
         for (Book book: books){
-            bookDao.add(book);
+            bookDao.save(book);
         }
+        bookDao.endTransaction();
     }
 
     @Override
     public List<Book> readSimple(int booksQuantity) {
-        return bookDao.getAll();
+        bookDao.beginTransaction();
+        List<Book> result =  bookDao.get(booksQuantity);
+        bookDao.endTransaction();
+        return result;
     }
 
     @Override
     public void updateSimple(List<Book> books) {
+        bookDao.beginTransaction();
         for (Book book: books){
-            bookDao.add(book);
+            bookDao.save(book);
         }
+        bookDao.endTransaction();
     }
 
     @Override
     public void deleteSimple(List<Book> books) {
+        bookDao.beginTransaction();
         for (Book book: books){
             bookDao.delete(book);
         }
+        bookDao.endTransaction();
     }
 
     @Override
     public void writeComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
+        bookDao.beginTransaction();
         for (Book book: books){
-            bookDao.add(book);
+            bookDao.save(book);
         }
         for (Person person: persons){
-            personDao.add(person);
+            personDao.save(person);
         }
         for (Library library: libraries){
-            libraryDao.add(library);
+            libraryDao.save(library);
         }
+        bookDao.endTransaction();
     }
 
     @Override
     public Pair<List<Library>, Pair<List<Book>, List<Person>>> readComplex(int librariesQuantity, int booksQuantity, int personsQuantity) {
-        return new Pair<>(libraryDao.getAll(), new Pair<>(bookDao.getAll(), personDao.getAll()));
+        bookDao.beginTransaction();
+        Pair<List<Library>, Pair<List<Book>, List<Person>>> result = new Pair<>(libraryDao.get(librariesQuantity), new Pair<>(bookDao.get(booksQuantity), personDao.get(personsQuantity)));
+        bookDao.endTransaction();
+        return result;
     }
 
     @Override
     public void updateComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
+        bookDao.beginTransaction();
         for (Book book: books){
             bookDao.update(book);
         }
@@ -87,10 +102,12 @@ public class ORMTestImpl extends ORMTest{
         for (Library library: libraries){
             libraryDao.update(library);
         }
+        bookDao.endTransaction();
     }
 
     @Override
     public void deleteComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
+        bookDao.beginTransaction();
         for (Book book: books){
             bookDao.delete(book);
         }
@@ -100,5 +117,6 @@ public class ORMTestImpl extends ORMTest{
         for (Library library:libraries){
             libraryDao.delete(library);
         }
+        bookDao.endTransaction();
     }
 }

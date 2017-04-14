@@ -6,7 +6,7 @@ import com.onurciner.ohibernate.OneToMany;
 
 import java.util.List;
 
-@Entity
+@Entity(TABLE_NAME = "library", TABLE_OPERATION = Entity.TABLE_OPERATION_TYPE.DROP_AND_CREATE)
 public class Library{
 
     @Id(PRIMARY_KEY_AUTOINCREMENT = true)

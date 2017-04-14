@@ -5,7 +5,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.study.benchmarkorm.db.CursorWrappers;
 import com.study.benchmarkorm.db.CursorWrappers.PersonCursorWrapper;
+import com.study.benchmarkorm.db.LibraryDbSchema;
 import com.study.benchmarkorm.db.LibraryDbSchema.PersonTable;
 import com.study.benchmarkorm.model.Person;
 
@@ -13,9 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PersonDao {
-
-    private SQLiteDatabase mDatabase;
+public class PersonDao extends AbstractDao<Person>{
 
     public PersonDao(SQLiteDatabase db) {
         mDatabase = db;
@@ -33,7 +33,18 @@ public class PersonDao {
         return persons;
     }
 
-    public void add(Person c) {
+    public List<Person> get(int limit) {
+        List<Person> result = new ArrayList<>();
+        Cursor cursor = mDatabase.query(LibraryDbSchema.PersonTable.NAME,null,null,null,null,null,null,String.valueOf(limit));
+        CursorWrappers.PersonCursorWrapper personCursorWrapper = new CursorWrappers.PersonCursorWrapper(cursor);
+        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            result.add(personCursorWrapper.getPerson());
+        }
+        cursor.close();
+        return result;
+    }
+
+    public void save(Person c) {
         ContentValues values = getContentValues(c);
         mDatabase.insert(PersonTable.NAME, null, values);
     }
@@ -77,7 +88,7 @@ public class PersonDao {
         return values;
     }
 
-    private PersonCursorWrapper query(String whereClause, String[] whereArgs) {
+    protected PersonCursorWrapper query(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 PersonTable.NAME,
                 null, // Columns - null выбирает все столбцы
