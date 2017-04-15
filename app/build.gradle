@@ -3,26 +3,6 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 def dbflow_version = "3.1.1"
 
-buildscript {
-    repositories {
-        jcenter()
-
-        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local'}
-    }
-    dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
-}
-
-
-
-allprojects {
-    repositories {
-        jcenter()
-        maven { url "https://jitpack.io" }
-    }
-}
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -49,9 +29,10 @@ android {
             resValue "string", "app_name", "RealmBenchmark"
         }
         greenDao {
-//            applicationIdSuffix ".greenDao"
-//            versionNameSuffix "-greenDao"
-//            resValue "string", "app_name", "GeenDaoBenchmark"
+            applicationIdSuffix ".greenDao"
+            versionNameSuffix "-greenDao"
+            resValue "string", "app_name", "GeenDaoBenchmark"
+            //uncomment this code to work with GreenDAO
 //            apply plugin: 'org.greenrobot.greendao'
 //            greendao {
 //                schemaVersion 1
@@ -117,7 +98,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     testCompile 'junit:junit:4.12'
 

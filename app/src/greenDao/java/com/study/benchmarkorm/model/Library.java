@@ -15,7 +15,7 @@ import org.greenrobot.greendao.DaoException;
 public class Library{
 
     @Id
-    private int id;
+    private long id;
 
     @NotNull
     private String address;
@@ -39,14 +39,23 @@ public class Library{
     public Library() {
     }
 
-    @Generated(hash = 1978343951)
-    public Library(int id, @NotNull String address, String name) {
+    @Generated(hash = 2096938530)
+    public Library(long id, @NotNull String address, String name) {
         this.id = id;
         this.address = address;
         this.name = name;
     }
 
-    public int getId() {
+    @Keep
+    public Library(long id, @NotNull String address, String name,List<Person> employees, List<Book> books) {
+        this.id = id;
+        this.address = address;
+        this.name = name;
+        this.books = books;
+        this.employees = employees;
+    }
+
+    public long getId() {
         return id;
     }
     public void setId(int id) {
@@ -127,6 +136,10 @@ public class Library{
     @Generated(hash = 1253254391)
     public synchronized void resetEmployees() {
         employees = null;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     /** called by internal mechanisms, do not call yourself. */

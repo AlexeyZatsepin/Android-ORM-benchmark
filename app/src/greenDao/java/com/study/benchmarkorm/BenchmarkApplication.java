@@ -7,7 +7,7 @@ import com.study.benchmarkorm.model.DaoSession;
 
 import org.greenrobot.greendao.database.Database;
 
-public class GreenDaoApplication extends Application {
+public class BenchmarkApplication extends Application {
     private static DaoSession daoSession;
 
     @Override
