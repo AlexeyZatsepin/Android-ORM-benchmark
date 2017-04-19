@@ -20,10 +20,10 @@
             android:gravity="center"
             android:orientation="vertical">
             <Button
-                android:id="@+id/button_write_simple"
+                android:id="@+id/button_simple_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test write (simple)" />
+                android:text="Simple test (part one)" />
 
             <TextView
                 android:id="@+id/tv_write_simple"
@@ -39,10 +39,10 @@
             android:gravity="center"
             android:orientation="vertical">
             <Button
-                android:id="@+id/button_write_complex"
+                android:id="@+id/button_complex_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test write (complex)" />
+                android:text="Complex test (Part one)" />
 
             <TextView
                 android:id="@+id/tv_write_complex"
@@ -58,10 +58,10 @@
             android:gravity="center"
             android:orientation="vertical">
             <Button
-                android:id="@+id/button_write_balanced"
+                android:id="@+id/button_balanced_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test write (balanced)" />
+                android:text="Balanced test (Part one)" />
 
             <TextView
                 android:id="@+id/tv_write_balanced"
@@ -84,139 +84,21 @@
             android:gravity="center"
             android:orientation="vertical">
             <Button
-                android:id="@+id/button_read_simple"
+                android:id="@+id/button_simple_second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test read (simple)" />
+                android:text="Simple test (Part two)" />
 
             <TextView
                 android:id="@+id/tv_read_simple"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="200ms"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/button_read_complex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test read (complex)" />
-
-            <TextView
-                android:id="@+id/tv_read_complex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="200ms"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/button_read_balanced"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test read (balanced)" />
-
-            <TextView
-                android:id="@+id/tv_read_balanced"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="200ms"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:baselineAligned="false">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/button_update_simple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test update (simple)" />
-
             <TextView
                 android:id="@+id/tv_update_simple"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="200ms"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/button_update_complex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test update (complex)" />
-
-            <TextView
-                android:id="@+id/tv_update_complex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="200ms"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/button_update_balanced"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test udpate (balanced)" />
-
-            <TextView
-                android:id="@+id/tv_update_balanced"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="200ms"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:baselineAligned="false">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/button_delete_simple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test delete (simple)" />
-
             <TextView
                 android:id="@+id/tv_delete_simple"
                 android:layout_width="wrap_content"
@@ -231,11 +113,21 @@
             android:gravity="center"
             android:orientation="vertical">
             <Button
-                android:id="@+id/button_delete_complex"
+                android:id="@+id/button_complex_second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test delete (complex)" />
+                android:text="Complex test (Part two)" />
 
+            <TextView
+                android:id="@+id/tv_read_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+            <TextView
+                android:id="@+id/tv_update_complex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
             <TextView
                 android:id="@+id/tv_delete_complex"
                 android:layout_width="wrap_content"
@@ -250,11 +142,21 @@
             android:gravity="center"
             android:orientation="vertical">
             <Button
-                android:id="@+id/button_delete_balanced"
+                android:id="@+id/button_balanced_second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test delete (balanced)" />
+                android:text="Balanced test (Part two)" />
 
+            <TextView
+                android:id="@+id/tv_read_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
+            <TextView
+                android:id="@+id/tv_update_balanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="200ms"/>
             <TextView
                 android:id="@+id/tv_delete_balanced"
                 android:layout_width="wrap_content"

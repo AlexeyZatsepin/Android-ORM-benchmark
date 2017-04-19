@@ -2,6 +2,7 @@ package com.study.benchmarkorm;
 
 import android.content.Context;
 import android.util.Pair;
+import android.widget.TextView;
 
 import com.study.benchmarkorm.model.Book;
 import com.study.benchmarkorm.model.Library;
@@ -15,6 +16,114 @@ public abstract class ORMTest {
 
     public ORMTest(Context context) {
         initDB(context);
+    }
+
+    public void testSimplePartOne(TextView writeTV) {
+        // warming-up
+        for (int i = 0; i < 5; i++) {
+            writeSimple(randomObjectsGenerator.generateBooks(100));
+            deleteSimple(readSimple(100));
+        }
+        long first = writeSimple();
+        long second = writeSimple();
+        long third = writeSimple();
+        long average = (first + second + third) / 3;
+        writeTV.setText("Write: " + average + "ms" + "\nPlease restart your app and click second part button");
+    }
+
+    public void testSimplePartTwo(TextView readTV, TextView updateTV, TextView deleteTV) {
+        // warming-up
+        readSimple();
+        long readTime = readSimple();
+        readTV.setText("Read: " + readTime + "ms");
+        long updateTime = updateSimple();
+        readTV.setText("Update: " + updateTime + "ms");
+        long deleteTime = deleteSimple();
+        readTV.setText("Delete: " + deleteTime + "ms");
+    }
+
+    public void testComplexPartOne(TextView writeTV) {
+        // warming-up
+        final List<Book> books = new ArrayList<>();
+        final List<Person> persons = new ArrayList<>();
+        final List<Library> libraries = new ArrayList<>();
+        List<Book> oneLibraryBooks;
+        List<Person> oneLibraryPersons;
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 2; j++) {
+                oneLibraryBooks = randomObjectsGenerator.generateBooks(10);
+                oneLibraryPersons = randomObjectsGenerator.generatePersons(10);
+                libraries.add(randomObjectsGenerator.nextLibrary(oneLibraryBooks, oneLibraryPersons));
+                books.addAll(oneLibraryBooks);
+                persons.addAll(oneLibraryPersons);
+            }
+            writeComplex(libraries, books, persons);
+            deleteComplex(libraries, books, persons);
+            libraries.clear();
+            books.clear();
+            persons.clear();
+        }
+
+
+        long first = writeComplex();
+        long second = writeComplex();
+        long third = writeComplex();
+        long average = (first + second + third) / 3;
+        writeTV.setText("Write: " + average + "ms" + "\nPlease restart your app and click second part button");
+    }
+
+    public void testComplexPartTwo(TextView readTV, TextView updateTV, TextView deleteTV) {
+        // warming-up
+        readComplex();
+        long readTime = readComplex();
+        readTV.setText("Read: " + readTime + "ms");
+        long updateTime = updateComplex();
+        readTV.setText("Update: " + updateTime + "ms");
+        long deleteTime = deleteComplex();
+        readTV.setText("Delete: " + deleteTime + "ms");
+    }
+
+    public void testBalancedPartOne(TextView writeTV) {
+        // warming-up
+        final List<Book> books = new ArrayList<>();
+        final List<Person> persons = new ArrayList<>();
+        final List<Library> libraries = new ArrayList<>();
+        List<Book> oneLibraryBooks;
+        List<Person> oneLibraryPersons;
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 2; j++) {
+                oneLibraryBooks = randomObjectsGenerator.generateBooks(10);
+                oneLibraryPersons = randomObjectsGenerator.generatePersons(10);
+                libraries.add(randomObjectsGenerator.nextLibrary(oneLibraryBooks, oneLibraryPersons));
+                books.addAll(oneLibraryBooks);
+                persons.addAll(oneLibraryPersons);
+            }
+            writeComplex(libraries, books, persons);
+            deleteComplex(libraries, books, persons);
+            libraries.clear();
+            books.clear();
+            persons.clear();
+        }
+
+
+        long first = writeBalanced();
+        long second = writeBalanced();
+        long third = writeBalanced();
+        long average = (first + second + third) / 3;
+        writeTV.setText("Write: " + average + "ms" + "\nPlease restart your app and click second part button");
+    }
+
+    public void testBalancedPartTwo(TextView readTV, TextView updateTV, TextView deleteTV) {
+        // warming-up
+        readComplex();
+        long readTime = readBalanced();
+        readTV.setText("Read: " + readTime + "ms");
+        long updateTime = updateBalanced();
+        readTV.setText("Update: " + updateTime + "ms");
+        long deleteTime = deleteBalanced();
+        readTV.setText("Delete: " + deleteTime + "ms");
     }
 
     public abstract void initDB(Context context);
@@ -39,12 +148,6 @@ public abstract class ORMTest {
         final int booksBatchNumber = 1000;
 
         final int numberOfPasses = 10;
-        // warming-up
-        for (int i = 0; i < numberOfPasses; i++) {
-            writeSimple(randomObjectsGenerator.generateBooks(booksBatchNumber));
-            deleteSimple(readSimple(booksBatchNumber));
-        }
-        randomObjectsGenerator.refresh();
 
         // main part
         long[] allTime = new long[numberOfPasses];
@@ -87,14 +190,6 @@ public abstract class ORMTest {
         final int booksBatchNumber = 1000;
 
         final int numberOfPasses = 10;
-        // warming-up
-        for (int i = 0; i < numberOfPasses; i++) {
-            List<Book> books = readSimple(booksBatchNumber);
-            for (Book book: books) {
-                book.setAuthor(randomObjectsGenerator.nextString());
-            }
-            updateSimple(books);
-        }
 
         // main part
         long[] allTime = new long[numberOfPasses];
@@ -152,23 +247,6 @@ public abstract class ORMTest {
         List<Book> oneLibraryBooks;
         List<Person> oneLibraryPersons;
 
-        // warming-up
-        for (int i = 0; i < numberOfPasses; i++) {
-            for (int j = 0; j < librariesBatchNumber; j++) {
-                oneLibraryBooks = randomObjectsGenerator.generateBooks(booksBatchNumber);
-                oneLibraryPersons = randomObjectsGenerator.generatePersons(personsBatchNumber);
-                libraries.add(randomObjectsGenerator.nextLibrary(oneLibraryBooks, oneLibraryPersons));
-                books.addAll(oneLibraryBooks);
-                persons.addAll(oneLibraryPersons);
-                randomObjectsGenerator.refresh();
-            }
-            writeComplex(libraries, books, persons);
-            deleteComplex(libraries, books, persons);
-            libraries.clear();
-            books.clear();
-            persons.clear();
-        }
-
         // main part
         long[] allTime = new long[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
@@ -179,7 +257,6 @@ public abstract class ORMTest {
                 libraries.add(randomObjectsGenerator.nextLibrary(oneLibraryBooks, oneLibraryPersons));
                 books.addAll(oneLibraryBooks);
                 persons.addAll(oneLibraryPersons);
-                randomObjectsGenerator.refresh();
             }
 
             simpleProfiler.start();
