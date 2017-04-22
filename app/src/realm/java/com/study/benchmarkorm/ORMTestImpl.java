@@ -98,15 +98,12 @@ public class ORMTestImpl extends ORMTest{
     }
 
     @Override
-    public long updateSimple() {
-        if (realm.where(Book.class).count()==0){
-            writeSimple();
-        }
+    public float[] updateSimple() {
         final int booksBatchNumber = 1000;
         final int numberOfPasses = 10;
 
         // main part
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             List<Book> result = readSimple(booksBatchNumber);
@@ -120,20 +117,15 @@ public class ORMTestImpl extends ORMTest{
             realm.commitTransaction();
             allTime[i] = simpleProfiler.stop();
         }
-
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
     @Override
-    protected long updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected float[] updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
         final int numberOfPasses = 10;
 
         // main part
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
 
@@ -169,17 +161,11 @@ public class ORMTestImpl extends ORMTest{
             allTime[i] = simpleProfiler.stop();
 
         }
-
-
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
     @Override
-    protected long writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected float[] writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
         final int numberOfPasses = 10;
         final List<Book> books = new RealmList<>();
         final List<Person> persons = new RealmList<>();
@@ -188,7 +174,7 @@ public class ORMTestImpl extends ORMTest{
         List<Person> oneLibraryPersons;
 
         // main part
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             for (int j = 0; j < librariesBatchNumber; j++) {
@@ -208,10 +194,6 @@ public class ORMTestImpl extends ORMTest{
             persons.clear();
 
         }
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 }

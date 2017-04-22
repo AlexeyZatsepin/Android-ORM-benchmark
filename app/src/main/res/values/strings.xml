@@ -1,3 +1,19 @@
 <resources>
-    <!--<string name="app_name">BenchmarkORM</string>-->
+    <string name="chart_label">AVERAGE TIME</string>
+    <string name="chart_label2">00:00:00</string>
+
+    <string name="simple_write">WRITE SIMPLE TEST</string>
+    <string name="simple_read">READ SIMPLE TEST</string>
+    <string name="simple_update">UPDATE SIMPLE TEST</string>
+    <string name="simple_delete">DELETE SIMPLE TEST</string>
+
+    <string name="complex_write">WRITE COMPLEX TEST</string>
+    <string name="complex_read">READ COMPLEX TEST</string>
+    <string name="complex_update">UPDATE COMPLEX TEST</string>
+    <string name="complex_delete">DELETE COMPLEX TEST</string>
+
+    <string name="balanced_write">WRITE BALANCED TEST</string>
+    <string name="balanced_read">READ BALANCED TEST</string>
+    <string name="balanced_update">UPDATE BALANCED TEST</string>
+    <string name="balanced_delete">DELETE BALANCED TEST</string>
 </resources>

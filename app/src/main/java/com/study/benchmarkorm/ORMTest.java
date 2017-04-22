@@ -18,31 +18,7 @@ public abstract class ORMTest {
         initDB(context);
     }
 
-    public void testSimplePartOne(TextView writeTV) {
-        // warming-up
-        for (int i = 0; i < 5; i++) {
-            writeSimple(randomObjectsGenerator.generateBooks(100));
-            deleteSimple(readSimple(100));
-        }
-        long first = writeSimple();
-        long second = writeSimple();
-        long third = writeSimple();
-        long average = (first + second + third) / 3;
-        writeTV.setText("Write: " + average + "ms" + "\nPlease restart your app and click second part button");
-    }
-
-    public void testSimplePartTwo(TextView readTV, TextView updateTV, TextView deleteTV) {
-        // warming-up
-        readSimple();
-        long readTime = readSimple();
-        readTV.setText("Read: " + readTime + "ms");
-        long updateTime = updateSimple();
-        readTV.setText("Update: " + updateTime + "ms");
-        long deleteTime = deleteSimple();
-        readTV.setText("Delete: " + deleteTime + "ms");
-    }
-
-    public void testComplexPartOne(TextView writeTV) {
+    public void warmingUp() {
         // warming-up
         final List<Book> books = new ArrayList<>();
         final List<Person> persons = new ArrayList<>();
@@ -64,66 +40,6 @@ public abstract class ORMTest {
             books.clear();
             persons.clear();
         }
-
-
-        long first = writeComplex();
-        long second = writeComplex();
-        long third = writeComplex();
-        long average = (first + second + third) / 3;
-        writeTV.setText("Write: " + average + "ms" + "\nPlease restart your app and click second part button");
-    }
-
-    public void testComplexPartTwo(TextView readTV, TextView updateTV, TextView deleteTV) {
-        // warming-up
-        readComplex();
-        long readTime = readComplex();
-        readTV.setText("Read: " + readTime + "ms");
-        long updateTime = updateComplex();
-        readTV.setText("Update: " + updateTime + "ms");
-        long deleteTime = deleteComplex();
-        readTV.setText("Delete: " + deleteTime + "ms");
-    }
-
-    public void testBalancedPartOne(TextView writeTV) {
-        // warming-up
-        final List<Book> books = new ArrayList<>();
-        final List<Person> persons = new ArrayList<>();
-        final List<Library> libraries = new ArrayList<>();
-        List<Book> oneLibraryBooks;
-        List<Person> oneLibraryPersons;
-
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 2; j++) {
-                oneLibraryBooks = randomObjectsGenerator.generateBooks(10);
-                oneLibraryPersons = randomObjectsGenerator.generatePersons(10);
-                libraries.add(randomObjectsGenerator.nextLibrary(oneLibraryBooks, oneLibraryPersons));
-                books.addAll(oneLibraryBooks);
-                persons.addAll(oneLibraryPersons);
-            }
-            writeComplex(libraries, books, persons);
-            deleteComplex(libraries, books, persons);
-            libraries.clear();
-            books.clear();
-            persons.clear();
-        }
-
-
-        long first = writeBalanced();
-        long second = writeBalanced();
-        long third = writeBalanced();
-        long average = (first + second + third) / 3;
-        writeTV.setText("Write: " + average + "ms" + "\nPlease restart your app and click second part button");
-    }
-
-    public void testBalancedPartTwo(TextView readTV, TextView updateTV, TextView deleteTV) {
-        // warming-up
-        readComplex();
-        long readTime = readBalanced();
-        readTV.setText("Read: " + readTime + "ms");
-        long updateTime = updateBalanced();
-        readTV.setText("Update: " + updateTime + "ms");
-        long deleteTime = deleteBalanced();
-        readTV.setText("Delete: " + deleteTime + "ms");
     }
 
     public abstract void initDB(Context context);
@@ -144,13 +60,13 @@ public abstract class ORMTest {
 
     public abstract void deleteComplex(List<Library> libraries, List<Book> books, List<Person> persons);
 
-    public long writeSimple() {
+    public float[] writeSimple() {
         final int booksBatchNumber = 1000;
 
         final int numberOfPasses = 10;
 
         // main part
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             List<Book> books = randomObjectsGenerator.generateBooks(booksBatchNumber);
@@ -158,19 +74,14 @@ public abstract class ORMTest {
             writeSimple(books);
             allTime[i] = simpleProfiler.stop();
         }
-
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
-    public long readSimple() {
+    public float[] readSimple() {
         final int booksBatchNumber = 1000;
         final int numberOfPasses = 10;
 
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             simpleProfiler.start();
@@ -179,20 +90,16 @@ public abstract class ORMTest {
             deleteSimple(books);
         }
 
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
-    public long updateSimple() {
+    public float[] updateSimple() {
         final int booksBatchNumber = 1000;
 
         final int numberOfPasses = 10;
 
         // main part
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             List<Book> books = readSimple(booksBatchNumber);
@@ -203,19 +110,14 @@ public abstract class ORMTest {
             updateSimple(books);
             allTime[i] = simpleProfiler.stop();
         }
-
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
-    public long deleteSimple() {
+    public float[] deleteSimple() {
         final int booksBatchNumber = 1000;
         final int numberOfPasses = 10;
 
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             List<Book> books = readSimple(booksBatchNumber);
@@ -224,14 +126,10 @@ public abstract class ORMTest {
             allTime[i] = simpleProfiler.stop();
         }
 
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
-    public long writeBalanced() {
+    public float[] writeBalanced() {
         final int booksBatchNumber = 50;
         final int librariesBatchNumber = 50;
         final int personsBatchNumber = 50;
@@ -239,7 +137,7 @@ public abstract class ORMTest {
         return writeComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    protected long writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected float[] writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
         final int numberOfPasses = 10;
         final List<Book> books = new ArrayList<>(booksBatchNumber * librariesBatchNumber);
         final List<Person> persons = new ArrayList<>(personsBatchNumber * librariesBatchNumber);
@@ -248,7 +146,7 @@ public abstract class ORMTest {
         List<Person> oneLibraryPersons;
 
         // main part
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             for (int j = 0; j < librariesBatchNumber; j++) {
@@ -268,14 +166,10 @@ public abstract class ORMTest {
             persons.clear();
         }
 
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
-    public long readBalanced() {
+    public float[] readBalanced() {
         final int booksBatchNumber = 50;
         final int librariesBatchNumber = 50;
         final int personsBatchNumber = 50;
@@ -283,9 +177,9 @@ public abstract class ORMTest {
         return readComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    protected long readComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected float[] readComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
         final int numberOfPasses = 10;
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             simpleProfiler.start();
@@ -293,15 +187,10 @@ public abstract class ORMTest {
             allTime[i] = simpleProfiler.stop();
             deleteComplex(data.first, data.second.first, data.second.second);
         }
-
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
-    public long updateBalanced() {
+    public float[] updateBalanced() {
         final int booksBatchNumber = 50;
         final int librariesBatchNumber = 50;
         final int personsBatchNumber = 50;
@@ -309,7 +198,7 @@ public abstract class ORMTest {
         return updateComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    protected long updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected float[] updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
         final int numberOfPasses = 10;
 
         // warming-up
@@ -335,7 +224,7 @@ public abstract class ORMTest {
         }
 
         // main part
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
@@ -361,15 +250,10 @@ public abstract class ORMTest {
             allTime[i] = simpleProfiler.stop();
 
         }
-
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
-    public long deleteBalanced() {
+    public float[] deleteBalanced() {
         final int booksBatchNumber = 50;
         final int librariesBatchNumber = 50;
         final int personsBatchNumber = 50;
@@ -377,10 +261,10 @@ public abstract class ORMTest {
         return deleteComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    protected long deleteComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected float[] deleteComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
         final int numberOfPasses = 10;
 
-        long[] allTime = new long[numberOfPasses];
+        float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
@@ -388,15 +272,10 @@ public abstract class ORMTest {
             deleteComplex(data.first, data.second.first, data.second.second);
             allTime[i] = simpleProfiler.stop();
         }
-
-        long average = 0;
-        for (int i = 0; i < numberOfPasses; i++) {
-            average += allTime[i] / numberOfPasses;
-        }
-        return average;
+        return allTime;
     }
 
-    public long writeComplex() {
+    public float[] writeComplex() {
         final int booksBatchNumber = 500;
         final int librariesBatchNumber = 5;
         final int personsBatchNumber = 400;
@@ -404,7 +283,7 @@ public abstract class ORMTest {
         return writeComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    public long readComplex() {
+    public float[] readComplex() {
         final int booksBatchNumber = 500;
         final int librariesBatchNumber = 5;
         final int personsBatchNumber = 400;
@@ -412,7 +291,7 @@ public abstract class ORMTest {
         return readComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    public long updateComplex() {
+    public float[] updateComplex() {
         final int booksBatchNumber = 500;
         final int librariesBatchNumber = 5;
         final int personsBatchNumber = 400;
@@ -420,7 +299,7 @@ public abstract class ORMTest {
         return updateComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
     }
 
-    public long deleteComplex() {
+    public float[] deleteComplex() {
         final int booksBatchNumber = 500;
         final int librariesBatchNumber = 5;
         final int personsBatchNumber = 400;

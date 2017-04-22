@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2b3d48">
+
+        <ImageButton
+            android:id="@+id/play_full"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_play_toolbar" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/block_read"
+                android:layout_width="wrap_content"
+                android:layout_height="180dp"
+                android:background="#364d5a">
+
+                <ImageButton
+                        android:id="@+id/play_read"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_play_toolbar" />
+
+
+                <TextView
+                    android:id="@+id/tv_read"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/play_read"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:textColor="#9fb7cc"
+                    android:textSize="12sp"
+                    tools:text="@string/simple_read" />
+
+                <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/legend_read"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_read"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:text="@string/chart_label"
+                    android:textColor="#9fb7cc"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_read_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/legend_read"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/chart_label2"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp" />
+
+                <com.db.chart.view.LineChartView xmlns:chart="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/chart_read"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/tv_read_result"
+                    android:layout_marginBottom="35dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="-15dp"
+                    chart:chart_axisColor="#30547d99"
+                    chart:chart_typeface="OpenSans-Regular.ttf" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/block_write"
+                android:layout_width="wrap_content"
+                android:layout_height="180dp"
+                android:background="#364d5a"
+                android:paddingTop="2dp">
+
+                <ImageButton
+                        android:id="@+id/play_write"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_play_toolbar" />
+
+                <TextView
+                    android:id="@+id/tv_write"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/play_write"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:textColor="#9fb7cc"
+                    android:textSize="12sp"
+                    tools:text="@string/simple_write" />
+
+                <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/legend_write"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_write"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:text="@string/chart_label"
+                    android:textColor="#9fb7cc"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_write_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/legend_write"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/chart_label2"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp" />
+
+                <com.db.chart.view.LineChartView xmlns:chart="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/chart_write"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/tv_write_result"
+                    android:layout_marginBottom="35dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="-15dp"
+                    chart:chart_axisColor="#30547d99"
+                    chart:chart_typeface="OpenSans-Regular.ttf" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/block_update"
+                android:layout_width="wrap_content"
+                android:layout_height="180dp"
+                android:background="#364d5a"
+                android:paddingTop="2dp">
+
+                <ImageButton
+                    android:id="@+id/play_update"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_play_toolbar" />
+
+
+                <TextView
+                    android:id="@+id/tv_update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/play_update"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:textColor="#9fb7cc"
+                    android:textSize="12sp"
+                    tools:text="@string/simple_update" />
+
+                <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/legend_update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_update"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:text="@string/chart_label"
+                    android:textColor="#9fb7cc"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_update_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/legend_update"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/chart_label2"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp" />
+
+                <com.db.chart.view.LineChartView xmlns:chart="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/chart_update"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/tv_update_result"
+                    android:layout_marginBottom="35dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="-15dp"
+                    chart:chart_axisColor="#30547d99"
+                    chart:chart_typeface="OpenSans-Regular.ttf" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/block_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="180dp"
+                android:background="#364d5a"
+                android:paddingTop="2dp">
+
+                <ImageButton
+                    android:id="@+id/play_delete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_play_toolbar" />
+
+
+                <TextView
+                    android:id="@+id/tv_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/play_delete"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:textColor="#9fb7cc"
+                    android:textSize="12sp"
+                    tools:text="@string/simple_delete" />
+
+                <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/legend_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_delete"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:text="@string/chart_label"
+                    android:textColor="#9fb7cc"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_delete_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/legend_delete"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/chart_label2"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp" />
+
+                <com.db.chart.view.LineChartView
+                    xmlns:chart="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/chart_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/tv_delete_result"
+                    android:layout_marginBottom="35dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="-15dp"
+                    chart:chart_axisColor="#30547d99"
+                    chart:chart_typeface="OpenSans-Regular.ttf" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
