@@ -208,7 +208,6 @@ public class ORMTestImpl extends ORMTest{
             persons.clear();
 
         }
-        randomObjectsGenerator.refresh();
         long average = 0;
         for (int i = 0; i < numberOfPasses; i++) {
             average += allTime[i] / numberOfPasses;

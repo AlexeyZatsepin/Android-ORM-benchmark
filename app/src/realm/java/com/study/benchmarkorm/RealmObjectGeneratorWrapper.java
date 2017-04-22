@@ -9,11 +9,16 @@ import java.util.List;
 import io.realm.RealmList;
 
 public class RealmObjectGeneratorWrapper extends RandomObjectsGenerator{
+
+    long index = 0;
+
     @Override
     public RealmList<Book> generateBooks(int quantity) {
         RealmList<Book> books = new RealmList<>();
         for (int i = 0; i < quantity; i++) {
-            books.add(nextBook());
+            Book book = nextBook();
+            book.setId(index++);
+            books.add(book);
         }
         return books;
     }
@@ -22,7 +27,9 @@ public class RealmObjectGeneratorWrapper extends RandomObjectsGenerator{
     public RealmList<Person> generatePersons(int quantity) {
         RealmList<Person> persons = new RealmList<>();
         for (int i = 0; i < quantity; i++) {
-            persons.add(nextPerson());
+            Person person = nextPerson();
+            person.setId(index++);
+            persons.add(person);
         }
         return persons;
     }

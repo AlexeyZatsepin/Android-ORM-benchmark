@@ -15,9 +15,9 @@ import jsqlite.Exception;
 
 public class ORMTestImpl extends ORMTest {
     private static final String TAG = "OHibernate";
-    private OHibernate<Book> bookDao = new OHibernate<>(Book.class);
-    private OHibernate<Person> personDao = new OHibernate<>(Person.class);
-    private OHibernate<Library> libraryDao = new OHibernate<>(Library.class);
+    private OHibernate<Book> bookDao;
+    private OHibernate<Person> personDao;
+    private OHibernate<Library> libraryDao;
 
     public ORMTestImpl(Context applicationContext) {
         super(applicationContext);
@@ -25,7 +25,9 @@ public class ORMTestImpl extends ORMTest {
 
     @Override
     public void initDB(Context context) {
-
+        bookDao = new OHibernate<>(Book.class);
+        personDao = new OHibernate<>(Person.class);
+        libraryDao = new OHibernate<>(Library.class);
     }
 
     @Override

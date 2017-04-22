@@ -8,7 +8,7 @@ import com.onurciner.ohibernate.Id;
 public class Book{
 
     @Id(PRIMARY_KEY_AUTOINCREMENT = true)
-    private long id;
+    private Integer id;
 
     private String author;
 
@@ -22,14 +22,14 @@ public class Book{
     }
 
     public Book(long id,String author,String title, int pagesCount, int bookId) {
-        this.id = id;
+        this.id = (int)id;
         this.author = author;
         this.title = title;
         this.pagesCount = pagesCount;
         this.bookId = bookId;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -67,9 +67,5 @@ public class Book{
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 }
