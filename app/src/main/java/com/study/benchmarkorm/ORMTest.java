@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ORMTest {
+    public static final int NUMBER_OF_PASSES = 10;
     protected RandomObjectsGenerator randomObjectsGenerator = new RandomObjectsGenerator();
 
     public ORMTest(Context context) {
@@ -63,12 +64,10 @@ public abstract class ORMTest {
     public float[] writeSimple() {
         final int booksBatchNumber = 1000;
 
-        final int numberOfPasses = 10;
-
         // main part
-        float[] allTime = new float[numberOfPasses];
+        float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
-        for (int i = 0; i < numberOfPasses; i++) {
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             List<Book> books = randomObjectsGenerator.generateBooks(booksBatchNumber);
             simpleProfiler.start();
             writeSimple(books);
@@ -79,11 +78,10 @@ public abstract class ORMTest {
 
     public float[] readSimple() {
         final int booksBatchNumber = 1000;
-        final int numberOfPasses = 10;
 
-        float[] allTime = new float[numberOfPasses];
+        float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
-        for (int i = 0; i < numberOfPasses; i++) {
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             simpleProfiler.start();
             List<Book> books = readSimple(booksBatchNumber);
             allTime[i] = simpleProfiler.stop();
@@ -96,12 +94,10 @@ public abstract class ORMTest {
     public float[] updateSimple() {
         final int booksBatchNumber = 1000;
 
-        final int numberOfPasses = 10;
-
         // main part
-        float[] allTime = new float[numberOfPasses];
+        float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
-        for (int i = 0; i < numberOfPasses; i++) {
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             List<Book> books = readSimple(booksBatchNumber);
             for (Book book: books) {
                 book.setAuthor(randomObjectsGenerator.nextString());
@@ -115,11 +111,10 @@ public abstract class ORMTest {
 
     public float[] deleteSimple() {
         final int booksBatchNumber = 1000;
-        final int numberOfPasses = 10;
 
-        float[] allTime = new float[numberOfPasses];
+        float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
-        for (int i = 0; i < numberOfPasses; i++) {
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             List<Book> books = readSimple(booksBatchNumber);
             simpleProfiler.start();
             deleteSimple(books);
@@ -138,7 +133,6 @@ public abstract class ORMTest {
     }
 
     protected float[] writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
-        final int numberOfPasses = 10;
         final List<Book> books = new ArrayList<>(booksBatchNumber * librariesBatchNumber);
         final List<Person> persons = new ArrayList<>(personsBatchNumber * librariesBatchNumber);
         final List<Library> libraries = new ArrayList<>(librariesBatchNumber);
@@ -146,9 +140,9 @@ public abstract class ORMTest {
         List<Person> oneLibraryPersons;
 
         // main part
-        float[] allTime = new float[numberOfPasses];
+        float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
-        for (int i = 0; i < numberOfPasses; i++) {
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             for (int j = 0; j < librariesBatchNumber; j++) {
                 oneLibraryBooks = randomObjectsGenerator.generateBooks(booksBatchNumber);
                 oneLibraryPersons = randomObjectsGenerator.generatePersons(personsBatchNumber);
@@ -178,10 +172,9 @@ public abstract class ORMTest {
     }
 
     protected float[] readComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
-        final int numberOfPasses = 10;
-        float[] allTime = new float[numberOfPasses];
+        float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
-        for (int i = 0; i < numberOfPasses; i++) {
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             simpleProfiler.start();
             Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
             allTime[i] = simpleProfiler.stop();
@@ -199,34 +192,11 @@ public abstract class ORMTest {
     }
 
     protected float[] updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
-        final int numberOfPasses = 10;
-
-        // warming-up
-        for (int i = 0; i < numberOfPasses; i++) {
-            Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
-            List<Library> libraries = readed.first;
-            List<Book> books = readed.second.first;
-            List<Person> persons = readed.second.second;
-
-            for (Library library: libraries) {
-                library.setName(randomObjectsGenerator.nextString());
-            }
-
-            for (Book book: books) {
-                book.setAuthor(randomObjectsGenerator.nextString());
-            }
-
-            for (Person person: persons) {
-                person.setFirstName(randomObjectsGenerator.nextString());
-                person.setSecondName(randomObjectsGenerator.nextString());
-            }
-            updateComplex(libraries, books, persons);
-        }
 
         // main part
-        float[] allTime = new float[numberOfPasses];
+        float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
-        for (int i = 0; i < numberOfPasses; i++) {
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
             List<Library> libraries = readed.first;
             List<Book> books = readed.second.first;

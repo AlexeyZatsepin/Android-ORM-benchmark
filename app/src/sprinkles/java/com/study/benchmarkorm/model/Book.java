@@ -1,16 +1,15 @@
 package com.study.benchmarkorm.model;
 
 import se.emilsjolander.sprinkles.Model;
-import se.emilsjolander.sprinkles.annotations.AutoIncrement;
+import se.emilsjolander.sprinkles.annotations.AutoIncrementPrimaryKey;
 import se.emilsjolander.sprinkles.annotations.Column;
-import se.emilsjolander.sprinkles.annotations.Key;
+import se.emilsjolander.sprinkles.annotations.ForeignKey;
 import se.emilsjolander.sprinkles.annotations.Table;
 
 @Table("Book")
 public class Book extends Model{
 
-    @AutoIncrement
-    @Key
+    @AutoIncrementPrimaryKey
     @Column("_id")
     private long id;
 
@@ -26,7 +25,18 @@ public class Book extends Model{
     @Column("bookID")
     private int bookId;
 
+    @ForeignKey("Library(_id)")
+    @Column("library_id") private long libId;
+
     public Book() {
+    }
+
+    public Book(String author,String title,
+                int pagesCount, int bookId) {
+        this.author = author;
+        this.title = title;
+        this.pagesCount = pagesCount;
+        this.bookId = bookId;
     }
 
     public Book(long id,String author,String title,

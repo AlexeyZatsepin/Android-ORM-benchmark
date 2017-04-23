@@ -27,11 +27,19 @@ android {
             applicationIdSuffix ".realm"
             versionNameSuffix "-realm"
             resValue "string", "app_name", "RealmBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,40}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,800}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,15}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,15}"
         }
         greenDao {
             applicationIdSuffix ".greenDao"
             versionNameSuffix "-greenDao"
             resValue "string", "app_name", "GeenDaoBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
             //uncomment this code to work with GreenDAO
 //            apply plugin: 'org.greenrobot.greendao'
 //            greendao {
@@ -42,47 +50,83 @@ android {
             applicationIdSuffix ".ohibernate"
             versionNameSuffix "-ohibernate"
             resValue "string", "app_name", "OHibernateBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
         }
         sprinkles {
             applicationIdSuffix ".sprinkles"
             versionNameSuffix "-sprinkles"
             resValue "string", "app_name", "SprinklesBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,2000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
         }
         active {
             applicationIdSuffix ".active"
             versionNameSuffix "-active"
             resValue "string", "app_name", "ActiveAndroidBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,2000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,2000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,2000}"
         }
         sqlite{
             applicationIdSuffix ".sqlite"
             versionNameSuffix "-sqlite"
             resValue "string", "app_name", "SQLiteBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,200}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,200}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,200}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,200}"
         }
         //Vlad
         dbflow {
             applicationIdSuffix ".dbflow"
             versionNameSuffix "-dbflow"
             resValue "string", "app_name", "DBFlowBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
         }
         freezer {
             applicationIdSuffix ".freezer"
             versionNameSuffix "-freezer"
             resValue "string", "app_name", "FreezerBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
         }
         requery {
             applicationIdSuffix ".requery"
             versionNameSuffix "-requery"
             resValue "string", "app_name", "RequeryBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
         }
         ormlite{
             applicationIdSuffix ".ormlite"
             versionNameSuffix "-ormlite"
             resValue "string", "app_name", "ORMLiteBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
         }
         sugarOrm{
             applicationIdSuffix ".sugarOrm"
             versionNameSuffix "-sugarOrm"
             resValue "string", "app_name", "SugarORMBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
         }
     }
     lintOptions {
@@ -118,7 +162,7 @@ dependencies {
     greenDaoCompile 'org.greenrobot:greendao:3.2.2'
 
     //Sprinkles
-    sprinklesCompile 'se.emilsjolander:sprinkles:1.3.1'
+    sprinklesCompile 'se.emilsjolander:sprinkles:1.0.0'
 
 
     //DBFlow

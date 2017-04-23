@@ -3,15 +3,15 @@ package com.study.benchmarkorm.model;
 import java.util.Date;
 
 import se.emilsjolander.sprinkles.Model;
-import se.emilsjolander.sprinkles.annotations.AutoIncrement;
+import se.emilsjolander.sprinkles.annotations.AutoIncrementPrimaryKey;
 import se.emilsjolander.sprinkles.annotations.Column;
-import se.emilsjolander.sprinkles.annotations.Key;
+import se.emilsjolander.sprinkles.annotations.ForeignKey;
 import se.emilsjolander.sprinkles.annotations.Table;
 
 @Table("Person")
 public class Person extends Model {
 
-    @AutoIncrement @Key @Column("_id") private long id;
+    @AutoIncrementPrimaryKey @Column("_id") private long id;
 
     @Column("firstName") private String firstName;
     @Column("secondName") private String secondName;
@@ -19,7 +19,18 @@ public class Person extends Model {
     @Column("gender") private String gender;
     @Column("phone") private long phone;
 
+    @ForeignKey("Library(_id)")
+    @Column("library_id") private long libId;
+
     public Person() {
+    }
+
+    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthdayDate = birthdayDate;
+        this.gender = gender;
+        this.phone = phone;
     }
 
     public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {

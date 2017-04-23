@@ -54,6 +54,15 @@ public class BasicFragment extends Fragment {
     @Bind(R.id.tv_delete)
     TextView tv_delete;
 
+    @Bind(R.id.tv_read_result)
+    TextView tv_read_result;
+    @Bind(R.id.tv_write_result)
+    TextView tv_write_result;
+    @Bind(R.id.tv_update_result)
+    TextView tv_update_result;
+    @Bind(R.id.tv_delete_result)
+    TextView tv_delete_result;
+
     private boolean isPlayedR = false;
     private boolean isPlayedW = false;
     private boolean isPlayedU = false;
@@ -81,8 +90,9 @@ public class BasicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_block, container, false);
         ButterKnife.bind(this,root);
+        current = getArguments().getInt(ARG);
         ormTest = new ORMTestImpl(getActivity().getApplicationContext());
-        switch (getArguments().getInt(ARG)){
+        switch (current){
             case 0:
                 tv_read.setText(R.string.simple_read);
                 tv_write.setText(R.string.simple_write);
@@ -102,6 +112,10 @@ public class BasicFragment extends Fragment {
                 tv_delete.setText(R.string.complex_delete);
                 break;
         }
+        show(mChartWrite,BuildConfig.expectedWrite);
+        show(mChartRead,BuildConfig.expectedRead);
+        show(mChartUpdate,BuildConfig.expectedUpdate);
+        show(mChartDelete,BuildConfig.expectedDelete);
         return root;
     }
 
@@ -127,13 +141,14 @@ public class BasicFragment extends Fragment {
                 mValues = ormTest.writeBalanced();
                 break;
         }
+        tv_write_result.setText(formatResult(mValues));
         if(isPlayedW){
-            mPlayBtnWrite.setImageResource(R.drawable.ic_refresh);
             lock();
             mChartWrite.dismissAllTooltips();
-            mChartWrite.dismiss(new Animation().setEndAction(showAction(mChartWrite)));
+            mChartWrite.dismiss(new Animation().setEndAction(showAction(mChartWrite,mValues)));
         }else{
             lock();
+            mPlayBtnWrite.setImageResource(R.drawable.ic_refresh);
             mChartWrite.dismissAllTooltips();
             mChartWrite.updateValues(0, mValues);
             mChartWrite.notifyDataUpdate();
@@ -154,13 +169,14 @@ public class BasicFragment extends Fragment {
                 mValues = ormTest.readBalanced();
                 break;
         }
+        tv_read_result.setText(formatResult(mValues));
         if(isPlayedR){
-            mPlayBtnRead.setImageResource(R.drawable.ic_refresh);
             lock();
             mChartRead.dismissAllTooltips();
-            mChartRead.dismiss(new Animation().setEndAction(showAction(mChartRead)));
+            mChartRead.dismiss(new Animation().setEndAction(showAction(mChartRead,mValues)));
         }else{
             lock();
+            mPlayBtnRead.setImageResource(R.drawable.ic_refresh);
             mChartRead.dismissAllTooltips();
             mChartRead.updateValues(0, mValues);
             mChartRead.notifyDataUpdate();
@@ -181,13 +197,14 @@ public class BasicFragment extends Fragment {
                 mValues = ormTest.updateBalanced();
                 break;
         }
+        tv_update_result.setText(formatResult(mValues));
         if(isPlayedU){
-            mPlayBtnUpdate.setImageResource(R.drawable.ic_refresh);
             lock();
             mChartUpdate.dismissAllTooltips();
-            mChartUpdate.dismiss(new Animation().setEndAction(showAction(mChartUpdate)));
+            mChartUpdate.dismiss(new Animation().setEndAction(showAction(mChartUpdate,mValues)));
         }else{
             lock();
+            mPlayBtnUpdate.setImageResource(R.drawable.ic_refresh);
             mChartUpdate.dismissAllTooltips();
             mChartUpdate.updateValues(0, mValues);
             mChartUpdate.notifyDataUpdate();
@@ -205,16 +222,17 @@ public class BasicFragment extends Fragment {
                 mValues = ormTest.deleteComplex();
                 break;
             case 2:
-                mValues = ormTest.updateBalanced();
+                mValues = ormTest.deleteBalanced();
                 break;
         }
+        tv_delete_result.setText(formatResult(mValues));
         if(isPlayedD){
-            mPlayBtnDelete.setImageResource(R.drawable.ic_refresh);
             lock();
             mChartDelete.dismissAllTooltips();
-            mChartDelete.dismiss(new Animation().setEndAction(showAction(mChartDelete)));
+            mChartDelete.dismiss(new Animation().setEndAction(showAction(mChartDelete,mValues)));
         }else{
             lock();
+            mPlayBtnDelete.setImageResource(R.drawable.ic_refresh);
             mChartDelete.dismissAllTooltips();
             mChartDelete.updateValues(0, mValues);
             mChartDelete.notifyDataUpdate();
@@ -223,9 +241,9 @@ public class BasicFragment extends Fragment {
     }
 
 
-    protected void show(LineChartView chart) {
+    protected void show(LineChartView chart,float[] values) {
         lock();
-        LineSet dataset = new LineSet(mLabels, mValues);
+        LineSet dataset = new LineSet(mLabels, values);
         dataset.setColor(Color.parseColor("#53c1bd"))
                 .setFill(Color.parseColor("#3d6c73"))
                 .setGradientFill(new int[] {Color.parseColor("#364d5a"), Color.parseColor("#3f7178")},
@@ -268,16 +286,24 @@ public class BasicFragment extends Fragment {
         mPlayBtnFull.setEnabled(true);
     }
 
-    private Runnable showAction(final LineChartView view){
+    private Runnable showAction(final LineChartView view,final float[] values){
         return new Runnable() {
             @Override
             public void run() {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
-                        show(view);
+                        show(view,values);
                     }
                 }, 500);
             }
         };
+    }
+
+    public String formatResult(float[] array){
+        float sum=0;
+        for (float el : array) {
+            sum += el;
+        }
+        return (int)sum/array.length + "ms";
     }
 }

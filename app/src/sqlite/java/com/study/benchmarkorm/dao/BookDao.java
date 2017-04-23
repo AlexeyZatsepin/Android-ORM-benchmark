@@ -17,13 +17,13 @@ public class BookDao extends AbstractDao<Book> {
 
     public BookDao(SQLiteDatabase db) {
         mDatabase = db;
-        String insertSQL = "INSERT INTO "+ BookTable.NAME +" ("
-                +BookTable.Cols.ID+", "+
+        String insertSQL = "INSERT INTO "+ BookTable.NAME +" ("+
+//                BookTable.Cols.ID+", "+
                 BookTable.Cols.TITLE + ", " +
                 BookTable.Cols.AUTHOR + ", " +
                 BookTable.Cols.PAGES_COUNT + ", " +
                 BookTable.Cols.BOOK_ID + ", " +
-                BookTable.Cols.LIBRARY_ID +") VALUES (?, ?, ?, ?, ?, ?)";
+                BookTable.Cols.LIBRARY_ID +") VALUES (?, ?, ?, ?, ?)";
         insertStatement = mDatabase.compileStatement(insertSQL);
         String updateSQL = "UPDATE "+ BookTable.NAME +
                 " SET "+BookTable.Cols.AUTHOR+"=? WHERE "+BookTable.Cols.ID+"=?";
@@ -55,15 +55,15 @@ public class BookDao extends AbstractDao<Book> {
 
     public void save(Book c) {
         insertStatement.clearBindings();
-        insertStatement.bindLong(1,c.getId());
-        insertStatement.bindString(2,c.getTitle());
-        insertStatement.bindString(3,c.getAuthor());
-        insertStatement.bindLong(4,c.getPagesCount());
-        insertStatement.bindLong(5,c.getBookId());
+//        insertStatement.bindLong(1,c.getId());
+        insertStatement.bindString(1,c.getTitle());
+        insertStatement.bindString(2,c.getAuthor());
+        insertStatement.bindLong(3,c.getPagesCount());
+        insertStatement.bindLong(4,c.getBookId());
         if (c.getLibrary()!=null){
-            insertStatement.bindLong(6,c.getLibrary().getId());
+            insertStatement.bindLong(5,c.getLibrary().getId());
         }else{
-            insertStatement.bindNull(6);
+            insertStatement.bindNull(5);
         }
         insertStatement.executeInsert();
     }

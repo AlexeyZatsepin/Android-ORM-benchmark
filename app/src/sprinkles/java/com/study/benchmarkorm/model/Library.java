@@ -3,16 +3,14 @@ package com.study.benchmarkorm.model;
 import java.util.List;
 
 import se.emilsjolander.sprinkles.Model;
-import se.emilsjolander.sprinkles.annotations.AutoIncrement;
+import se.emilsjolander.sprinkles.annotations.AutoIncrementPrimaryKey;
 import se.emilsjolander.sprinkles.annotations.Column;
-import se.emilsjolander.sprinkles.annotations.Key;
 import se.emilsjolander.sprinkles.annotations.Table;
 
 @Table("Library")
 public class Library extends Model{
 
-    @AutoIncrement
-    @Key
+    @AutoIncrementPrimaryKey
     @Column("_id")
     private long id;
 
@@ -22,12 +20,6 @@ public class Library extends Model{
     @Column("name")
     private String name;
 
-    @Column("employees")
-    private List<Person> employees;
-
-    @Column("books")
-    private List<Book> books;
-
     public Library() {
     }
 
@@ -36,12 +28,15 @@ public class Library extends Model{
         this.address = address;
         this.name = name;
     }
+    public Library(String address, String name, List<Person> employees, List<Book> books) {
+        this.address = address;
+        this.name = name;
+    }
+
     public Library(long id, String address, String name, List<Person> employees, List<Book> books) {
         this.id = id;
         this.address = address;
         this.name = name;
-        this.employees = employees;
-        this.books =  books;
     }
 
     public long getId() {
@@ -61,17 +56,5 @@ public class Library extends Model{
     }
     public void setName(String name) {
         this.name = name;
-    }
-    public List<Person> getEmployees() {
-        return employees;
-    }
-    public void setEmployees(List<Person> employees) {
-        this.employees = employees;
-    }
-    public List<Book> getBooks() {
-        return books;
-    }
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 }

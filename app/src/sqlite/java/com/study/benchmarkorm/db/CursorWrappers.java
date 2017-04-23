@@ -22,14 +22,14 @@ public class CursorWrappers {
             String author = getString(getColumnIndex(BookTable.Cols.AUTHOR));
             int pages = getInt(getColumnIndex(BookTable.Cols.PAGES_COUNT));
             int bookId = getInt(getColumnIndex(BookTable.Cols.BOOK_ID));
-            long libId = getInt(getColumnIndex(BookTable.Cols.LIBRARY_ID));
+//            long libId = getInt(getColumnIndex(BookTable.Cols.LIBRARY_ID));
             Book book = new Book();
             book.setTitle(title);
             book.setAuthor(author);
             book.setId(id);
             book.setPagesCount(pages);
             book.setBookId(bookId);
-            book.setLibrary(DatabaseManager.get().getLibraryDao().get(libId));
+//            book.setLibrary(DatabaseManager.get().getLibraryDao().get(libId));
             return book;
         }
     }
