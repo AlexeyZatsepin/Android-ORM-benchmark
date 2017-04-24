@@ -13,13 +13,11 @@ public class Library{
     public Library() {
     }
 
-    public Library(long id,String address, String name,List<Person> persons, List<Book> books) {
-        this.id = id;
+    public Library(String address, String name) {
         this.address = address;
         this.name = name;
-        this.books = books;
-        this.employees = persons;
     }
+
     public Library(String address, String name,List<Person> persons, List<Book> books) {
         this.address = address;
         this.name = name;
@@ -27,10 +25,12 @@ public class Library{
         this.employees = persons;
     }
 
-    public Library(long id, String address, String name) {
+    public Library(long id,String address, String name,List<Person> persons, List<Book> books) {
         this.id = id;
         this.address = address;
         this.name = name;
+        this.books = books;
+        this.employees = persons;
     }
 
     public long getId() {

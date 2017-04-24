@@ -8,7 +8,7 @@ import com.study.benchmarkorm.db.LibraryDbSchema.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
     private static final String DATABASE_NAME = "library.db";
 
     public DatabaseHelper(Context context) {
@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 BookTable.Cols.PAGES_COUNT + ", " +
                 BookTable.Cols.BOOK_ID + ", " +
                 BookTable.Cols.LIBRARY_ID + " integer,"
-                + " FOREIGN KEY (" + BookTable.Cols.LIBRARY_ID + ") REFERENCES " + LibraryTable.NAME + "(" + LibraryTable.Cols.ID + "));");
+                + " FOREIGN KEY (" + BookTable.Cols.LIBRARY_ID + ") REFERENCES " + LibraryTable.NAME + "(" + LibraryTable.Cols.ID + ") ON DELETE CASCADE);");
         db.execSQL("create table " + PersonTable.NAME + "(" +
                 PersonTable.Cols.ID+" integer primary key autoincrement, " +
                 PersonTable.Cols.F_NAME + ", " +
@@ -38,8 +38,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 PersonTable.Cols.GENDER + ", " +
                 PersonTable.Cols.PHONE + ", " +
                 PersonTable.Cols.LIBRARY_ID + " integer,"
-                + " FOREIGN KEY (" + PersonTable.Cols.LIBRARY_ID + ") REFERENCES " + LibraryTable.NAME + "(" + LibraryTable.Cols.ID + "));");
+                + " FOREIGN KEY (" + PersonTable.Cols.LIBRARY_ID + ") REFERENCES " + LibraryTable.NAME + "(" + LibraryTable.Cols.ID + ") ON DELETE CASCADE);");
 
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
     }
 
     @Override

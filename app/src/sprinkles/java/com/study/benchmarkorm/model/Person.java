@@ -11,16 +11,23 @@ import se.emilsjolander.sprinkles.annotations.Table;
 @Table("Person")
 public class Person extends Model {
 
-    @AutoIncrementPrimaryKey @Column("_id") private long id;
+    @AutoIncrementPrimaryKey @Column("_id")
+    private long id;
 
-    @Column("firstName") private String firstName;
-    @Column("secondName") private String secondName;
-    @Column("bd") private Date birthdayDate;
-    @Column("gender") private String gender;
-    @Column("phone") private long phone;
+    @Column("firstName")
+    private String firstName;
+    @Column("secondName")
+    private String secondName;
+    @Column("bd")
+    private Date birthdayDate;
+    @Column("gender")
+    private String gender;
+    @Column("phone")
+    private long phone;
 
     @ForeignKey("Library(_id)")
-    @Column("library_id") private long libId;
+    @Column("library_id")
+    private long libId;
 
     public Person() {
     }
@@ -88,5 +95,13 @@ public class Person extends Model {
 
     public void setPhone(long phone) {
         this.phone = phone;
+    }
+
+    public long getLibId() {
+        return libId;
+    }
+
+    public void setLibId(long libId) {
+        this.libId = libId;
     }
 }

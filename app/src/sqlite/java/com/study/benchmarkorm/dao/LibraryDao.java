@@ -1,7 +1,5 @@
 package com.study.benchmarkorm.dao;
 
-
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -19,6 +17,13 @@ public class LibraryDao extends AbstractDao<Library>{
 
     public LibraryDao(SQLiteDatabase db) {
         mDatabase = db;
+        String insertSQL = "INSERT INTO "+ LibraryTable.NAME +" ("+
+                LibraryTable.Cols.ADDRESS + ", " +
+                LibraryTable.Cols.NAME + ") VALUES (?, ?)";
+        insertStatement = mDatabase.compileStatement(insertSQL);
+        String updateSQL = "UPDATE "+ LibraryTable.NAME +
+                " SET "+ LibraryTable.Cols.NAME+"=? WHERE "+ LibraryTable.Cols.ID+"=?";
+        updateStatement = mDatabase.compileStatement(updateSQL);
     }
 
     public List<Library> getAll() {
@@ -47,8 +52,10 @@ public class LibraryDao extends AbstractDao<Library>{
     }
 
     public void save(Library c) {
-        ContentValues values = getContentValues(c);
-        mDatabase.insert(LibraryTable.NAME, null, values);
+        insertStatement.clearBindings();
+        insertStatement.bindString(1,c.getAddress());
+        insertStatement.bindString(2,c.getName());
+        insertStatement.executeInsert();
     }
     public void delete(Library c) {
         String id = String.valueOf(c.getId());
@@ -72,21 +79,11 @@ public class LibraryDao extends AbstractDao<Library>{
         }
     }
 
-    public void update(Library Library) {
-        String id = String.valueOf(Library.getId());
-        ContentValues values = getContentValues(Library);
-        mDatabase.update(LibraryTable.NAME, values,
-                LibraryTable.Cols.ID + " = ?",
-                new String[] { id });
-    }
-
-
-    private static ContentValues getContentValues(Library Library) {
-        ContentValues values = new ContentValues();
-        values.put(LibraryTable.Cols.ID, Library.getId());
-        values.put(LibraryTable.Cols.NAME, Library.getName());
-        values.put(LibraryTable.Cols.ADDRESS, Library.getAddress());
-        return values;
+    public void update(Library library) {
+        updateStatement.clearBindings();
+        updateStatement.bindString(1,library.getName());
+        updateStatement.bindLong(2,library.getId());
+        updateStatement.executeUpdateDelete();
     }
 
     protected LibraryCursorWrapper query(String whereClause, String[] whereArgs) {

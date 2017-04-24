@@ -13,7 +13,7 @@ public class Book{
 
     private int bookId;
 
-    private Library library = new Library(0,"bla","bla"); //TODO remove
+    private Library library;
 
     public Book() {
     }

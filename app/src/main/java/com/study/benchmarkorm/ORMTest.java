@@ -2,7 +2,6 @@ package com.study.benchmarkorm;
 
 import android.content.Context;
 import android.util.Pair;
-import android.widget.TextView;
 
 import com.study.benchmarkorm.model.Book;
 import com.study.benchmarkorm.model.Library;
@@ -85,7 +84,6 @@ public abstract class ORMTest {
             simpleProfiler.start();
             List<Book> books = readSimple(booksBatchNumber);
             allTime[i] = simpleProfiler.stop();
-            deleteSimple(books);
         }
 
         return allTime;

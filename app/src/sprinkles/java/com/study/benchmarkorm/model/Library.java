@@ -28,13 +28,7 @@ public class Library extends Model{
         this.address = address;
         this.name = name;
     }
-    public Library(String address, String name, List<Person> employees, List<Book> books) {
-        this.address = address;
-        this.name = name;
-    }
-
-    public Library(long id, String address, String name, List<Person> employees, List<Book> books) {
-        this.id = id;
+    public Library(String address, String name) {
         this.address = address;
         this.name = name;
     }

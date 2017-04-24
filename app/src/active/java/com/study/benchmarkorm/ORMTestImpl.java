@@ -12,9 +12,10 @@ import com.study.benchmarkorm.model.Person;
 import java.util.List;
 
 
-class ORMTestImpl extends ORMTest {
+public class ORMTestImpl extends ORMTest {
     public ORMTestImpl(Context applicationContext) {
         super(applicationContext);
+        randomObjectsGenerator = new InverseRandomGenerator();
     }
 
     @Override

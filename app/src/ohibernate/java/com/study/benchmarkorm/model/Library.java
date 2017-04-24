@@ -30,6 +30,13 @@ public class Library{
         this.name = name;
     }
 
+    public Library(String address, String name, List<Person> persons, List<Book> books) {
+        this.address = address;
+        this.name = name;
+        this.employees = persons;
+        this.books = books;
+    }
+
     public Library(long id, String address, String name, List<Person> persons, List<Book> books) {
         this.id = (int)id;
         this.address = address;

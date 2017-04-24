@@ -1,7 +1,5 @@
 package com.study.benchmarkorm.dao;
 
-
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -55,16 +53,11 @@ public class BookDao extends AbstractDao<Book> {
 
     public void save(Book c) {
         insertStatement.clearBindings();
-//        insertStatement.bindLong(1,c.getId());
         insertStatement.bindString(1,c.getTitle());
         insertStatement.bindString(2,c.getAuthor());
         insertStatement.bindLong(3,c.getPagesCount());
         insertStatement.bindLong(4,c.getBookId());
-        if (c.getLibrary()!=null){
-            insertStatement.bindLong(5,c.getLibrary().getId());
-        }else{
-            insertStatement.bindNull(5);
-        }
+        insertStatement.bindLong(5,c.getLibrary());
         insertStatement.executeInsert();
     }
     public void delete(Book c) {
@@ -87,6 +80,7 @@ public class BookDao extends AbstractDao<Book> {
     }
 
     public void update(Book book) {
+        updateStatement.clearBindings();
         updateStatement.bindString(1,book.getAuthor());
         updateStatement.bindLong(2,book.getId());
         updateStatement.executeUpdateDelete();

@@ -48,10 +48,6 @@ public class RandomObjectsGenerator {
         return randomString.nextString();
     }
 
-    public int nextInt() {
-        return random.nextInt();
-    }
-
     public static class RandomString {
 
         private static final char[] symbols;

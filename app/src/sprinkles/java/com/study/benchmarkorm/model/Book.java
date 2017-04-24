@@ -91,4 +91,12 @@ public class Book extends Model{
     public void setId(long id) {
         this.id = id;
     }
+
+    public long getLibId() {
+        return libId;
+    }
+
+    public void setLibId(long libId) {
+        this.libId = libId;
+    }
 }

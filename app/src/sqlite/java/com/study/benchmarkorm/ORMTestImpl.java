@@ -22,6 +22,7 @@ public class ORMTestImpl extends ORMTest{
 
     public ORMTestImpl(Context context) {
         super(context);
+        randomObjectsGenerator = new InverseRandomGenerator();
     }
 
     @Override
@@ -70,14 +71,14 @@ public class ORMTestImpl extends ORMTest{
     @Override
     public void writeComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
         bookDao.beginTransaction();
+        for (Library library: libraries){
+            libraryDao.save(library);
+        }
         for (Book book: books){
             bookDao.save(book);
         }
         for (Person person: persons){
             personDao.save(person);
-        }
-        for (Library library: libraries){
-            libraryDao.save(library);
         }
         bookDao.endTransaction();
     }

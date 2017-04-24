@@ -17,6 +17,7 @@ import se.emilsjolander.sprinkles.Transaction;
 public class ORMTestImpl extends ORMTest {
     public ORMTestImpl(Context applicationContext) {
         super(applicationContext);
+        randomObjectsGenerator = new InverseRandomGenerator();
     }
 
     @Override
