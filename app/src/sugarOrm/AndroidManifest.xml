@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.study.benchmarkorm">
+    <application android:name="com.orm.SugarApp"/>
+
+    <meta-data android:name="DATABASE" android:value="libraries_sugarORM.db" />
+    <meta-data android:name="VERSION" android:value="1" />
+    <meta-data android:name="QUERY_LOG" android:value="true" />
+    <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.study.benchmarkorm.model" />
+</manifest>
