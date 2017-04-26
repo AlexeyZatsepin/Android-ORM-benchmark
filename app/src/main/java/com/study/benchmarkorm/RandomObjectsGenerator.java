@@ -13,35 +13,35 @@ public class RandomObjectsGenerator {
     protected static Random random = new Random();
     protected static RandomString randomString = new RandomString(40);
 
-    public Book nextBook() {
+    public Book nextBook(Library library) {
         return new Book(randomString.nextString(), randomString.nextString(),
-                Math.abs(random.nextInt()) + 1, Math.abs(random.nextInt()) + 1);
+                Math.abs(random.nextInt()) + 1, Math.abs(random.nextInt()) + 1, library);
     }
 
-    public List<Book> generateBooks(int quantity) {
+    public List<Book> generateBooks(int quantity, Library library) {
         List<Book> books = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
-            books.add(nextBook());
+            books.add(nextBook(library));
         }
         return books;
     }
 
-    public Person nextPerson() {
+    public Person nextPerson(Library library) {
         return new Person(randomString.nextString(), randomString.nextString(),
                 new Date(System.currentTimeMillis()), random.nextBoolean()? "male": "female",
-                Math.abs(random.nextLong()) % ((int)Math.pow(10, 15)));
+                Math.abs(random.nextLong()) % ((int)Math.pow(10, 15)), library);
     }
 
-    public List<Person> generatePersons(int quantity) {
+    public List<Person> generatePersons(int quantity, Library library) {
         List<Person> persons = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
-            persons.add(nextPerson());
+            persons.add(nextPerson(library));
         }
         return persons;
     }
 
-    public Library nextLibrary(List<Book> books, List<Person> persons) {
-        return new Library(randomString.nextString(), randomString.nextString(), persons, books);
+    public Library nextLibrary() {
+        return new Library(randomString.nextString(), randomString.nextString());
     }
 
     public String nextString() {

@@ -121,7 +121,6 @@ public class BasicFragment extends Fragment {
 
     @OnClick(R.id.play_full)
     public void play(){
-        ormTest.warmingUp();
         playWrite();
         playRead();
         playUpdate();

@@ -27,6 +27,11 @@ public class Library extends BaseModel{
     public Library() {
     }
 
+    public Library(String address, String name) {
+        this.address = address;
+        this.name = name;
+    }
+
     public Library(String address, String name, List<Person> employees, List<Book> books) {
         this.address = address;
         this.name = name;
