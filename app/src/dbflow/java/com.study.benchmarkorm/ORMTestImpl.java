@@ -45,9 +45,9 @@ public class ORMTestImpl extends ORMTest {
     @Override
     public List<Book> readSimple(int booksQuantity) {
         List<Book> books = new Select().from(Book.class).limit(booksQuantity).queryList();
-        for (Book book: books) {
-            String name = book.toString();
-        }
+//        for (Book book: books) {
+//            String name = book.toString();
+//        }
         return books;
     }
 
@@ -92,17 +92,17 @@ public class ORMTestImpl extends ORMTest {
     @Override
     public Pair<List<Library>, Pair<List<Book>, List<Person>>> readComplex(int librariesQuantity, int booksQuantity, int personsQuantity) {
         List<Library> libraries = new Select().from(Library.class).limit(librariesQuantity).queryList();
-        for (Library library: libraries) {
-            String name = library.toString();
-        }
+//        for (Library library: libraries) {
+//            String name = library.toString();
+//        }
         List<Book> books = new Select().from(Book.class).limit(booksQuantity * librariesQuantity).queryList();
-        for (Book book: books) {
-            String name =  book.toString();
-        }
+//        for (Book book: books) {
+//            String name =  book.toString();
+//        }
         List<Person> persons = new Select().from(Person.class).limit(personsQuantity * librariesQuantity).queryList();
-        for (Person person: persons) {
-            String name = person.toString();
-        }
+//        for (Person person: persons) {
+//            String name = person.toString();
+//        }
         return new Pair<>(libraries, new Pair<>(books, persons));
     }
 
