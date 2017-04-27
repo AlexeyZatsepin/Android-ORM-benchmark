@@ -28,6 +28,8 @@ public class PersonDao extends AbstractDao<Person> {
         String updateSQL = "UPDATE " + PersonTable.NAME +
                 " SET " + PersonTable.Cols.F_NAME + "=?, " + PersonTable.Cols.S_NAME + "=?  WHERE " + PersonTable.Cols.ID + "=?";
         updateStatement = mDatabase.compileStatement(updateSQL);
+        String count = "SELECT COUNT(*) FROM " + PersonTable.NAME;
+        selectStatement = mDatabase.compileStatement(count);
     }
 
     public List<Person> getAll() {
@@ -61,7 +63,7 @@ public class PersonDao extends AbstractDao<Person> {
         insertStatement.bindString(3, c.getBirthdayDate().toString());
         insertStatement.bindString(4, c.getGender());
         insertStatement.bindLong(5, c.getPhone());
-        insertStatement.bindLong(6, c.getLibrary());
+        insertStatement.bindLong(6, c.getLibrary().getId());
         insertStatement.executeInsert();
     }
 

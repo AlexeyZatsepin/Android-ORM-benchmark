@@ -19,12 +19,14 @@ public class Person{
 
     public Person() {
     }
-    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone,Library library) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthdayDate = birthdayDate;
         this.gender = gender;
         this.phone = phone;
+        this.library = library;
+        library.addPerson(this);
     }
     public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
         this.id = id;

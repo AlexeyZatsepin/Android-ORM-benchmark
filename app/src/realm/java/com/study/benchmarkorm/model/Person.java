@@ -3,6 +3,7 @@ package com.study.benchmarkorm.model;
 
 import java.util.Date;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -20,12 +21,15 @@ public class Person extends RealmObject{
     public Person() {
     }
 
-    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone, Library library) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthdayDate = birthdayDate;
         this.gender = gender;
         this.phone = phone;
+        RealmList<Person> temp = library.getEmployees();
+        temp.add(this);
+        library.setEmployees(temp);
     }
 
     public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {

@@ -12,6 +12,7 @@ public abstract class AbstractDao<T> {
     protected SQLiteDatabase mDatabase;
     protected SQLiteStatement insertStatement;
     protected SQLiteStatement updateStatement;
+    protected SQLiteStatement selectStatement;
 
     public abstract List<T> getAll();
     public abstract List<T> get(int limit);
@@ -20,6 +21,10 @@ public abstract class AbstractDao<T> {
     public abstract T get(long id);
     public abstract void update(T crime);
     protected abstract <K extends CursorWrapper> K query(String whereClause, String[] whereArgs);
+
+    public long count(){
+        return selectStatement.simpleQueryForLong();
+    }
 
     public void beginTransaction() {
         mDatabase.beginTransaction();

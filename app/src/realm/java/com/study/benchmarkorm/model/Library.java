@@ -18,19 +18,18 @@ public class Library extends RealmObject{
     public Library() {
     }
 
-    public Library(String address, String name, List<Person> employees, List<Book> books) {
+    public Library(long id,String address, String name) {
         this.address = address;
         this.name = name;
-        this.employees = (RealmList<Person>) employees;
-        this.books = (RealmList<Book>) books;
+        this.employees = new RealmList<>();
+        this.books = new RealmList<>();
     }
 
-    public Library(long id, String address, String name, List<Person> employees, List<Book> books) {
-        this.id = id;
+    public Library(String address, String name) {
         this.address = address;
         this.name = name;
-        this.employees = (RealmList<Person>) employees;
-        this.books = (RealmList<Book>) books;
+        this.employees = new RealmList<>();
+        this.books = new RealmList<>();
     }
 
     public long getId() {
@@ -72,4 +71,5 @@ public class Library extends RealmObject{
     public void setBooks(RealmList<Book> books) {
         this.books = books;
     }
+
 }

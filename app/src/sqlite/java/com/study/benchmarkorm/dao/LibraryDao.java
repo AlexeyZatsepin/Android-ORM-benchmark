@@ -24,6 +24,8 @@ public class LibraryDao extends AbstractDao<Library>{
         String updateSQL = "UPDATE "+ LibraryTable.NAME +
                 " SET "+ LibraryTable.Cols.NAME+"=? WHERE "+ LibraryTable.Cols.ID+"=?";
         updateStatement = mDatabase.compileStatement(updateSQL);
+        String count = "SELECT COUNT(*) FROM " + LibraryTable.NAME;
+        selectStatement = mDatabase.compileStatement(count);
     }
 
     public List<Library> getAll() {

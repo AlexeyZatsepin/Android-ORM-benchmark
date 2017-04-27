@@ -98,6 +98,11 @@ public class ORMTestImpl extends ORMTest{
     }
 
     @Override
+    public boolean isEmpty() {
+        return realm.where(Book.class).count()==0;
+    }
+
+    @Override
     public float[] updateSimple() {
         final int booksBatchNumber = 1000;
         final int numberOfPasses = 10;
@@ -173,14 +178,14 @@ public class ORMTestImpl extends ORMTest{
         List<Book> oneLibraryBooks;
         List<Person> oneLibraryPersons;
 
-        // main part
         float[] allTime = new float[numberOfPasses];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < numberOfPasses; i++) {
             for (int j = 0; j < librariesBatchNumber; j++) {
-                oneLibraryBooks = randomObjectsGenerator.generateBooks(booksBatchNumber);
-                oneLibraryPersons = randomObjectsGenerator.generatePersons(personsBatchNumber);
-                libraries.add(randomObjectsGenerator.nextLibrary(oneLibraryBooks, oneLibraryPersons));
+                Library library = randomObjectsGenerator.nextLibrary();
+                oneLibraryBooks = randomObjectsGenerator.generateBooks(booksBatchNumber, library);
+                oneLibraryPersons = randomObjectsGenerator.generatePersons(personsBatchNumber, library);
+                libraries.add(library);
                 books.addAll(oneLibraryBooks);
                 persons.addAll(oneLibraryPersons);
             }
@@ -192,8 +197,8 @@ public class ORMTestImpl extends ORMTest{
             libraries.clear();
             books.clear();
             persons.clear();
-
         }
+
         return allTime;
     }
 }

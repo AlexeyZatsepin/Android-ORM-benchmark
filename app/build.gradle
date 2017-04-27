@@ -1,19 +1,8 @@
 apply plugin: 'com.android.application'
 //for dbflow
 //apply plugin: 'com.neenbedankt.android-apt'
-//
-//def dbflow_version = "3.1.1"
-//
-//buildscript {
-//    repositories {
-//        jcenter()
-//
-//        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local'}
-//    }
-//    dependencies {
-//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-//    }
-//}
+
+def dbflow_version = "3.1.1"
 
 allprojects {
     repositories {
@@ -164,8 +153,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
     testCompile 'junit:junit:4.12'
 
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -189,7 +176,7 @@ dependencies {
 
 
     //DBFlow
-//    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+//    dbflowannotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
 //    dbflowCompile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 //    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
 //    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"

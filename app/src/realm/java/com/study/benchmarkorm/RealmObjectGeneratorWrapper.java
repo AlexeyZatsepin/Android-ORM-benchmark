@@ -4,6 +4,8 @@ import com.study.benchmarkorm.model.Book;
 import com.study.benchmarkorm.model.Library;
 import com.study.benchmarkorm.model.Person;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.RealmList;
@@ -13,10 +15,10 @@ public class RealmObjectGeneratorWrapper extends RandomObjectsGenerator{
     long index = 0;
 
     @Override
-    public RealmList<Book> generateBooks(int quantity) {
+    public RealmList<Book> generateBooks(int quantity, Library library) {
         RealmList<Book> books = new RealmList<>();
         for (int i = 0; i < quantity; i++) {
-            Book book = nextBook();
+            Book book = nextBook(library);
             book.setId(index++);
             books.add(book);
         }
@@ -24,10 +26,10 @@ public class RealmObjectGeneratorWrapper extends RandomObjectsGenerator{
     }
 
     @Override
-    public RealmList<Person> generatePersons(int quantity) {
+    public RealmList<Person> generatePersons(int quantity, Library library) {
         RealmList<Person> persons = new RealmList<>();
         for (int i = 0; i < quantity; i++) {
-            Person person = nextPerson();
+            Person person = nextPerson(library);
             person.setId(index++);
             persons.add(person);
         }
@@ -35,9 +37,8 @@ public class RealmObjectGeneratorWrapper extends RandomObjectsGenerator{
     }
 
     @Override
-    public Library nextLibrary(List<Book> books, List<Person> persons) {
-        return new Library(index++, randomString.nextString(), randomString.nextString(),
-                new RealmList<>(persons.toArray(new Person[persons.size()])),
-                new RealmList<>(books.toArray(new Book[books.size()])));
+    public Library nextLibrary() {
+        return new Library(index++, randomString.nextString(), randomString.nextString());
     }
+
 }

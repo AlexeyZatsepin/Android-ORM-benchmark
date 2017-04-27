@@ -1,5 +1,6 @@
 package com.study.benchmarkorm.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Library{
@@ -16,6 +17,8 @@ public class Library{
     public Library(String address, String name) {
         this.address = address;
         this.name = name;
+        this.books = new ArrayList<>();
+        this.employees = new ArrayList<>();
     }
 
     public Library(String address, String name,List<Person> persons, List<Book> books) {
@@ -62,5 +65,12 @@ public class Library{
     }
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public void addPerson(Person person){
+        employees.add(person);
+    }
+    public void addBook(Book book){
+        books.add(book);
     }
 }

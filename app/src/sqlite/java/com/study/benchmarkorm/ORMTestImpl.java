@@ -120,4 +120,9 @@ public class ORMTestImpl extends ORMTest{
         }
         bookDao.endTransaction();
     }
+
+    @Override
+    public boolean isEmpty() {
+        return bookDao.count()==0 && personDao.count()==0 && libraryDao.count()==0;
+    }
 }

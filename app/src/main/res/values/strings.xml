@@ -1,6 +1,13 @@
 <resources>
     <string name="chart_label">AVERAGE TIME</string>
-    <string name="chart_label2">00:00:00</string>
+    <string name="chart_label2">0 ms</string>
+
+    <string name="alert_message">Are you sure? Program will fill database and exit</string>
+    <string name="alert_title">Exit</string>
+    <string name="alert_positive">Yes</string>
+    <string name="alert_negative">No</string>
+    <string name="alert_warning_title">Warning</string>
+    <string name="alert_warning_message">Database is empty</string>
 
     <string name="simple_write">WRITE SIMPLE TEST</string>
     <string name="simple_read">READ SIMPLE TEST</string>

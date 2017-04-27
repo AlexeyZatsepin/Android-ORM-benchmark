@@ -26,6 +26,8 @@ public class BookDao extends AbstractDao<Book> {
         String updateSQL = "UPDATE "+ BookTable.NAME +
                 " SET "+BookTable.Cols.AUTHOR+"=? WHERE "+BookTable.Cols.ID+"=?";
         updateStatement = mDatabase.compileStatement(updateSQL);
+        String count = "SELECT COUNT(*) FROM " + BookTable.NAME;
+        selectStatement = mDatabase.compileStatement(count);
     }
 
     public List<Book> getAll() {
@@ -57,7 +59,11 @@ public class BookDao extends AbstractDao<Book> {
         insertStatement.bindString(2,c.getAuthor());
         insertStatement.bindLong(3,c.getPagesCount());
         insertStatement.bindLong(4,c.getBookId());
-        insertStatement.bindLong(5,c.getLibrary());
+        if (c.getLibrary()!=null){
+            insertStatement.bindLong(5,c.getLibrary().getId());
+        }else{
+            insertStatement.bindNull(5);
+        }
         insertStatement.executeInsert();
     }
     public void delete(Book c) {
