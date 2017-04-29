@@ -167,13 +167,16 @@ public class BasicFragment extends Fragment {
     public void playWrite() {
         switch (current) {
             case 0:
-                mValues = ormTest.writeSimple();
+                ormTest.writeSimple(0);
+                mValues = ormTest.writeSimple(1);
                 break;
             case 1:
-                mValues = ormTest.writeComplex();
+                ormTest.writeComplex(0);
+                mValues = ormTest.writeComplex(1);
                 break;
             case 2:
-                mValues = ormTest.writeBalanced();
+                ormTest.writeBalanced(0);
+                mValues = ormTest.writeBalanced(1);
                 break;
         }
         tv_write_result.setText(formatResult(mValues));
