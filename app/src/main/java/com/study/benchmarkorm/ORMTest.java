@@ -38,7 +38,9 @@ public abstract class ORMTest {
 
     public abstract void deleteComplex(List<Library> libraries, List<Book> books, List<Person> persons);
 
-    public abstract boolean isEmpty();
+    public boolean isEmpty() {
+        return readSimple(1).isEmpty();
+    }
 
     public void warmingUp() {
         final List<Book> books = new ArrayList<>();
