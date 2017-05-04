@@ -72,9 +72,9 @@ public class ORMTestImpl extends ORMTest {
 
     @Override
     public void deleteComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
-        libraryEntityManager.delete(libraries);
         bookEntityManager.delete(books);
         personEntityManager.delete(persons);
+        libraryEntityManager.delete(libraries);
     }
 
 

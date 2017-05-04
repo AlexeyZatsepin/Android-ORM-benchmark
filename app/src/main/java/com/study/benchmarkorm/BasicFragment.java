@@ -145,8 +145,9 @@ public class BasicFragment extends Fragment {
                     .setPositiveButton(R.string.alert_positive, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            ormTest.warmingUp();
                             playWrite();
-                            System.exit(0);
+//                            System.exit(0);
                         }
                     }).setNegativeButton(R.string.alert_negative, new DialogInterface.OnClickListener() {
                         @Override
@@ -159,7 +160,6 @@ public class BasicFragment extends Fragment {
             playRead();
             playUpdate();
             playDelete();
-            playWrite();
         }
     }
 

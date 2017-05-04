@@ -176,7 +176,7 @@ dependencies {
 
 
     //DBFlow
-//    dbflowannotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+//    apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
 //    dbflowCompile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 //    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
 //    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"

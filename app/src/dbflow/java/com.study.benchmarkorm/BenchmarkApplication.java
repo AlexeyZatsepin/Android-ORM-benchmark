@@ -28,20 +28,20 @@ public class BenchmarkApplication extends android.app.Application {
     }
 
 
-    static class DBFlowExclusionStrategy implements ExclusionStrategy {
-
-        // Otherwise, Gson will go through base classes of DBFlow models
-        // and hang forever.
-        @Override
-        public boolean shouldSkipField(FieldAttributes f) {
-            return f.getDeclaredClass().equals(ModelAdapter.class) || f.getName().equals("_id");
-        }
-
-        @Override
-        public boolean shouldSkipClass(Class<?> clazz) {
-            return false;
-        }
-    }
+//    static class DBFlowExclusionStrategy implements ExclusionStrategy {
+//
+//        // Otherwise, Gson will go through base classes of DBFlow models
+//        // and hang forever.
+//        @Override
+//        public boolean shouldSkipField(FieldAttributes f) {
+//            return f.getDeclaredClass().equals(ModelAdapter.class) || f.getName().equals("_id");
+//        }
+//
+//        @Override
+//        public boolean shouldSkipClass(Class<?> clazz) {
+//            return false;
+//        }
+//    }
 
 
 }

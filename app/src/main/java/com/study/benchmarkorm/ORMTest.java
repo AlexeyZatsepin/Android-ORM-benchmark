@@ -16,6 +16,14 @@ public abstract class ORMTest {
     protected final int NUMBER_OF_PASSES = 10;
     protected RandomObjectsGenerator randomObjectsGenerator = new RandomObjectsGenerator();
 
+    private static final int BOOKS_SIMPLE_BATCH_SIZE = 1000;
+    private static final int LIBRARIES_BALANCED_BATCH_SIZE = 5;
+    private static final int BOOKS_BALANCED_BATCH_SIZE = 50;
+    private static final int PERSONS_BALANCED_BATCH_SIZE = 50;
+    private static final int LIBRARIES_COMPLEX_BATCH_SIZE = 5;
+    private static final int BOOKS_COMPLEX_BATCH_SIZE = 500;
+    private static final int PERSONS_COMPLEX_BATCH_SIZE = 400;
+
     public ORMTest(Context context) {
         initDB(context);
     }
@@ -55,26 +63,31 @@ public abstract class ORMTest {
                 writeComplex(new ArrayList<Library>() {{
                     add(library);
                 }}, new ArrayList<Book>(), new ArrayList<Person>());
-                libraries.add(readComplex(2, 0, 0).first.get(j));
+                List<Library> bufLibraries = readComplex(Math.max(LIBRARIES_BALANCED_BATCH_SIZE, LIBRARIES_COMPLEX_BATCH_SIZE) + 2, 0, 0)
+                        .first;
+                libraries.add(bufLibraries.get(bufLibraries.size() - 1));
+
                 oneLibraryBooks = randomObjectsGenerator.generateBooks(10, libraries.get(j));
                 oneLibraryPersons = randomObjectsGenerator.generatePersons(10, libraries.get(j));
                 books.addAll(oneLibraryBooks);
                 persons.addAll(oneLibraryPersons);
             }
             writeComplex(new ArrayList<Library>(), books, persons);
-            Pair<List<Library>, Pair<List<Book>, List<Person>>> data =
-                    readComplex(libraries.size(), books.size(), persons.size());
-            deleteComplex(data.first, data.second.first, data.second.second);
             libraries.clear();
             books.clear();
             persons.clear();
         }
+        Pair<List<Library>, Pair<List<Book>, List<Person>>> data =
+                readComplex(10,
+                        100, 100);
+        deleteComplex(data.first,
+                data.second.first,
+                data.second.second);
+
+        System.gc();
     }
 
     public float[] writeSimple(int writeNumber) {
-        final int booksBatchNumber = 1000;
-
-
         // main part
         float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
@@ -82,81 +95,77 @@ public abstract class ORMTest {
         writeComplex(new ArrayList<Library>() {{
             add(library);
         }}, new ArrayList<Book>(), new ArrayList<Person>());
-        Library readedLibrary = readComplex(1, 0, 0).first.get(writeNumber);
+        Library readedLibrary = readComplex(writeNumber + 1, 0, 0).first.get(writeNumber);
 
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
-            List<Book> books = randomObjectsGenerator.generateBooks(booksBatchNumber, readedLibrary);
+            List<Book> books = randomObjectsGenerator.generateBooks(BOOKS_SIMPLE_BATCH_SIZE, readedLibrary);
             simpleProfiler.start();
             writeSimple(books);
             allTime[i] = simpleProfiler.stop();
+
+            System.gc();
         }
 
         return allTime;
     }
 
     public float[] readSimple() {
-        final int booksBatchNumber = 1000;
-
-
         float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             simpleProfiler.start();
-            List<Book> books = readSimple(booksBatchNumber);
+            List<Book> books = readSimple(BOOKS_SIMPLE_BATCH_SIZE);
             allTime[i] = simpleProfiler.stop();
             deleteSimple(books);
+
+            System.gc();
         }
 
         return allTime;
     }
 
     public float[] updateSimple() {
-        final int booksBatchNumber = 1000;
-
-
         // main part
         float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
-            List<Book> books = readSimple(booksBatchNumber);
+            List<Book> books = readSimple(BOOKS_SIMPLE_BATCH_SIZE);
             for (Book book : books) {
                 book.setAuthor(randomObjectsGenerator.nextString());
             }
             simpleProfiler.start();
             updateSimple(books);
             allTime[i] = simpleProfiler.stop();
+
+            System.gc();
         }
 
         return allTime;
     }
 
     public float[] deleteSimple() {
-        final int booksBatchNumber = 1000;
-
         float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
-            List<Book> books = readSimple(booksBatchNumber);
+            List<Book> books = readSimple(BOOKS_SIMPLE_BATCH_SIZE);
             simpleProfiler.start();
             deleteSimple(books);
             allTime[i] = simpleProfiler.stop();
+
+            System.gc();
         }
 
         return allTime;
     }
 
     public float[] writeBalanced(int writeNumber) {
-        final int booksBatchNumber = 50;
-        final int librariesBatchNumber = 50;
-        final int personsBatchNumber = 50;
-
-        return writeComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber, writeNumber);
+        return writeComplexBenchmark(BOOKS_BALANCED_BATCH_SIZE, LIBRARIES_BALANCED_BATCH_SIZE, PERSONS_BALANCED_BATCH_SIZE, writeNumber);
     }
 
-    protected float[] writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber, int writeNumber) {
+    protected float[] writeComplexBenchmark(int booksBatchSize, int librariesBatchSize, int personsBatchSize, int writeNumber) {
 
-        final List<Book> books = new ArrayList<>(booksBatchNumber * librariesBatchNumber);
-        final List<Person> persons = new ArrayList<>(personsBatchNumber * librariesBatchNumber);
+        final List<Book> books = new ArrayList<>(booksBatchSize * librariesBatchSize);
+        final List<Person> persons = new ArrayList<>(personsBatchSize * librariesBatchSize);
         List<Library> libraries;
         List<Book> oneLibraryBooks;
         List<Person> oneLibraryPersons;
@@ -168,20 +177,26 @@ public abstract class ORMTest {
             allTime[i] = 0;
 
             //libraries
-            for (int j = 0; j < librariesBatchNumber; j++) {
+            for (int j = 0; j < librariesBatchSize; j++) {
                 final Library library = randomObjectsGenerator.nextLibrary();
 
                 simpleProfiler.start();
-                writeComplex(new ArrayList<Library>(){{add(library);}}, new ArrayList<Book>(), new ArrayList<Person>());
+                writeComplex(new ArrayList<Library>() {{
+                    add(library);
+                }}, new ArrayList<Book>(), new ArrayList<Person>());
                 allTime[i] += simpleProfiler.stop();
             }
-            libraries = readComplex(NUMBER_OF_PASSES * (writeNumber + 1), 0, 0).first
-                    .subList(NUMBER_OF_PASSES * writeNumber, NUMBER_OF_PASSES * (writeNumber + 1));
+        }
+
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
+            libraries = readComplex((i + 1) * librariesBatchSize * (writeNumber + 1), 0, 0).first
+                    .subList(i * librariesBatchSize * writeNumber,
+                            (i + 1) * librariesBatchSize * (writeNumber + 1));
 
             //books and persons
-            for (int j = 0; j < librariesBatchNumber; j++) {
-                oneLibraryBooks = randomObjectsGenerator.generateBooks(booksBatchNumber, libraries.get(j));
-                oneLibraryPersons = randomObjectsGenerator.generatePersons(personsBatchNumber, libraries.get(j));
+            for (int j = 0; j < librariesBatchSize; j++) {
+                oneLibraryBooks = randomObjectsGenerator.generateBooks(booksBatchSize, libraries.get(j));
+                oneLibraryPersons = randomObjectsGenerator.generatePersons(personsBatchSize, libraries.get(j));
                 books.addAll(oneLibraryBooks);
                 persons.addAll(oneLibraryPersons);
             }
@@ -190,74 +205,50 @@ public abstract class ORMTest {
             writeComplex(libraries, books, persons);
             allTime[i] += simpleProfiler.stop();
 
-            libraries.clear();
             books.clear();
             persons.clear();
+
+            System.gc();
         }
 
         return allTime;
     }
 
     public float[] readBalanced() {
-        final int booksBatchNumber = 50;
-        final int librariesBatchNumber = 50;
-        final int personsBatchNumber = 50;
-
-        return readComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
+        return readComplexBenchmark(BOOKS_BALANCED_BATCH_SIZE, LIBRARIES_BALANCED_BATCH_SIZE, PERSONS_BALANCED_BATCH_SIZE);
     }
 
-    protected float[] readComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
+    protected float[] readComplexBenchmark(int booksBatchSize, int librariesBatchSize, int personsBatchSize) {
+        booksBatchSize *= librariesBatchSize;
+        personsBatchSize *= librariesBatchSize;
 
         float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             simpleProfiler.start();
-            Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
+            Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchSize, booksBatchSize, personsBatchSize);
             allTime[i] = simpleProfiler.stop();
             deleteComplex(data.first, data.second.first, data.second.second);
+
+            System.gc();
         }
 
         return allTime;
     }
 
     public float[] updateBalanced() {
-        final int booksBatchNumber = 50;
-        final int librariesBatchNumber = 50;
-        final int personsBatchNumber = 50;
-
-        return updateComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
+        return updateComplexBenchmark(BOOKS_BALANCED_BATCH_SIZE, LIBRARIES_BALANCED_BATCH_SIZE, PERSONS_BALANCED_BATCH_SIZE);
     }
 
-    protected float[] updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
-
-
-        // warming-up
-        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
-            Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
-            List<Library> libraries = readed.first;
-            List<Book> books = readed.second.first;
-            List<Person> persons = readed.second.second;
-
-            for (Library library : libraries) {
-                library.setName(randomObjectsGenerator.nextString());
-            }
-
-            for (Book book : books) {
-                book.setAuthor(randomObjectsGenerator.nextString());
-            }
-
-            for (Person person : persons) {
-                person.setFirstName(randomObjectsGenerator.nextString());
-                person.setSecondName(randomObjectsGenerator.nextString());
-            }
-            updateComplex(libraries, books, persons);
-        }
+    protected float[] updateComplexBenchmark(int booksBatchSize, int librariesBatchSize, int personsBatchSize) {
+        booksBatchSize *= librariesBatchSize;
+        personsBatchSize *= librariesBatchSize;
 
         // main part
         float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
-            Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
+            Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchSize, booksBatchSize, personsBatchSize);
             List<Library> libraries = readed.first;
             List<Book> books = readed.second.first;
             List<Person> persons = readed.second.second;
@@ -279,63 +270,49 @@ public abstract class ORMTest {
             updateComplex(libraries, books, persons);
             allTime[i] = simpleProfiler.stop();
 
+
+            System.gc();
         }
 
         return allTime;
     }
 
     public float[] deleteBalanced() {
-        final int booksBatchNumber = 50;
-        final int librariesBatchNumber = 50;
-        final int personsBatchNumber = 50;
-
-        return deleteComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
+        return deleteComplexBenchmark(BOOKS_BALANCED_BATCH_SIZE, LIBRARIES_BALANCED_BATCH_SIZE, PERSONS_BALANCED_BATCH_SIZE);
     }
 
-    protected float[] deleteComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
-
+    protected float[] deleteComplexBenchmark(int booksBatchSize, int librariesBatchSize, int personsBatchSize) {
+        booksBatchSize *= librariesBatchSize;
+        personsBatchSize *= librariesBatchSize;
 
         float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
-            Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
+            Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchSize, booksBatchSize, personsBatchSize);
             simpleProfiler.start();
             deleteComplex(data.first, data.second.first, data.second.second);
             allTime[i] = simpleProfiler.stop();
+
+            System.gc();
         }
 
         return allTime;
     }
 
     public float[] writeComplex(int writeNumber) {
-        final int booksBatchNumber = 500;
-        final int librariesBatchNumber = 5;
-        final int personsBatchNumber = 400;
-
-        return writeComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber, writeNumber);
+        return writeComplexBenchmark(BOOKS_COMPLEX_BATCH_SIZE,
+                LIBRARIES_COMPLEX_BATCH_SIZE, PERSONS_COMPLEX_BATCH_SIZE, writeNumber);
     }
 
     public float[] readComplex() {
-        final int booksBatchNumber = 500;
-        final int librariesBatchNumber = 5;
-        final int personsBatchNumber = 400;
-
-        return readComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
+        return readComplexBenchmark(BOOKS_COMPLEX_BATCH_SIZE, LIBRARIES_COMPLEX_BATCH_SIZE, PERSONS_COMPLEX_BATCH_SIZE);
     }
 
     public float[] updateComplex() {
-        final int booksBatchNumber = 500;
-        final int librariesBatchNumber = 5;
-        final int personsBatchNumber = 400;
-
-        return updateComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
+        return updateComplexBenchmark(BOOKS_COMPLEX_BATCH_SIZE, LIBRARIES_COMPLEX_BATCH_SIZE, PERSONS_COMPLEX_BATCH_SIZE);
     }
 
     public float[] deleteComplex() {
-        final int booksBatchNumber = 500;
-        final int librariesBatchNumber = 5;
-        final int personsBatchNumber = 400;
-
-        return deleteComplexBenchmark(booksBatchNumber, librariesBatchNumber, personsBatchNumber);
+        return deleteComplexBenchmark(BOOKS_COMPLEX_BATCH_SIZE, LIBRARIES_COMPLEX_BATCH_SIZE, PERSONS_COMPLEX_BATCH_SIZE);
     }
 }

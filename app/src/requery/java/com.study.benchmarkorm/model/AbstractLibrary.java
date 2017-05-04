@@ -19,13 +19,18 @@ public class AbstractLibrary implements Serializable {
 
     String name;
 
-    @OneToMany
+//    @OneToMany
     List<Person> employees;
 
-    @OneToMany
+//    @OneToMany
     List<Book> books;
 
     public AbstractLibrary() {
+    }
+
+    public AbstractLibrary(String address, String name) {
+        this.address = address;
+        this.name = name;
     }
 
     public AbstractLibrary(String address, String name, List<Person> employees, List<Book> books) {

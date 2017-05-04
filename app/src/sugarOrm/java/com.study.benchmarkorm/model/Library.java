@@ -27,6 +27,11 @@ public class Library extends SugarRecord{
         this.books = books;
     }
 
+    public Library(String address, String name) {
+        this.address = address;
+        this.name = name;
+    }
+
     public String getAddress() {
         return address;
     }

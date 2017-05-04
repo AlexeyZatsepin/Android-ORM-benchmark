@@ -31,6 +31,15 @@ public class Person extends SugarRecord{
         this.phone = phone;
     }
 
+    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone, Library library) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthdayDate = birthdayDate;
+        this.gender = gender;
+        this.phone = phone;
+        this.library = library;
+    }
+
     public String getFirstName() {
         return firstName;
     }

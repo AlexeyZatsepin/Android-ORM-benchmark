@@ -238,20 +238,6 @@ public class ORMTestImpl extends ORMTest {
     @Override
     public void deleteComplex(final List<Library> libraries, final List<Book> books, final List<Person> persons) {
         try {
-            libraryDAO.callBatchTasks(new Callable<Object>() {
-
-                @Override
-                public Object call() throws Exception {
-                    for (Library library: libraries) {
-                        libraryDAO.delete(library);
-                    }
-                    return null;
-                }
-            });
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             bookDAO.callBatchTasks(new Callable<Object>() {
 
                 @Override
@@ -272,6 +258,20 @@ public class ORMTestImpl extends ORMTest {
                 public Object call() throws Exception {
                     for (Person person: persons) {
                         personDAO.delete(person);
+                    }
+                    return null;
+                }
+            });
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            libraryDAO.callBatchTasks(new Callable<Object>() {
+
+                @Override
+                public Object call() throws Exception {
+                    for (Library library: libraries) {
+                        libraryDAO.delete(library);
                     }
                     return null;
                 }

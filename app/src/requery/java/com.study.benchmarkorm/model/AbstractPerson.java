@@ -39,6 +39,16 @@ public class AbstractPerson implements Serializable{
         this.gender = gender;
         this.phone = phone;
     }
+
+    public AbstractPerson(String firstName, String secondName, Date birthdayDate, String gender, long phone, Library library) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthdayDate = birthdayDate;
+        this.gender = gender;
+        this.phone = phone;
+        this.library = library;
+    }
+
     public AbstractPerson(int id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
         this.id = id;
         this.firstName = firstName;

@@ -91,13 +91,6 @@ public class ORMTestImpl extends ORMTest {
     public void deleteComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
         try(Transaction transaction = dataStore.transaction()) {
             transaction.begin();
-            for (Library library : libraries) {
-                dataStore.delete(library);
-            }
-            transaction.commit();
-        }
-        try(Transaction transaction = dataStore.transaction()) {
-            transaction.begin();
             for (Book book : books) {
                 dataStore.delete(book);
             }
@@ -107,6 +100,13 @@ public class ORMTestImpl extends ORMTest {
             transaction.begin();
             for (Person person : persons) {
                 dataStore.delete(person);
+            }
+            transaction.commit();
+        }
+        try(Transaction transaction = dataStore.transaction()) {
+            transaction.begin();
+            for (Library library : libraries) {
+                dataStore.delete(library);
             }
             transaction.commit();
         }
