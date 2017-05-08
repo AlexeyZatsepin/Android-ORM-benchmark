@@ -12,6 +12,8 @@ public class Library{
     private List<Book> books;
 
     public Library() {
+        this.books = new ArrayList<>();
+        this.employees = new ArrayList<>();
     }
 
     public Library(String address, String name) {
@@ -27,15 +29,7 @@ public class Library{
         this.books = books;
         this.employees = persons;
     }
-
-    public Library(long id,String address, String name,List<Person> persons, List<Book> books) {
-        this.id = id;
-        this.address = address;
-        this.name = name;
-        this.books = books;
-        this.employees = persons;
-    }
-
+    
     public long getId() {
         return id;
     }
