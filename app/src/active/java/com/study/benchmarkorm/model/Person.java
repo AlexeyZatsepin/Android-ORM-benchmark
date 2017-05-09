@@ -9,13 +9,15 @@ import java.util.Date;
 
 @Table(name = "Person")
 public class Person extends Model{
+    @Column(name = "firstName")
     private String firstName;
-
+    @Column(name = "secondName")
     private String secondName;
-
+    @Column(name = "birthdayDate")
     private Date birthdayDate;
-
+    @Column(name = "gender")
     private String gender;
+    @Column(name = "phone")
     private long phone;
 
     @Column(name = "library")
@@ -31,13 +33,13 @@ public class Person extends Model{
         this.gender = gender;
         this.phone = phone;
     }
-    public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone, Library library) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthdayDate = birthdayDate;
         this.gender = gender;
         this.phone = phone;
-        this.library = null;
+        this.library = library;
     }
 
     public String getFirstName() {

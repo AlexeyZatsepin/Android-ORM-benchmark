@@ -1,14 +1,16 @@
 package com.study.benchmarkorm.model;
 
 import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import java.util.List;
 
 @Table(name = "Library")
 public class Library extends Model{
-
+    @Column(name = "address")
     private String address;
+    @Column(name = "name")
     private String name;
 
     public Library() {
@@ -17,13 +19,6 @@ public class Library extends Model{
     public Library(String address, String name) {
         this.address = address;
         this.name = name;
-    }
-    public Library(String address, String name, List<Person> employees, List<Book> books) {
-//        this.id = id;
-        this.address = address;
-        this.name = name;
-//        this.employees = employees;
-//        this.books =  books;
     }
 
     public String getAddress() {

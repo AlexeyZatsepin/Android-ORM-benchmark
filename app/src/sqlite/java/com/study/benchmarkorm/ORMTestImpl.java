@@ -22,7 +22,6 @@ public class ORMTestImpl extends ORMTest{
 
     public ORMTestImpl(Context context) {
         super(context);
-        randomObjectsGenerator = new InverseRandomGenerator();
     }
 
     @Override

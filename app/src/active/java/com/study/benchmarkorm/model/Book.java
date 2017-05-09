@@ -6,13 +6,13 @@ import com.activeandroid.annotation.Table;
 
 @Table(name = "Book")
 public class Book extends Model{
-
+    @Column(name = "author")
     private String author;
-
+    @Column(name = "title")
     private String title;
-
+    @Column(name = "pagesCount")
     private int pagesCount;
-
+    @Column(name = "bookId")
     private int bookId;
 
     @Column(name = "library")
@@ -29,12 +29,12 @@ public class Book extends Model{
         this.bookId = bookId;
     }
 
-    public Book(long id,String author, String title, int pagesCount, int bookId) {
+    public Book(String author, String title, int pagesCount, int bookId, Library library) {
         this.author = author;
         this.title = title;
         this.pagesCount = pagesCount;
         this.bookId = bookId;
-        this.library = null;
+        this.library = library;
     }
 
     public String getAuthor() {
