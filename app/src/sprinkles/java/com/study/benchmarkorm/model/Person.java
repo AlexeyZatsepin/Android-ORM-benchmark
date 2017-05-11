@@ -11,7 +11,8 @@ import se.emilsjolander.sprinkles.annotations.Table;
 @Table("Person")
 public class Person extends Model {
 
-    @AutoIncrementPrimaryKey @Column("_id")
+    @AutoIncrementPrimaryKey
+    @Column("_id")
     private long id;
 
     @Column("firstName")
@@ -19,7 +20,7 @@ public class Person extends Model {
     @Column("secondName")
     private String secondName;
     @Column("bd")
-    private Date birthdayDate;
+    private long birthdayDate;
     @Column("gender")
     private String gender;
     @Column("phone")
@@ -32,21 +33,13 @@ public class Person extends Model {
     public Person() {
     }
 
-    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone) {
+    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone, Library library) {
         this.firstName = firstName;
         this.secondName = secondName;
-        this.birthdayDate = birthdayDate;
+        this.birthdayDate = birthdayDate.getTime();
         this.gender = gender;
         this.phone = phone;
-    }
-
-    public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
-        this.id = id;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.birthdayDate = birthdayDate;
-        this.gender = gender;
-        this.phone = phone;
+        this.libId = library.getId();
     }
 
     public long getId() {
@@ -74,11 +67,11 @@ public class Person extends Model {
     }
 
     public Date getBirthdayDate() {
-        return birthdayDate;
+        return new Date(birthdayDate);
     }
 
     public void setBirthdayDate(Date birthdayDate) {
-        this.birthdayDate = birthdayDate;
+        this.birthdayDate = birthdayDate.getTime();
     }
 
     public String getGender() {

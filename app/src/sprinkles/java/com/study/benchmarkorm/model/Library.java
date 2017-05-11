@@ -1,7 +1,5 @@
 package com.study.benchmarkorm.model;
 
-import java.util.List;
-
 import se.emilsjolander.sprinkles.Model;
 import se.emilsjolander.sprinkles.annotations.AutoIncrementPrimaryKey;
 import se.emilsjolander.sprinkles.annotations.Column;
@@ -23,11 +21,6 @@ public class Library extends Model{
     public Library() {
     }
 
-    public Library(long id, String address, String name) {
-        this.id = id;
-        this.address = address;
-        this.name = name;
-    }
     public Library(String address, String name) {
         this.address = address;
         this.name = name;

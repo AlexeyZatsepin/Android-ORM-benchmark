@@ -1,6 +1,5 @@
 package com.study.benchmarkorm.model;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -17,22 +16,15 @@ public class Book extends RealmObject{
     public Book() {
     }
 
-    public Book(String author, String title, int pagesCount, int bookId,Library library) {
+    public Book(String author, String title, int pagesCount, int bookId) {
         this.author = author;
         this.title = title;
         this.pagesCount = pagesCount;
         this.bookId = bookId;
-        RealmList<Book> temp = library.getBooks();
-        temp.add(this);
-        library.setBooks(temp);
     }
 
-    public Book(long id,String author, String title, int pagesCount, int bookId) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.pagesCount = pagesCount;
-        this.bookId = bookId;
+    public Book(String s, String s1, int i, int i1, Library library) {
+
     }
 
     public long getId() {

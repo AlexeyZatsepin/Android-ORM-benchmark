@@ -1,6 +1,5 @@
 package com.study.benchmarkorm.model;
 
-import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -18,18 +17,14 @@ public class Library extends RealmObject{
     public Library() {
     }
 
-    public Library(long id,String address, String name) {
+    public Library(String address, String name, RealmList<Book> books, RealmList<Person> employees) {
         this.address = address;
         this.name = name;
-        this.employees = new RealmList<>();
-        this.books = new RealmList<>();
+        this.employees = employees;
+        this.books = books;
     }
 
-    public Library(String address, String name) {
-        this.address = address;
-        this.name = name;
-        this.employees = new RealmList<>();
-        this.books = new RealmList<>();
+    public Library(String s, String s1) {
     }
 
     public long getId() {

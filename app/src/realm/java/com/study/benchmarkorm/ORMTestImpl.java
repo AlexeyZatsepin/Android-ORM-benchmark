@@ -25,16 +25,21 @@ public class ORMTestImpl extends ORMTest{
     @Override
     public void initDB(Context context) {
         realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.clear(Book.class);
-        realm.clear(Person.class);
-        realm.clear(Library.class);
-        realm.commitTransaction();
-        randomObjectsGenerator = new RealmObjectGeneratorWrapper();
+//        realm.beginTransaction();
+//        realm.clear(Book.class);
+//        realm.clear(Person.class);
+//        realm.clear(Library.class);
+//        realm.commitTransaction();
+        randomObjectsGenerator = new RealmObjectGeneratorWrapper(realm);
     }
 
     @Override
     public void writeSimple(List<Book> books) {
+        // look with realmList
+    }
+
+
+    public void writeSimple(RealmList<Book> books) {
         realm.beginTransaction();
         realm.copyToRealm(books);
         realm.commitTransaction();
@@ -49,14 +54,19 @@ public class ORMTestImpl extends ORMTest{
     }
 
     @Override
-    public void updateSimple(List<Book> books) {
+    public void updateSimple(List<Book> books) {}
+
+
+    public void updateSimple(RealmList<Book> books) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(books);
         realm.commitTransaction();
     }
 
     @Override
-    public void deleteSimple(List<Book> books) {
+    public void deleteSimple(List<Book> books) {}
+
+    public void deleteSimple(RealmList<Book> books) {
         realm.beginTransaction();
         realm.clear(Book.class);
         realm.commitTransaction();
@@ -99,106 +109,121 @@ public class ORMTestImpl extends ORMTest{
 
     @Override
     public boolean isEmpty() {
-        return realm.where(Book.class).count()==0;
+        return realm.where(Book.class).count()==0 && realm.where(Person.class).count()==0&& realm.where(Library.class).count()==0;
+    }
+
+    @Override
+    public void warmingUp() {
+        final RealmList<Book> books = new RealmList<>();
+        final RealmList<Person> persons = new RealmList<>();
+        final RealmList<Library> libraries = new RealmList<>();
+        RealmList<Book> oneLibraryBooks;
+        RealmList<Person> oneLibraryPersons;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 2; j++) {
+                oneLibraryBooks = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generateBooks(10);
+                oneLibraryPersons = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generatePersons(10);
+                libraries.add(((RealmObjectGeneratorWrapper)randomObjectsGenerator).nextLibrary(oneLibraryBooks,oneLibraryPersons));
+                books.addAll(oneLibraryBooks);
+                persons.addAll(oneLibraryPersons);
+            }
+            writeComplex(libraries, books, persons);
+            deleteComplex(libraries, books, persons);
+            libraries.clear();
+            books.clear();
+            persons.clear();
+        }
+    }
+
+    @Override
+    public float[] writeSimple(int writeNumber) {
+        // main part
+        float[] allTime = new float[NUMBER_OF_PASSES];
+        SimpleProfiler simpleProfiler = new SimpleProfiler();
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
+//            RealmList<Book> books = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generateBooks(BOOKS_SIMPLE_BATCH_SIZE);
+            simpleProfiler.start();
+//            writeSimple(books);
+            RealmList<Book> books = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generateBooks(BOOKS_SIMPLE_BATCH_SIZE);
+            allTime[i] = simpleProfiler.stop();
+
+            System.gc();
+        }
+        return allTime;
     }
 
     @Override
     public float[] updateSimple() {
-        final int booksBatchNumber = 1000;
-        final int numberOfPasses = 10;
-
-        // main part
-        float[] allTime = new float[numberOfPasses];
+        float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
-        for (int i = 0; i < numberOfPasses; i++) {
-            List<Book> result = readSimple(booksBatchNumber);
-            List<Book> books = new ArrayList<>();
-            books.addAll(result);
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
+            List<Book> books = readSimple(BOOKS_SIMPLE_BATCH_SIZE);
             simpleProfiler.start();
-            realm.beginTransaction();
             for (Book book: books) {
                 book.setAuthor(randomObjectsGenerator.nextString());
             }
-            realm.commitTransaction();
             allTime[i] = simpleProfiler.stop();
         }
         return allTime;
     }
 
     @Override
-    protected float[] updateComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
-        final int numberOfPasses = 10;
+    protected float[] writeComplexBenchmark(int booksBatchSize, int librariesBatchSize, int personsBatchSize, int writeNumber) {
+        final RealmList<Book> books = new RealmList<>();
+        final RealmList<Person> persons = new RealmList<>();
+        final RealmList<Library> libraries = new RealmList<>();
+        RealmList<Book> oneLibraryBooks;
+        RealmList<Person> oneLibraryPersons;
 
-        // main part
-        float[] allTime = new float[numberOfPasses];
+        float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
-        Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchNumber, booksBatchNumber, personsBatchNumber);
-
-        for (int i = 0; i < numberOfPasses; i++) {
-            List<Library> libraries = readed.first;
-            List<Book> books = readed.second.first;
-            List<Person> persons = readed.second.second;
-            List<Library> tempL = new ArrayList<>();
-            List<Person> tempP = new ArrayList<>();
-            List<Book> tempB = new ArrayList<>();
-            tempB.addAll(books);
-            tempP.addAll(persons);
-            tempL.addAll(libraries);
-            String r1 = randomObjectsGenerator.nextString(); //random data
-            String r2 = randomObjectsGenerator.nextString();
-            String r3 = randomObjectsGenerator.nextString();
-            String r4 = randomObjectsGenerator.nextString();
-            simpleProfiler.start();
-            realm.beginTransaction();
-            for (Library library: tempL) {
-                library.setName(r1);
-            }
-
-            for (Book book: tempB) {
-                book.setAuthor(r2);
-            }
-
-            for (Person person: tempP) {
-                person.setFirstName(r3);
-                person.setSecondName(r4);
-            }
-            realm.commitTransaction();
-            allTime[i] = simpleProfiler.stop();
-
-        }
-        return allTime;
-    }
-
-    @Override
-    protected float[] writeComplexBenchmark(int booksBatchNumber, int librariesBatchNumber, int personsBatchNumber) {
-        final int numberOfPasses = 10;
-        final List<Book> books = new RealmList<>();
-        final List<Person> persons = new RealmList<>();
-        final List<Library> libraries = new RealmList<>();
-        List<Book> oneLibraryBooks;
-        List<Person> oneLibraryPersons;
-
-        float[] allTime = new float[numberOfPasses];
-        SimpleProfiler simpleProfiler = new SimpleProfiler();
-        for (int i = 0; i < numberOfPasses; i++) {
-            for (int j = 0; j < librariesBatchNumber; j++) {
-                Library library = randomObjectsGenerator.nextLibrary();
-                oneLibraryBooks = randomObjectsGenerator.generateBooks(booksBatchNumber, library);
-                oneLibraryPersons = randomObjectsGenerator.generatePersons(personsBatchNumber, library);
-                libraries.add(library);
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
+            for (int j = 0; j < LIBRARIES_COMPLEX_BATCH_SIZE; j++) {
+                simpleProfiler.start();
+                oneLibraryBooks = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generateBooks(BOOKS_COMPLEX_BATCH_SIZE);
+                oneLibraryPersons = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generatePersons(PERSONS_COMPLEX_BATCH_SIZE);
+                libraries.add(((RealmObjectGeneratorWrapper)randomObjectsGenerator).nextLibrary(oneLibraryBooks, oneLibraryPersons));
                 books.addAll(oneLibraryBooks);
                 persons.addAll(oneLibraryPersons);
+                allTime[i] = simpleProfiler.stop();
             }
 
-            simpleProfiler.start();
-            writeComplex(libraries, books, persons);
-            allTime[i] = simpleProfiler.stop();
+//            simpleProfiler.start();
+//            writeComplex(libraries, books, persons);
+//            allTime[i] = simpleProfiler.stop();
 
             libraries.clear();
             books.clear();
             persons.clear();
         }
+        return allTime;
+    }
 
+    @Override
+    protected float[] updateComplexBenchmark(int booksBatchSize, int librariesBatchSize, int personsBatchSize) {
+        float[] allTime = new float[NUMBER_OF_PASSES];
+        SimpleProfiler simpleProfiler = new SimpleProfiler();
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
+            Pair<List<Library>, Pair<List<Book>, List<Person>>> readed = readComplex(librariesBatchSize, booksBatchSize, personsBatchSize);
+            List<Library> libraries = readed.first;
+            List<Book> books = readed.second.first;
+            List<Person> persons = readed.second.second;
+
+            simpleProfiler.start();
+            for (Library library: libraries) {
+                library.setName(randomObjectsGenerator.nextString());
+            }
+
+            for (Book book: books) {
+                book.setAuthor(randomObjectsGenerator.nextString());
+            }
+
+            for (Person person: persons) {
+                person.setFirstName(randomObjectsGenerator.nextString());
+                person.setSecondName(randomObjectsGenerator.nextString());
+            }
+            allTime[i] = simpleProfiler.stop();
+        }
         return allTime;
     }
 }

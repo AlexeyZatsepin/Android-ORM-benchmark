@@ -4,5 +4,6 @@
     package="com.study.benchmarkorm">
     <application
         android:name=".SprinklesApplication"
-        tools:replace="android:allowBackup,icon,theme,label"/>
+        tools:replace="android:icon"
+        android:icon="@drawable/ic_launcher"/>
 </manifest>
