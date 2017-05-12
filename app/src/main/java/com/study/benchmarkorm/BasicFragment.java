@@ -156,7 +156,7 @@ public class BasicFragment extends Fragment {
                         }
                     }).setIcon(R.drawable.ic_warning).show();
         } else {
-            ormTest.warmingUp();
+            //ormTest.warmingUp();
             playRead();
             playUpdate();
             playDelete();
