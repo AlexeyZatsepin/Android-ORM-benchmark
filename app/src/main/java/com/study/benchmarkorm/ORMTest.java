@@ -288,10 +288,19 @@ public abstract class ORMTest {
         float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
-            Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchSize, booksBatchSize, personsBatchSize);
+            Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(0, booksBatchSize, personsBatchSize);
             simpleProfiler.start();
-            deleteComplex(data.first, data.second.first, data.second.second);
+            deleteComplex(new ArrayList<Library>(), data.second.first, data.second.second);
             allTime[i] = simpleProfiler.stop();
+
+            System.gc();
+        }
+
+        for (int i = 0; i < NUMBER_OF_PASSES; i++) {
+            Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchSize, 0, 0);
+            simpleProfiler.start();
+            deleteComplex(data.first, new ArrayList<Book>(), new ArrayList<Person>());
+            allTime[i] += simpleProfiler.stop();
 
             System.gc();
         }
