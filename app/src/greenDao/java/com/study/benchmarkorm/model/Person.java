@@ -12,7 +12,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Person{
 
     @Id
-    private long id;
+    private Long id;
 
     @NotNull
     private String firstName;
@@ -29,9 +29,9 @@ public class Person{
     public Person() {
     }
 
-    @Generated(hash = 936841301)
-    public Person(long id, @NotNull String firstName, @NotNull String secondName,
-            @NotNull Date birthdayDate, String gender, long phone) {
+    @Generated(hash = 1149059260)
+    public Person(Long id, @NotNull String firstName, @NotNull String secondName,
+                  @NotNull Date birthdayDate, String gender, long phone) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -40,13 +40,24 @@ public class Person{
         this.phone = phone;
     }
 
-    public long getId() {
+    public Person(@NotNull String firstName, @NotNull String secondName,
+                  @NotNull Date birthdayDate, String gender, long phone, Library library) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthdayDate = birthdayDate;
+        this.gender = gender;
+        this.phone = phone;
+        library.addPerson(this);
+    }
+
+    public Long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -86,5 +97,9 @@ public class Person{
 
     public void setPhone(long phone) {
         this.phone = phone;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

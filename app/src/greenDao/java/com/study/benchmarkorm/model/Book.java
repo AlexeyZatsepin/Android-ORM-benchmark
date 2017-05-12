@@ -6,10 +6,10 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class Book{ //TODO try to create @Index on some @Property
+public class Book{
 
     @Id
-    private long id;
+    private Long id;
 
     @NotNull
     private String author;
@@ -22,12 +22,18 @@ public class Book{ //TODO try to create @Index on some @Property
 
     private int bookId;
 
-    public Book() {
+    public Book(@NotNull String author, @NotNull String title,
+                int pagesCount, int bookId, Library library) {
+        this.author = author;
+        this.title = title;
+        this.pagesCount = pagesCount;
+        this.bookId = bookId;
+        library.addBook(this);
     }
 
-    @Generated(hash = 46882632)
-    public Book(long id, @NotNull String author, @NotNull String title,
-            int pagesCount, int bookId) {
+    @Generated(hash = 39525177)
+    public Book(Long id, @NotNull String author, @NotNull String title,
+                int pagesCount, int bookId) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -35,11 +41,15 @@ public class Book{ //TODO try to create @Index on some @Property
         this.bookId = bookId;
     }
 
+    @Generated(hash = 1839243756)
+    public Book() {
+    }
+
     public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

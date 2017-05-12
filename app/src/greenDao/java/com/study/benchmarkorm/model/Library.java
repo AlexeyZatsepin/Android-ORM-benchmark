@@ -7,6 +7,7 @@ import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.ToMany;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
@@ -15,17 +16,17 @@ import org.greenrobot.greendao.DaoException;
 public class Library{
 
     @Id
-    private long id;
+    private Long id;
 
     @NotNull
     private String address;
     private String name;
 
     @ToMany(referencedJoinProperty = "id")
-    private List<Person> employees;
+    private List<Person> employees = new ArrayList<>();
 
     @ToMany(referencedJoinProperty = "id")
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 
     /** Used for active entity operations. */
     @Generated(hash = 1118012288)
@@ -39,26 +40,25 @@ public class Library{
     public Library() {
     }
 
-    @Generated(hash = 2096938530)
-    public Library(long id, @NotNull String address, String name) {
+    @Generated(hash = 1188889840)
+    public Library(Long id, @NotNull String address, String name) {
         this.id = id;
         this.address = address;
         this.name = name;
     }
 
     @Keep
-    public Library(long id, @NotNull String address, String name,List<Person> employees, List<Book> books) {
-        this.id = id;
+    public Library(@NotNull String address, String name) {
         this.address = address;
         this.name = name;
-        this.books = books;
-        this.employees = employees;
+        this.books = new ArrayList<>();
+        this.employees = new ArrayList<>();
     }
 
     public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getAddress() {
@@ -88,6 +88,15 @@ public class Library{
     @Keep
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    @Keep
+    public void addBook(Book item){
+        books.add(item);
+    }
+    @Keep
+    public void addPerson(Person item){
+        employees.add(item);
     }
 
     /**
