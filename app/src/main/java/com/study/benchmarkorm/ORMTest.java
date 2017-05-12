@@ -16,13 +16,13 @@ public abstract class ORMTest {
     protected final int NUMBER_OF_PASSES = 10;
     protected RandomObjectsGenerator randomObjectsGenerator = new RandomObjectsGenerator();
 
-    private static final int BOOKS_SIMPLE_BATCH_SIZE = 1000;
-    private static final int LIBRARIES_BALANCED_BATCH_SIZE = 5;
-    private static final int BOOKS_BALANCED_BATCH_SIZE = 50;
-    private static final int PERSONS_BALANCED_BATCH_SIZE = 50;
-    private static final int LIBRARIES_COMPLEX_BATCH_SIZE = 5;
-    private static final int BOOKS_COMPLEX_BATCH_SIZE = 500;
-    private static final int PERSONS_COMPLEX_BATCH_SIZE = 400;
+    protected static final int BOOKS_SIMPLE_BATCH_SIZE = 1000;
+    protected static final int LIBRARIES_BALANCED_BATCH_SIZE = 5;
+    protected static final int BOOKS_BALANCED_BATCH_SIZE = 50;
+    protected static final int PERSONS_BALANCED_BATCH_SIZE = 50;
+    protected static final int LIBRARIES_COMPLEX_BATCH_SIZE = 5;
+    protected static final int BOOKS_COMPLEX_BATCH_SIZE = 500;
+    protected static final int PERSONS_COMPLEX_BATCH_SIZE = 400;
 
     public ORMTest(Context context) {
         initDB(context);
@@ -228,7 +228,7 @@ public abstract class ORMTest {
             simpleProfiler.start();
             Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchSize, booksBatchSize, personsBatchSize);
             allTime[i] = simpleProfiler.stop();
-            deleteComplex(data.first, data.second.first, data.second.second);
+            deleteComplex(new ArrayList<Library>(), data.second.first, data.second.second);
 
             System.gc();
         }
@@ -304,6 +304,9 @@ public abstract class ORMTest {
 
             System.gc();
         }
+        
+        Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchSize * NUMBER_OF_PASSES, 0, 0);
+        deleteComplex(data.first, new ArrayList<Book>(), new ArrayList<Person>());
 
         return allTime;
     }
