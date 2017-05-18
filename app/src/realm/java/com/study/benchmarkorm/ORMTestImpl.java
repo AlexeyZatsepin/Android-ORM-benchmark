@@ -25,11 +25,6 @@ public class ORMTestImpl extends ORMTest{
     @Override
     public void initDB(Context context) {
         realm = Realm.getDefaultInstance();
-//        realm.beginTransaction();
-//        realm.clear(Book.class);
-//        realm.clear(Person.class);
-//        realm.clear(Library.class);
-//        realm.commitTransaction();
         randomObjectsGenerator = new RealmObjectGeneratorWrapper(realm);
     }
 
@@ -121,9 +116,11 @@ public class ORMTestImpl extends ORMTest{
         RealmList<Person> oneLibraryPersons;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 2; j++) {
+                realm.beginTransaction();
                 oneLibraryBooks = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generateBooks(10);
                 oneLibraryPersons = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generatePersons(10);
                 libraries.add(((RealmObjectGeneratorWrapper)randomObjectsGenerator).nextLibrary(oneLibraryBooks,oneLibraryPersons));
+                realm.commitTransaction();
                 books.addAll(oneLibraryBooks);
                 persons.addAll(oneLibraryPersons);
             }
@@ -159,9 +156,11 @@ public class ORMTestImpl extends ORMTest{
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             List<Book> books = readSimple(BOOKS_SIMPLE_BATCH_SIZE);
             simpleProfiler.start();
+            realm.beginTransaction();
             for (Book book: books) {
                 book.setAuthor(randomObjectsGenerator.nextString());
             }
+            realm.commitTransaction();
             allTime[i] = simpleProfiler.stop();
         }
         return allTime;
@@ -180,9 +179,11 @@ public class ORMTestImpl extends ORMTest{
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             for (int j = 0; j < LIBRARIES_COMPLEX_BATCH_SIZE; j++) {
                 simpleProfiler.start();
+                realm.beginTransaction();
                 oneLibraryBooks = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generateBooks(BOOKS_COMPLEX_BATCH_SIZE);
                 oneLibraryPersons = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generatePersons(PERSONS_COMPLEX_BATCH_SIZE);
                 libraries.add(((RealmObjectGeneratorWrapper)randomObjectsGenerator).nextLibrary(oneLibraryBooks, oneLibraryPersons));
+                realm.commitTransaction();
                 books.addAll(oneLibraryBooks);
                 persons.addAll(oneLibraryPersons);
                 allTime[i] = simpleProfiler.stop();
@@ -210,6 +211,7 @@ public class ORMTestImpl extends ORMTest{
             List<Person> persons = readed.second.second;
 
             simpleProfiler.start();
+            realm.beginTransaction();
             for (Library library: libraries) {
                 library.setName(randomObjectsGenerator.nextString());
             }
@@ -222,6 +224,7 @@ public class ORMTestImpl extends ORMTest{
                 person.setFirstName(randomObjectsGenerator.nextString());
                 person.setSecondName(randomObjectsGenerator.nextString());
             }
+            realm.commitTransaction();
             allTime[i] = simpleProfiler.stop();
         }
         return allTime;

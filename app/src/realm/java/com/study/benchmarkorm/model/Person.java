@@ -8,9 +8,6 @@ import io.realm.annotations.PrimaryKey;
 
 public class Person extends RealmObject{
 
-    @PrimaryKey
-    private long id;
-
     private String firstName;
     private String secondName;
     private Date birthdayDate;
@@ -25,14 +22,6 @@ public class Person extends RealmObject{
     }
 
     public Person(String s, String s1, Date date, String s2, long l, Library library) {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getFirstName() {

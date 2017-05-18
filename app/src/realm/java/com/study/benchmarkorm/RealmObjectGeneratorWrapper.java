@@ -38,18 +38,15 @@ public class RealmObjectGeneratorWrapper extends RandomObjectsGenerator{
     }
 
     public Library nextLibrary(RealmList<Book> books, RealmList<Person> persons) {
-        realm.beginTransaction();
         Library library = realm.createObject(Library.class);
         library.setAddress(randomString.nextString());
         library.setName(randomString.nextString());
         library.setBooks(books);
         library.setEmployees(persons);
-        realm.commitTransaction();
         return library;
     }
 
     public Person nextPerson() {
-        realm.beginTransaction();
         Person person = realm.createObject(Person.class);
         person.setFirstName(randomString.nextString());
         person.setSecondName(randomString.nextString());
@@ -57,18 +54,15 @@ public class RealmObjectGeneratorWrapper extends RandomObjectsGenerator{
         person.setBirthdayDate(new Date(Math.abs(random.nextLong())));
         person.setGender(random.nextBoolean()? "male": "female");
         person.setPhone(Math.abs(random.nextLong()) % ((int)Math.pow(10, 15)));
-        realm.commitTransaction();
         return person;
     }
 
     public Book nextBook() {
-        realm.beginTransaction();
         Book book = realm.createObject(Book.class);
         book.setTitle(randomString.nextString());
         book.setAuthor(randomString.nextString());
         book.setBookId(Math.abs(random.nextInt()) + 1);
         book.setPagesCount(Math.abs(random.nextInt()) + 1);
-        realm.commitTransaction();
         return book;
     }
 

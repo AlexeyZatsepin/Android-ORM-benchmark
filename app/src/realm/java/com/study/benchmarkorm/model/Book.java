@@ -5,9 +5,6 @@ import io.realm.annotations.PrimaryKey;
 
 public class Book extends RealmObject{
 
-    @PrimaryKey
-    private long id;
-
     private String author;
     private String title;
     private int pagesCount;
@@ -25,14 +22,6 @@ public class Book extends RealmObject{
 
     public Book(String s, String s1, int i, int i1, Library library) {
 
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getAuthor() {
