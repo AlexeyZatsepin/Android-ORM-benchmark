@@ -95,10 +95,10 @@ public abstract class ORMTest {
         writeComplex(new ArrayList<Library>() {{
             add(library);
         }}, new ArrayList<Book>(), new ArrayList<Person>());
-        Library readedLibrary = readComplex(writeNumber + 1, 0, 0).first.get(writeNumber);
+        Library readLibrary = readComplex(writeNumber + 1, 0, 0).first.get(writeNumber);
 
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
-            List<Book> books = randomObjectsGenerator.generateBooks(BOOKS_SIMPLE_BATCH_SIZE, readedLibrary);
+            List<Book> books = randomObjectsGenerator.generateBooks(BOOKS_SIMPLE_BATCH_SIZE, readLibrary);
             simpleProfiler.start();
             writeSimple(books);
             allTime[i] = simpleProfiler.stop();
@@ -202,7 +202,7 @@ public abstract class ORMTest {
             }
 
             simpleProfiler.start();
-            writeComplex(libraries, books, persons);
+            writeComplex(new ArrayList<Library>(), books, persons);
             allTime[i] += simpleProfiler.stop();
 
             books.clear();
