@@ -51,7 +51,7 @@ public class RealmObjectGeneratorWrapper extends RandomObjectsGenerator{
         person.setFirstName(randomString.nextString());
         person.setSecondName(randomString.nextString());
         person.setSecondName(randomString.nextString());
-        person.setBirthdayDate(new Date(Math.abs(random.nextLong())));
+        person.setBirthdayDate(new Date(Math.abs(random.nextInt())));
         person.setGender(random.nextBoolean()? "male": "female");
         person.setPhone(Math.abs(random.nextLong()) % ((int)Math.pow(10, 15)));
         return person;

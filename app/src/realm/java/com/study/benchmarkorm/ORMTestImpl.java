@@ -141,7 +141,9 @@ public class ORMTestImpl extends ORMTest{
 //            RealmList<Book> books = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generateBooks(BOOKS_SIMPLE_BATCH_SIZE);
             simpleProfiler.start();
 //            writeSimple(books);
+            realm.beginTransaction();
             RealmList<Book> books = ((RealmObjectGeneratorWrapper)randomObjectsGenerator).generateBooks(BOOKS_SIMPLE_BATCH_SIZE);
+            realm.commitTransaction();
             allTime[i] = simpleProfiler.stop();
 
             System.gc();

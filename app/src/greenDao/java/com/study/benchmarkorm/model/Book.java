@@ -4,23 +4,28 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.DaoException;
 
 @Entity
 public class Book{
 
     @Id
     private Long id;
-
-    @NotNull
     private String author;
-
-    @NotNull
     private String title;
-
-    @NotNull
     private int pagesCount;
-
     private int bookId;
+    @ToOne(joinProperty = "id")
+    private Library library;
+    /** Used to resolve relations */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+    /** Used for active entity operations. */
+    @Generated(hash = 1097957864)
+    private transient BookDao myDao;
+    @Generated(hash = 510062427)
+    private transient Long library__resolvedKey;
 
     public Book(@NotNull String author, @NotNull String title,
                 int pagesCount, int bookId, Library library) {
@@ -28,12 +33,11 @@ public class Book{
         this.title = title;
         this.pagesCount = pagesCount;
         this.bookId = bookId;
-        library.addBook(this);
+        this.library = library;
     }
 
-    @Generated(hash = 39525177)
-    public Book(Long id, @NotNull String author, @NotNull String title,
-                int pagesCount, int bookId) {
+    @Generated(hash = 2026124379)
+    public Book(Long id, String author, String title, int pagesCount, int bookId) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -45,7 +49,7 @@ public class Book{
     public Book() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -87,5 +91,77 @@ public class Book{
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    /** To-one relationship, resolved on first access. */
+    @Generated(hash = 290165030)
+    public Library getLibrary() {
+        Long __key = this.id;
+        if (library__resolvedKey == null || !library__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            LibraryDao targetDao = daoSession.getLibraryDao();
+            Library libraryNew = targetDao.load(__key);
+            synchronized (this) {
+                library = libraryNew;
+                library__resolvedKey = __key;
+            }
+        }
+        return library;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 1817530046)
+    public void setLibrary(Library library) {
+        synchronized (this) {
+            this.library = library;
+            id = library == null ? null : library.getId();
+            library__resolvedKey = id;
+        }
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 1115456930)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getBookDao() : null;
     }
 }
