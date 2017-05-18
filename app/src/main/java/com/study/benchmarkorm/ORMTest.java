@@ -115,6 +115,7 @@ public abstract class ORMTest {
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             simpleProfiler.start();
             List<Book> books = readSimple(BOOKS_SIMPLE_BATCH_SIZE);
+            checkIfLoaded(new ArrayList<Library>(), books, new ArrayList<Person>());
             allTime[i] = simpleProfiler.stop();
             deleteSimple(books);
 
@@ -227,6 +228,7 @@ public abstract class ORMTest {
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             simpleProfiler.start();
             Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchSize, booksBatchSize, personsBatchSize);
+            checkIfLoaded(data.first, data.second.first, data.second.second);
             allTime[i] = simpleProfiler.stop();
             deleteComplex(new ArrayList<Library>(), data.second.first, data.second.second);
 
@@ -326,5 +328,58 @@ public abstract class ORMTest {
 
     public float[] deleteComplex() {
         return deleteComplexBenchmark(BOOKS_COMPLEX_BATCH_SIZE, LIBRARIES_COMPLEX_BATCH_SIZE, PERSONS_COMPLEX_BATCH_SIZE);
+    }
+    
+    public boolean checkIfLoaded(List<Library> libraries, List<Book> books, List<Person> persons) {
+        for (Library library: libraries) {
+            if (library.getName() == null) {
+                return false;
+            }
+            if (library.getAddress() == null) {
+                return false;
+            }
+        }
+        for (Person person: persons) {
+            if (person.getFirstName() == null) {
+                return false;
+            }
+            if (person.getSecondName() == null) {
+                return false;
+            }
+            if (person.getBirthdayDate() == null) {
+                return false;
+            }
+            if (person.getGender() == null) {
+                return false;
+            }
+            Library library = person.getLibrary();
+            if (library == null) {
+                return false;
+            }
+            if (library.getName() == null) {
+                return false;
+            }
+            if (library.getAddress() == null) {
+                return false;
+            }
+        }
+        for (Book book: books) {
+            if (book.getAuthor() == null) {
+                return false;
+            }
+            if (book.getTitle() == null) {
+                return false;
+            }
+            Library library = book.getLibrary();
+            if (library == null) {
+                return false;
+            }
+            if (library.getName() == null) {
+                return false;
+            }
+            if (library.getAddress() == null) {
+                return false;
+            }
+        }
     }
 }
