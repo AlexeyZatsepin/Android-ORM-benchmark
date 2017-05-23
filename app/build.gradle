@@ -4,12 +4,6 @@ apply plugin: 'com.android.application'
 
 def dbflow_version = "3.1.1"
 
-allprojects {
-    repositories {
-        jcenter()
-        maven { url "https://jitpack.io" }
-    }
-}
 
 android {
     compileSdkVersion 25
@@ -62,6 +56,20 @@ android {
             buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
             buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
             buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
+        }
+        room {
+            applicationIdSuffix ".room"
+            versionNameSuffix "-room"
+            resValue "string", "app_name", "RoomBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
+            javaCompileOptions {
+                annotationProcessorOptions {
+                    arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+                }
+            }
         }
         sprinkles {
             applicationIdSuffix ".sprinkles"
@@ -199,4 +207,7 @@ dependencies {
     freezerCompile 'fr.xebia.android.freezer:freezer:2.0.6'
     freezerProvided 'fr.xebia.android.freezer:freezer-annotations:2.0.6'
     freezerAnnotationProcessor 'fr.xebia.android.freezer:freezer-compiler:2.0.6'
+
+    roomCompile 'android.arch.persistence.room:runtime:1.0.0-alpha1'
+    roomAnnotationProcessor 'android.arch.persistence.room:compiler:1.0.0-alpha1'
 }
