@@ -196,16 +196,20 @@ public class BasicFragment extends Fragment {
 
     @OnClick(R.id.play_read)
     public void playRead() {
-        switch (current) {
-            case 0:
-                mValues = ormTest.readSimple();
-                break;
-            case 1:
-                mValues = ormTest.readComplex();
-                break;
-            case 2:
-                mValues = ormTest.readBalanced();
-                break;
+        try {
+            switch (current) {
+                case 0:
+                    mValues = ormTest.readSimple();
+                    break;
+                case 1:
+                    mValues = ormTest.readComplex();
+                    break;
+                case 2:
+                    mValues = ormTest.readBalanced();
+                    break;
+            }
+        } catch (ORMTest.ObjectsAreNotFullyLoadedException e) {
+            Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
         tv_read_result.setText(formatResult(mValues));
         if (isPlayedR) {
