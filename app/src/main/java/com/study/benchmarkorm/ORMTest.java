@@ -115,7 +115,9 @@ public abstract class ORMTest {
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             simpleProfiler.start();
             List<Book> books = readSimple(BOOKS_SIMPLE_BATCH_SIZE);
-            checkIfLoaded(new ArrayList<Library>(), books, new ArrayList<Person>());
+            if (!checkIfLoaded(new ArrayList<Library>(), books, new ArrayList<Person>())) {
+                throw new ObjectsAreNotFullyLoadedException();
+            }
             allTime[i] = simpleProfiler.stop();
             deleteSimple(books);
 
@@ -228,7 +230,9 @@ public abstract class ORMTest {
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             simpleProfiler.start();
             Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchSize, booksBatchSize, personsBatchSize);
-            checkIfLoaded(data.first, data.second.first, data.second.second);
+            if (checkIfLoaded(data.first, data.second.first, data.second.second)) {
+                throw new ObjectsAreNotFullyLoadedException();
+            }
             allTime[i] = simpleProfiler.stop();
             deleteComplex(new ArrayList<Library>(), data.second.first, data.second.second);
 
@@ -330,6 +334,17 @@ public abstract class ORMTest {
         return deleteComplexBenchmark(BOOKS_COMPLEX_BATCH_SIZE, LIBRARIES_COMPLEX_BATCH_SIZE, PERSONS_COMPLEX_BATCH_SIZE);
     }
     
+    
+    public static class ObjectsAreNotFullyLoadedException extends Exception {
+        public ObjectsAreNotFullyLoadedException() {
+            super("some objects were not fully loaded");
+        }
+
+        public ObjectsAreNotFullyLoadedException(String message) {
+            super(message);
+        }
+    }
+    
     public boolean checkIfLoaded(List<Library> libraries, List<Book> books, List<Person> persons) {
         for (Library library: libraries) {
             if (library.getName() == null) {
@@ -381,5 +396,6 @@ public abstract class ORMTest {
                 return false;
             }
         }
+        return true;
     }
 }
