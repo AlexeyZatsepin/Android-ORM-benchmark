@@ -17,7 +17,7 @@ public abstract class ORMTest {
     protected RandomObjectsGenerator randomObjectsGenerator = new RandomObjectsGenerator();
 
     protected static final int BOOKS_SIMPLE_BATCH_SIZE = 1000;
-    protected static final int LIBRARIES_BALANCED_BATCH_SIZE = 5;
+    protected static final int LIBRARIES_BALANCED_BATCH_SIZE = 50;
     protected static final int BOOKS_BALANCED_BATCH_SIZE = 50;
     protected static final int PERSONS_BALANCED_BATCH_SIZE = 50;
     protected static final int LIBRARIES_COMPLEX_BATCH_SIZE = 5;
