@@ -19,6 +19,8 @@ public class Book {
     @ColumnInfo(name="library_id")
     private long libraryId;
 
+    private Library library;
+
     public Book() {
     }
 
@@ -79,8 +81,12 @@ public class Book {
         this.libraryId = libraryId;
     }
 
+    public void setLibrary(Library library) {
+        this.library = library;
+    }
+
     public Library getLibrary(){
-        return null;
+        return library;
     }
     @Override
     public String toString() {

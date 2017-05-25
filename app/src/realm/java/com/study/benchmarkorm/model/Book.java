@@ -55,4 +55,6 @@ public class Book extends RealmObject{
     public void setBookId(int bookId) {
         this.bookId = bookId;
     }
+
+    public Library getLibrary(){return null;}
 }

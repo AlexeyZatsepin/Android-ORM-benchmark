@@ -18,7 +18,6 @@ public class Person extends RealmObject{
     }
 
     public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone) {
-
     }
 
     public Person(String s, String s1, Date date, String s2, long l, Library library) {
@@ -63,4 +62,6 @@ public class Person extends RealmObject{
     public void setPhone(long phone) {
         this.phone = phone;
     }
+
+    public Library getLibrary(){return null;}
 }

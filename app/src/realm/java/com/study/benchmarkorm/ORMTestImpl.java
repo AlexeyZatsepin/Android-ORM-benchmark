@@ -52,18 +52,18 @@ public class ORMTestImpl extends ORMTest{
     public void updateSimple(List<Book> books) {}
 
 
-    public void updateSimple(RealmList<Book> books) {
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(books);
-        realm.commitTransaction();
-    }
+//    public void updateSimple(RealmList<Book> books) {
+//        realm.beginTransaction();
+//        realm.copyToRealmOrUpdate(books);
+//        realm.commitTransaction();
+//    }
 
     @Override
-    public void deleteSimple(List<Book> books) {}
-
-    public void deleteSimple(RealmList<Book> books) {
+    public void deleteSimple(List<Book> books) {
         realm.beginTransaction();
-        realm.clear(Book.class);
+        for (Book book:books){
+            book.removeFromRealm();
+        }
         realm.commitTransaction();
     }
 
@@ -230,5 +230,46 @@ public class ORMTestImpl extends ORMTest{
             allTime[i] = simpleProfiler.stop();
         }
         return allTime;
+    }
+
+    @Override
+    public boolean checkIfLoaded(List<Library> libraries, List<Book> books, List<Person> persons) {
+        for (Library library: libraries) {
+            if (library.getName() == null) {
+                return false;
+            }
+            if (library.getAddress() == null) {
+                return false;
+            }
+            if (library.getEmployees() == null){
+                return false;
+            }
+            if (library.getBooks() == null){
+                return false;
+            }
+        }
+        for (Person person: persons) {
+            if (person.getFirstName() == null) {
+                return false;
+            }
+            if (person.getSecondName() == null) {
+                return false;
+            }
+            if (person.getBirthdayDate() == null) {
+                return false;
+            }
+            if (person.getGender() == null) {
+                return false;
+            }
+        }
+        for (Book book: books) {
+            if (book.getAuthor() == null) {
+                return false;
+            }
+            if (book.getTitle() == null) {
+                return false;
+            }
+        }
+        return true;
     }
 }

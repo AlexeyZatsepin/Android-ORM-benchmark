@@ -2,7 +2,6 @@ package com.study.benchmarkorm;
 
 import android.content.Context;
 import android.util.Pair;
-import android.widget.TextView;
 
 import com.study.benchmarkorm.model.Book;
 import com.study.benchmarkorm.model.Library;
@@ -238,7 +237,6 @@ public abstract class ORMTest {
 
             System.gc();
         }
-
         return allTime;
     }
 
@@ -275,7 +273,6 @@ public abstract class ORMTest {
             simpleProfiler.start();
             updateComplex(libraries, books, persons);
             allTime[i] = simpleProfiler.stop();
-
 
             System.gc();
         }
