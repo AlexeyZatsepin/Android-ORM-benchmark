@@ -28,8 +28,6 @@ public class Person {
     @ColumnInfo(name="library_id")
     private long libraryId;
 
-    private Library library;
-
     public Person() {
     }
 
@@ -94,12 +92,9 @@ public class Person {
     public long getLibraryId() {
         return libraryId;
     }
-    public Library getLibrary(){
-        return library;
-    }
 
-    public void setLibrary(Library library) {
-        this.library = library;
+    public Library getLibrary(){
+        return Library.map.get(id);
     }
 
     public void setLibraryId(long libraryId) {

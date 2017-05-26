@@ -101,6 +101,9 @@ public class ORMTestImpl extends ORMTest {
         personList.close();
         CursorList<Library> libraryList = Query.many(Library.class,"SELECT * FROM Library LIMIT ?",String.valueOf(librariesQuantity)).get();
         List<Library> libraries = libraryList.asList();
+        for (Library lib:libraries){
+            Library.map.put(lib.getId(),lib);
+        }
         libraryList.close();
         return new Pair<>(libraries, new Pair<>(books, persons));
     }

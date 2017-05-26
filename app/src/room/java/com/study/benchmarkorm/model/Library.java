@@ -3,6 +3,7 @@ package com.study.benchmarkorm.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.util.LongSparseArray;
 
 
 @Entity
@@ -11,6 +12,8 @@ public class Library {
     public @PrimaryKey(autoGenerate = true) long id;
     private String address;
     private String name;
+
+    public static LongSparseArray<Library> map = new LongSparseArray<>();
 
     public Library() {
     }

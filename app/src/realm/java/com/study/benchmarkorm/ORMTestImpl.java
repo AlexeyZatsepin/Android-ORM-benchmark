@@ -214,15 +214,18 @@ public class ORMTestImpl extends ORMTest{
 
             simpleProfiler.start();
             realm.beginTransaction();
-            for (Library library: libraries) {
+            for (int j = 0; j < libraries.size(); j++) {
+                Library library = libraries.get(j);
                 library.setName(randomObjectsGenerator.nextString());
             }
 
-            for (Book book: books) {
+            for (int i1 = 0; i1 < books.size(); i1++) {
+                Book book = books.get(i1);
                 book.setAuthor(randomObjectsGenerator.nextString());
             }
 
-            for (Person person: persons) {
+            for (int i1 = 0; i1 < persons.size(); i1++) {
+                Person person = persons.get(i1);
                 person.setFirstName(randomObjectsGenerator.nextString());
                 person.setSecondName(randomObjectsGenerator.nextString());
             }

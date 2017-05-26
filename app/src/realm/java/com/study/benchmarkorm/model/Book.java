@@ -1,6 +1,7 @@
 package com.study.benchmarkorm.model;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Book extends RealmObject{
@@ -9,6 +10,9 @@ public class Book extends RealmObject{
     private String title;
     private int pagesCount;
     private int bookId;
+
+    @Ignore
+    private Library library;
 
     public Book() {
     }
@@ -56,5 +60,9 @@ public class Book extends RealmObject{
         this.bookId = bookId;
     }
 
-    public Library getLibrary(){return null;}
+    public Library getLibrary(){return library;}
+
+    public void setLibrary(Library library) {
+        this.library = library;
+    }
 }

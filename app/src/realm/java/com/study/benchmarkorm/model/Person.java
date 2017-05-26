@@ -4,6 +4,7 @@ package com.study.benchmarkorm.model;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Person extends RealmObject{
@@ -13,6 +14,9 @@ public class Person extends RealmObject{
     private Date birthdayDate;
     private String gender;
     private long phone;
+
+    @Ignore
+    private Library library;
 
     public Person() {
     }
@@ -63,5 +67,9 @@ public class Person extends RealmObject{
         this.phone = phone;
     }
 
-    public Library getLibrary(){return null;}
+    public Library getLibrary(){return library;}
+
+    public void setLibrary(Library library) {
+        this.library = library;
+    }
 }

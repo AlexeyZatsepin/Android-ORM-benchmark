@@ -108,7 +108,7 @@ public abstract class ORMTest {
         return allTime;
     }
 
-    public float[] readSimple() {
+    public float[] readSimple() throws ObjectsAreNotFullyLoadedException {
         float[] allTime = new float[NUMBER_OF_PASSES];
         SimpleProfiler simpleProfiler = new SimpleProfiler();
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
@@ -216,11 +216,11 @@ public abstract class ORMTest {
         return allTime;
     }
 
-    public float[] readBalanced() {
+    public float[] readBalanced() throws ObjectsAreNotFullyLoadedException {
         return readComplexBenchmark(BOOKS_BALANCED_BATCH_SIZE, LIBRARIES_BALANCED_BATCH_SIZE, PERSONS_BALANCED_BATCH_SIZE);
     }
 
-    protected float[] readComplexBenchmark(int booksBatchSize, int librariesBatchSize, int personsBatchSize) {
+    protected float[] readComplexBenchmark(int booksBatchSize, int librariesBatchSize, int personsBatchSize) throws ObjectsAreNotFullyLoadedException {
         booksBatchSize *= librariesBatchSize;
         personsBatchSize *= librariesBatchSize;
 
@@ -319,7 +319,7 @@ public abstract class ORMTest {
                 LIBRARIES_COMPLEX_BATCH_SIZE, PERSONS_COMPLEX_BATCH_SIZE, writeNumber);
     }
 
-    public float[] readComplex() {
+    public float[] readComplex() throws ObjectsAreNotFullyLoadedException {
         return readComplexBenchmark(BOOKS_COMPLEX_BATCH_SIZE, LIBRARIES_COMPLEX_BATCH_SIZE, PERSONS_COMPLEX_BATCH_SIZE);
     }
 

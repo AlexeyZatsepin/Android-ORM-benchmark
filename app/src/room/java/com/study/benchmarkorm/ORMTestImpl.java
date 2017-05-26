@@ -79,6 +79,9 @@ public class ORMTestImpl extends ORMTest {
     public Pair<List<Library>, Pair<List<Book>, List<Person>>> readComplex(int librariesQuantity, int booksQuantity, int personsQuantity) {
         mDb.beginTransaction();
         List<Library> libraries = mDb.libraryModel().findAll(librariesQuantity);
+        for (Library library:libraries){
+            Library.map.put(library.getId(),library);
+        } // bottleneck
         List<Book> books = mDb.bookModel().findAll(booksQuantity);
         List<Person> persons  = mDb.personModel().loadAll(personsQuantity);
         mDb.setTransactionSuccessful();

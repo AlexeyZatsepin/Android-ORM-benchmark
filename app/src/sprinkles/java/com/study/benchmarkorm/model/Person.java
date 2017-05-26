@@ -97,4 +97,8 @@ public class Person extends Model {
     public void setLibId(long libId) {
         this.libId = libId;
     }
+
+    public Library getLibrary(){
+        return Library.map.get(id);
+    }
 }

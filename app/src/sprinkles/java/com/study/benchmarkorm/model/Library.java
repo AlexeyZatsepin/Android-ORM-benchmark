@@ -18,6 +18,8 @@ public class Library extends Model{
     @Column("name")
     private String name;
 
+    public static LongSparseArray<Library> map = new LongSparseArray<>();
+
     public Library() {
     }
 
