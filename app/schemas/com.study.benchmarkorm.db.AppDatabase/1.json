@@ -1,0 +1,177 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "00777afde1f347acb68cc090939682fa",
+    "entities": [
+      {
+        "tableName": "Person",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `firstName` TEXT, `secondName` TEXT, `birthdayDate` INTEGER, `gender` TEXT, `phone` INTEGER, `library_id` INTEGER, FOREIGN KEY(`library_id`) REFERENCES `Library`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "firstName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "secondName",
+            "columnName": "secondName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "birthdayDate",
+            "columnName": "birthdayDate",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "libraryId",
+            "columnName": "library_id",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Person_library_id",
+            "unique": false,
+            "columnNames": [
+              "library_id"
+            ],
+            "createSql": "CREATE  INDEX `index_Person_library_id` ON `${TABLE_NAME}` (`library_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Library",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "library_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Book",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `author` TEXT, `title` TEXT, `pagesCount` INTEGER, `bookId` INTEGER, `library_id` INTEGER, FOREIGN KEY(`library_id`) REFERENCES `Library`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "author",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "pagesCount",
+            "columnName": "pagesCount",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "bookId",
+            "columnName": "bookId",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "libraryId",
+            "columnName": "library_id",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Book_library_id",
+            "unique": false,
+            "columnNames": [
+              "library_id"
+            ],
+            "createSql": "CREATE  INDEX `index_Book_library_id` ON `${TABLE_NAME}` (`library_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Library",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "library_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Library",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `address` TEXT, `name` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"00777afde1f347acb68cc090939682fa\")"
+    ]
+  }
+}

@@ -93,6 +93,6 @@ public class Book extends Model{
     }
 
     public Library getLibrary(){
-        return Library.map.get(id);
+        return Library.map.get(libId);
     }
 }

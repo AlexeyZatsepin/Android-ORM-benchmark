@@ -80,7 +80,7 @@ public class Book {
     }
 
     public Library getLibrary(){
-        return Library.map.get(id);
+        return Library.map.get(libraryId);
     }
 
     @Override

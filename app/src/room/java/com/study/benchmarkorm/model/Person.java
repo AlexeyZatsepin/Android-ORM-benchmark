@@ -94,7 +94,7 @@ public class Person {
     }
 
     public Library getLibrary(){
-        return Library.map.get(id);
+        return Library.map.get(libraryId);
     }
 
     public void setLibraryId(long libraryId) {

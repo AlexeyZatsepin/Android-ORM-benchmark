@@ -64,15 +64,21 @@ public class ORMTestImpl extends ORMTest {
 
     @Override
     public void writeComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
+        mDb.beginTransaction();
         for (Library lib:libraries){
             mDb.libraryModel().insert(lib);
         }
+        mDb.setTransactionSuccessful();
+        mDb.endTransaction();
+        mDb.beginTransaction();
         for (Person person:persons){
             mDb.personModel().insert(person);
         }
         for (Book book:books){
             mDb.bookModel().insert(book);
         }
+        mDb.setTransactionSuccessful();
+        mDb.endTransaction();
     }
 
     @Override
@@ -114,6 +120,9 @@ public class ORMTestImpl extends ORMTest {
         for (Book book:books){
             mDb.bookModel().delete(book);
         }
+        mDb.setTransactionSuccessful();
+        mDb.endTransaction();
+        mDb.beginTransaction();
         for (Library lib:libraries){
             mDb.libraryModel().delete(lib);
         }
