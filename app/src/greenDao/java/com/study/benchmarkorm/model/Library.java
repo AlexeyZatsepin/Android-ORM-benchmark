@@ -11,7 +11,11 @@ public class Library{
     private Long id;
     private String address;
     private String name;
-
+    
+    @Keep public Library(String address, String name) {
+        this.address = address;
+        this.name = name;
+    }
 
     @Generated(hash = 1634895655)
     public Library(Long id, String address, String name) {
