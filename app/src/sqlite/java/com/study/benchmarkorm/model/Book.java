@@ -13,7 +13,7 @@ public class Book{
 
     private int bookId;
 
-    private Library library;
+    private long libraryId;
 
     public Book() {
     }
@@ -31,16 +31,16 @@ public class Book{
         this.title = title;
         this.pagesCount = pagesCount;
         this.bookId = bookId;
-        this.library = library;
+        this.libraryId = library.getId();
         library.addBook(this);
     }
 
     public Library getLibrary() {
-        return library;
+        return Library.map.get(libraryId);
     }
 
     public void setLibrary(Library library) {
-        this.library = library;
+        this.libraryId = library.getId();
     }
 
     public long getId() {
@@ -83,4 +83,11 @@ public class Book{
         this.bookId = bookId;
     }
 
+    public long getLibraryId() {
+        return libraryId;
+    }
+
+    public void setLibraryId(long libraryId) {
+        this.libraryId = libraryId;
+    }
 }

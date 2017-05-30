@@ -15,17 +15,18 @@ public class Person{
 
     private String gender;
     private long phone;
-    private Library library;
+    private long libraryId;
 
     public Person() {
     }
+
     public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone,Library library) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthdayDate = birthdayDate;
         this.gender = gender;
         this.phone = phone;
-        this.library = library;
+        this.libraryId = library.getId();
         library.addPerson(this);
     }
     public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
@@ -37,11 +38,11 @@ public class Person{
         this.phone = phone;
     }
     public Library getLibrary() {
-        return library;
+        return Library.map.get(libraryId);
     }
 
     public void setLibrary(Library library) {
-        this.library = library;
+        this.libraryId = library.getId();
     }
 
     public long getId() {
@@ -90,5 +91,13 @@ public class Person{
 
     public void setPhone(long phone) {
         this.phone = phone;
+    }
+
+    public long getLibraryId() {
+        return libraryId;
+    }
+
+    public void setLibraryId(long libraryId) {
+        this.libraryId = libraryId;
     }
 }

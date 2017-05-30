@@ -1,5 +1,7 @@
 package com.study.benchmarkorm.model;
 
+import android.util.LongSparseArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,8 @@ public class Library{
     private String name;
     private List<Person> employees;
     private List<Book> books;
+
+    public static LongSparseArray<Library> map = new LongSparseArray<>();
 
     public Library() {
         this.books = new ArrayList<>();
@@ -34,7 +38,9 @@ public class Library{
         return id;
     }
     public void setId(long id) {
+        map.put(id,this);
         this.id = id;
+
     }
     public String getAddress() {
         return address;

@@ -29,7 +29,7 @@ public class CursorWrappers {
             book.setId(id);
             book.setPagesCount(pages);
             book.setBookId(bookId);
-            book.setLibrary(DatabaseManager.get().getLibraryDao().get(libId));
+            book.setLibraryId(libId);
             return book;
         }
     }
@@ -69,7 +69,7 @@ public class CursorWrappers {
             person.setGender(gender);
             person.setBirthdayDate(date);
             person.setPhone(phone);
-            person.setLibrary(DatabaseManager.get().getLibraryDao().get(libId));
+            person.setLibraryId(libId);
             return person;
         }
     }

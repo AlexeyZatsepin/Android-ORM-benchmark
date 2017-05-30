@@ -229,7 +229,7 @@ public abstract class ORMTest {
         for (int i = 0; i < NUMBER_OF_PASSES; i++) {
             simpleProfiler.start();
             Pair<List<Library>, Pair<List<Book>, List<Person>>> data = readComplex(librariesBatchSize, booksBatchSize, personsBatchSize);
-            if (checkIfLoaded(data.first, data.second.first, data.second.second)) {
+            if (!checkIfLoaded(data.first, data.second.first, data.second.second)) {
                 throw new ObjectsAreNotFullyLoadedException();
             }
             allTime[i] = simpleProfiler.stop();
