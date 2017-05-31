@@ -10,22 +10,17 @@ public class Book extends RealmObject{
     private String title;
     private int pagesCount;
     private int bookId;
-
-    @Ignore
     private Library library;
 
     public Book() {
     }
 
-    public Book(String author, String title, int pagesCount, int bookId) {
+    public Book(String author, String title, int pagesCount, int bookId, Library library) {
         this.author = author;
         this.title = title;
         this.pagesCount = pagesCount;
         this.bookId = bookId;
-    }
-
-    public Book(String s, String s1, int i, int i1, Library library) {
-
+        this.library = library;
     }
 
     public String getAuthor() {
