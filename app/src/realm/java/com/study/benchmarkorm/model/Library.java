@@ -1,28 +1,19 @@
 package com.study.benchmarkorm.model;
 
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 public class Library extends RealmObject{
 
     private String address;
     private String name;
-    private RealmList<Person> employees;
-    private RealmList<Book> books;
 
     public Library() {
     }
 
-    public Library(String address, String name, RealmList<Book> books, RealmList<Person> employees) {
+    public Library(String address, String name) {
         this.address = address;
         this.name = name;
-        this.employees = employees;
-        this.books = books;
-    }
-
-    public Library(String s, String s1) {
     }
 
     public String getAddress() {
@@ -39,22 +30,6 @@ public class Library extends RealmObject{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public RealmList<Person> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(RealmList<Person> employees) {
-        this.employees = employees;
-    }
-
-    public RealmList<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(RealmList<Book> books) {
-        this.books = books;
     }
 
 }
