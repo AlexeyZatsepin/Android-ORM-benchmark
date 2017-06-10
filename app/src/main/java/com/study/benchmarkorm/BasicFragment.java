@@ -106,16 +106,16 @@ public class BasicFragment extends Fragment {
                 tv_delete.setText(R.string.simple_delete);
                 break;
             case 1:
-                tv_read.setText(R.string.balanced_read);
-                tv_write.setText(R.string.balanced_write);
-                tv_update.setText(R.string.balanced_update);
-                tv_delete.setText(R.string.balanced_delete);
-                break;
-            case 2:
                 tv_read.setText(R.string.complex_read);
                 tv_write.setText(R.string.complex_write);
                 tv_update.setText(R.string.complex_update);
                 tv_delete.setText(R.string.complex_delete);
+                break;
+            case 2:
+                tv_read.setText(R.string.balanced_read);
+                tv_write.setText(R.string.balanced_write);
+                tv_update.setText(R.string.balanced_update);
+                tv_delete.setText(R.string.balanced_delete);
                 break;
         }
         if (ormTest.isEmpty()) {

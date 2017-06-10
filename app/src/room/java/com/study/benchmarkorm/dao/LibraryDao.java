@@ -27,6 +27,9 @@ public interface LibraryDao {
     @Query("SELECT * From Library LIMIT :limit")
     List<Library> findAll(int limit);
 
+    @Query("SELECT * From Library where id = :id")
+    Library findById(int id);
+
     @Insert(onConflict = IGNORE)
     void insert(Library library);
 

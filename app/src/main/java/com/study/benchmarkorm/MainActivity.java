@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mTabLayout.addTab(mTabLayout.newTab().setText("Simple"),0);
-        mTabLayout.addTab(mTabLayout.newTab().setText("Balanced"),1);
-        mTabLayout.addTab(mTabLayout.newTab().setText("Complex"),2);
+        mTabLayout.addTab(mTabLayout.newTab().setText("Complex"),1);
+        mTabLayout.addTab(mTabLayout.newTab().setText("Balanced"),2);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
