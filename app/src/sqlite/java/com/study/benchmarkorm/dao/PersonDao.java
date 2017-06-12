@@ -3,10 +3,11 @@ package com.study.benchmarkorm.dao;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.study.benchmarkorm.db.CursorWrappers;
+import com.study.benchmarkorm.db.CursorWrappers.LibraryCursorWrapper;
 import com.study.benchmarkorm.db.CursorWrappers.PersonCursorWrapper;
 import com.study.benchmarkorm.db.LibraryDbSchema;
 import com.study.benchmarkorm.db.LibraryDbSchema.PersonTable;
+import com.study.benchmarkorm.model.Library;
 import com.study.benchmarkorm.model.Person;
 
 import java.util.ArrayList;
@@ -47,9 +48,16 @@ public class PersonDao extends AbstractDao<Person> {
     public List<Person> get(int limit) {
         List<Person> result = new ArrayList<>();
         Cursor cursor = mDatabase.query(LibraryDbSchema.PersonTable.NAME, null, null, null, null, null, null, String.valueOf(limit));
-        CursorWrappers.PersonCursorWrapper personCursorWrapper = new CursorWrappers.PersonCursorWrapper(cursor);
+        PersonCursorWrapper personCursorWrapper = new PersonCursorWrapper(cursor);
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            result.add(personCursorWrapper.getPerson());
+            Person person = personCursorWrapper.getPerson();
+            result.add(person);
+            if (Library.map.get(person.getLibraryId())==null){
+                LibraryCursorWrapper libraryCursor = new LibraryCursorWrapper(mDatabase.rawQuery("SELECT * FROM "+ LibraryDbSchema.LibraryTable.NAME+ " where "+ LibraryDbSchema.LibraryTable.Cols.ID +"="+ person.getLibraryId(),null));
+                libraryCursor.moveToFirst();
+                Library.map.put(person.getLibraryId(),libraryCursor.getLibrary());
+            }
+
         }
         cursor.close();
         return result;

@@ -40,8 +40,15 @@ public class ORMTestImpl extends ORMTest {
     @Override
     public List<Book> readSimple(int booksQuantity) {
 //        CursorList<Book> bookList = Query.all(Book.class).get();
-        CursorList<Book> bookList = Query.many(Book.class,"SELECT * FROM Book LIMIT ?",String.valueOf(booksQuantity)).get();
+        CursorList<Book> bookList = Query.many(Book.class,"SELECT * FROM Book LIMIT ?",
+                String.valueOf(booksQuantity)).get();
         List<Book> result = bookList.asList();
+        for (Book book: result){
+            if (book.getLibrary()==null){
+                Library.map.put(book.getLibId(),Query.one(Library.class,"SELECT * FROM Library WHERE id = ?",
+                        String.valueOf(book.getLibId())).get());
+            }
+        }
         bookList.close();
         return result;
     }

@@ -37,6 +37,11 @@ public class ORMTestImpl extends ORMTest {
     public List<Book> readSimple(int booksQuantity) {
         mDb.beginTransaction();
         List<Book> books = mDb.bookModel().findAll(booksQuantity);
+        for (Book book: books){
+            if (book.getLibrary()==null){
+                Library.map.put(book.getLibraryId(),mDb.libraryModel().findById(book.getLibraryId()));
+            }
+        }
         mDb.setTransactionSuccessful();
         mDb.endTransaction();
         return books;

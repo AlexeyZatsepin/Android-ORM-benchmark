@@ -4,8 +4,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.study.benchmarkorm.db.CursorWrappers.BookCursorWrapper;
+import com.study.benchmarkorm.db.CursorWrappers.LibraryCursorWrapper;
 import com.study.benchmarkorm.db.LibraryDbSchema.BookTable;
+import com.study.benchmarkorm.db.LibraryDbSchema.LibraryTable;
 import com.study.benchmarkorm.model.Book;
+import com.study.benchmarkorm.model.Library;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +50,13 @@ public class BookDao extends AbstractDao<Book> {
         Cursor cursor = mDatabase.query(BookTable.NAME,null,null,null,null,null,null,String.valueOf(limit));
         BookCursorWrapper bookCursorWrapper = new BookCursorWrapper(cursor);
         for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            result.add(bookCursorWrapper.getBook());
+            Book book = bookCursorWrapper.getBook();
+            result.add(book);
+            if (Library.map.get(book.getLibraryId())==null){
+                LibraryCursorWrapper libraryCursor = new LibraryCursorWrapper(mDatabase.rawQuery("SELECT * FROM "+LibraryTable.NAME+ " where "+ LibraryTable.Cols.ID +" = "+ book.getLibraryId(),null));
+                libraryCursor.moveToFirst();
+                Library.map.put(book.getLibraryId(),libraryCursor.getLibrary());
+            }
         }
         cursor.close();
         return result;

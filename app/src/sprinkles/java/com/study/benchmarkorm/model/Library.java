@@ -5,6 +5,8 @@ import se.emilsjolander.sprinkles.annotations.AutoIncrementPrimaryKey;
 import se.emilsjolander.sprinkles.annotations.Column;
 import se.emilsjolander.sprinkles.annotations.Table;
 
+import android.util.LongSparseArray;
+
 @Table("Library")
 public class Library extends Model{
 
