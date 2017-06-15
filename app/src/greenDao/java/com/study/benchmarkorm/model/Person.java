@@ -20,7 +20,9 @@ public class Person{
     private String gender;
     private long phone;
 
-    @ToOne(joinProperty = "id")
+    private long libraryId;
+
+    @ToOne(joinProperty = "libraryId")
     private Library library;
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -53,6 +55,7 @@ public class Person{
         this.gender = gender;
         this.phone = phone;
         this.library = library;
+        this.libraryId = library.getId();
     }
 
     public Long getId() {
