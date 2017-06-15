@@ -16,7 +16,9 @@ public class Book{
     private String title;
     private int pagesCount;
     private int bookId;
-    @ToOne(joinProperty = "id")
+    private long libraryId;
+
+    @ToOne(joinProperty = "libraryId")
     private Library library;
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -34,6 +36,7 @@ public class Book{
         this.pagesCount = pagesCount;
         this.bookId = bookId;
         this.library = library;
+        this.libraryId = library.getId();
     }
 
     @Generated(hash = 2026124379)
