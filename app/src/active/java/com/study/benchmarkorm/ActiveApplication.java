@@ -17,6 +17,7 @@ public class ActiveApplication extends Application {
                 .addModelClass(Person.class)
                 .addModelClass(Book.class)
                 .addModelClass(Library.class)
+                .setCacheSize(1)
                 .create();
 
         ActiveAndroid.initialize(dbConfiguration);
