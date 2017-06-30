@@ -117,4 +117,62 @@ class ORMTestImpl extends ORMTest {
 //            libraryDao.delete(lib);//TODO try deleteInTx
 //        }
     }
+    
+        @Override
+    public boolean checkIfLoaded(List<Library> libraries, List<Book> books, List<Person> persons) {
+        for (Library library: libraries) {
+            if (library.getName() == null) {
+                return false;
+            }
+            if (library.getAddress() == null) {
+                return false;
+            }
+            libraryDao.detach(library);
+        }
+        for (Person person: persons) {
+            if (person.getFirstName() == null) {
+                return false;
+            }
+            if (person.getSecondName() == null) {
+                return false;
+            }
+            if (person.getBirthdayDate() == null) {
+                return false;
+            }
+            if (person.getGender() == null) {
+                return false;
+            }
+            Library library = person.getLibrary();
+            if (library == null) {
+                return false;
+            }
+            if (library.getName() == null) {
+                return false;
+            }
+            if (library.getAddress() == null) {
+                return false;
+            }
+            libraryDao.detach(library);
+        }
+        for (Book book: books) {
+            if (book.getAuthor() == null) {
+                return false;
+            }
+            if (book.getTitle() == null) {
+                return false;
+            }
+            Library library = book.getLibrary();
+            if (library == null) {
+                return false;
+            }
+            if (library.getName() == null) {
+                return false;
+            }
+            if (library.getAddress() == null) {
+                return false;
+            }
+            libraryDao.detach(library);
+        }
+        return true;
+    }
 }
