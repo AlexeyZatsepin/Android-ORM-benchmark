@@ -63,6 +63,10 @@ public class ORMTestImpl extends ORMTest{
         realm.beginTransaction();
         realm.copyToRealm(libraries);
         realm.commitTransaction();
+        realm.beginTransaction();
+        realm.copyToRealm(books);
+        realm.copyToRealm(persons);
+        realm.commitTransaction();
     }
 
     @Override
