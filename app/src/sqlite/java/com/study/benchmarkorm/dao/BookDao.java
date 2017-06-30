@@ -47,18 +47,19 @@ public class BookDao extends AbstractDao<Book> {
 
     public List<Book> get(int limit) {
         List<Book> result = new ArrayList<>();
-        Cursor cursor = mDatabase.query(BookTable.NAME,null,null,null,null,null,null,String.valueOf(limit));
-        BookCursorWrapper bookCursorWrapper = new BookCursorWrapper(cursor);
-        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            Book book = bookCursorWrapper.getBook();
-            result.add(book);
-            if (Library.map.get(book.getLibraryId())==null){
-                LibraryCursorWrapper libraryCursor = new LibraryCursorWrapper(mDatabase.rawQuery("SELECT * FROM "+LibraryTable.NAME+ " where "+ LibraryTable.Cols.ID +" = "+ book.getLibraryId(),null));
-                libraryCursor.moveToFirst();
-                Library.map.put(book.getLibraryId(),libraryCursor.getLibrary());
+        try (Cursor cursor = mDatabase.query(BookTable.NAME, null, null, null, null, null, null, String.valueOf(limit))) {
+            BookCursorWrapper bookCursorWrapper = new BookCursorWrapper(cursor);
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                Book book = bookCursorWrapper.getBook();
+                result.add(book);
+                try (LibraryCursorWrapper libraryCursor = new LibraryCursorWrapper(
+                        mDatabase.rawQuery("SELECT * FROM " + LibraryTable.NAME + " where " +
+                                LibraryTable.Cols.ID + " = " + book.getLibraryId(), null))) {
+                    libraryCursor.moveToFirst();
+                    book.setLibrary(libraryCursor.getLibrary());
+                }
             }
         }
-        cursor.close();
         return result;
     }
 
