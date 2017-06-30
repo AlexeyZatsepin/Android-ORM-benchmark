@@ -1,7 +1,7 @@
 package com.study.benchmarkorm.model;
 
 
-public class Book{
+public class Book {
 
     private long id;
 
@@ -14,6 +14,8 @@ public class Book{
     private int bookId;
 
     private long libraryId;
+    
+    private Library library;
 
     public Book() {
     }
@@ -33,14 +35,6 @@ public class Book{
         this.bookId = bookId;
         this.libraryId = library.getId();
         library.addBook(this);
-    }
-
-    public Library getLibrary() {
-        return Library.map.get(libraryId);
-    }
-
-    public void setLibrary(Library library) {
-        this.libraryId = library.getId();
     }
 
     public long getId() {
@@ -89,5 +83,13 @@ public class Book{
 
     public void setLibraryId(long libraryId) {
         this.libraryId = libraryId;
+    }
+    
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 }
