@@ -39,7 +39,7 @@ public class ORMTestImpl extends ORMTest {
         List<Book> books = mDb.bookModel().findAll(booksQuantity);
         for (Book book: books){
             if (book.getLibrary()==null){
-                Library.map.put(book.getLibraryId(),mDb.libraryModel().findById(book.getLibraryId()));
+                Library.map.put(book.getLibraryId(),mDb.libraryModel().findById((int)(long)book.getLibraryId()));
             }
         }
         mDb.setTransactionSuccessful();
