@@ -16,6 +16,8 @@ public class Person{
     private String gender;
     private long phone;
     private long libraryId;
+    
+    private Library library;
 
     public Person() {
     }
@@ -36,13 +38,6 @@ public class Person{
         this.birthdayDate = birthdayDate;
         this.gender = gender;
         this.phone = phone;
-    }
-    public Library getLibrary() {
-        return Library.map.get(libraryId);
-    }
-
-    public void setLibrary(Library library) {
-        this.libraryId = library.getId();
     }
 
     public long getId() {
@@ -99,5 +94,13 @@ public class Person{
 
     public void setLibraryId(long libraryId) {
         this.libraryId = libraryId;
+    }
+    
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 }
