@@ -37,7 +37,7 @@ public class ORMTestImpl extends ORMTest{
         realm.beginTransaction();
         RealmResults<Book> result = realm.where(Book.class).findAll();
         realm.commitTransaction();
-        return result;
+        return result.subList(0, booksQuantity);
     }
 
     @Override
@@ -50,8 +50,9 @@ public class ORMTestImpl extends ORMTest{
     @Override
     public void deleteSimple(List<Book> books) {
         realm.beginTransaction();
-        for (int i = 0; i < books.size(); i++) {
-            Book book = books.get(i);
+        int size = books.size();
+        for (int i = 0; i < size; i++) {
+            Book book = books.get(0);
             book.removeFromRealm();
         }
         realm.commitTransaction();
@@ -67,9 +68,9 @@ public class ORMTestImpl extends ORMTest{
     @Override
     public Pair<List<Library>, Pair<List<Book>, List<Person>>> readComplex(int librariesQuantity, int booksQuantity, int personsQuantity) {
         realm.beginTransaction();
-        List<Book> books = realm.where(Book.class).findAll();
-        List<Person> persons = realm.where(Person.class).findAll();
-        List<Library> libraries = realm.where(Library.class).findAll();
+        List<Book> books = realm.where(Book.class).findAll().subList(0, booksQuantity);
+        List<Person> persons = realm.where(Person.class).findAll().subList(0, personsQuantity);
+        List<Library> libraries = realm.where(Library.class).findAll().subList(0, librariesQuantity);
         realm.commitTransaction();
         return new Pair<>(libraries, new Pair<>(books, persons));
     }
@@ -86,16 +87,22 @@ public class ORMTestImpl extends ORMTest{
     @Override
     public void deleteComplex(List<Library> libraries, List<Book> books, List<Person> persons) {
         realm.beginTransaction();
-        for (int i = 0; i < books.size(); i++) {
-            Book book = books.get(i);
+        int size = books.size();
+        for (int i = 0; i < size; i++) {
+            Book book = books.get(0);
             book.removeFromRealm();
         }
-        for (int i = 0; i < persons.size(); i++) {
-            Person person = persons.get(i);
+        size = persons.size();
+        for (int i = 0; i < size; i++) {
+            Person person = persons.get(0);
             person.removeFromRealm();
         }
-        for (int i = 0; i < libraries.size(); i++) {
-            Library library = libraries.get(i);
+        realm.commitTransaction();
+        
+        realm.beginTransaction();
+        size = libraries.size();
+        for (int i = 0; i < size; i++) {
+            Library library = libraries.get(0);
             library.removeFromRealm();
         }
         realm.commitTransaction();
