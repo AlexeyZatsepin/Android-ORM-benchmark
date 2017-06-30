@@ -34,7 +34,7 @@ public class Book {
         this.pagesCount = pagesCount;
         this.bookId = bookId;
         this.libraryId = library.getId();
-        library.addBook(this);
+        this.Library = library;
     }
 
     public long getId() {
