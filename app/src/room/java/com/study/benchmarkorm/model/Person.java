@@ -27,18 +27,22 @@ public class Person {
 
     @ColumnInfo(name="library_id")
     private long libraryId;
+        
+    @Ignore
+    private Library library;
 
     public Person() {
     }
 
     @Ignore
-    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone, Library libraryId) {
+    public Person(String firstName, String secondName, Date birthdayDate, String gender, long phone, Library library) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthdayDate = birthdayDate;
         this.gender = gender;
         this.phone = phone;
-        this.libraryId = libraryId.id;
+        this.libraryId = library.id;
+        this.library = library;
     }
 
     public long getId() {
@@ -92,12 +96,16 @@ public class Person {
     public long getLibraryId() {
         return libraryId;
     }
-
-    public Library getLibrary(){
-        return Library.map.get(libraryId);
-    }
-
+        
     public void setLibraryId(long libraryId) {
         this.libraryId = libraryId;
+    }
+        
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 }
