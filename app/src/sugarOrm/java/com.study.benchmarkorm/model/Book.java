@@ -63,6 +63,14 @@ public class Book extends SugarRecord{
     public void setBookId(int bookId) {
         this.bookId = bookId;
     }
+    
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
+    }
 
     @Override
     public String toString() {
