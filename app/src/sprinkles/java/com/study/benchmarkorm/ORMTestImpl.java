@@ -39,17 +39,22 @@ public class ORMTestImpl extends ORMTest {
 
     @Override
     public List<Book> readSimple(int booksQuantity) {
-//        CursorList<Book> bookList = Query.all(Book.class).get();
-        CursorList<Book> bookList = Query.many(Book.class,"SELECT * FROM Book LIMIT ?",
-                String.valueOf(booksQuantity)).get();
-        List<Book> result = bookList.asList();
-        for (Book book: result){
-            if (book.getLibrary()==null){
-                Library.map.put(book.getLibId(),Query.one(Library.class,"SELECT * FROM Library WHERE id = ?",
-                        String.valueOf(book.getLibId())).get());
+        List<Book> result = null;
+        Transaction t = new Transaction();
+        try {
+            try (CursorList<Book> bookList = Query.many(Book.class, "SELECT * FROM Book LIMIT ?",
+                    String.valueOf(booksQuantity)).get()) {
+                result = bookList.asList();
+                for (Book book : result) {
+                    book.setLibrary(Query.one(Library.class, "SELECT * FROM Library WHERE _id = ?",
+                                String.valueOf(book.getLibId())).get());
+                }
+                t.setSuccessful(true);
             }
+        } finally {
+            t.finish();
         }
-        bookList.close();
+
         return result;
     }
 
@@ -100,18 +105,33 @@ public class ORMTestImpl extends ORMTest {
 
     @Override
     public Pair<List<Library>, Pair<List<Book>, List<Person>>> readComplex(int librariesQuantity, int booksQuantity, int personsQuantity) {
-        CursorList<Book> bookList = Query.many(Book.class,"SELECT * FROM Book LIMIT ?",String.valueOf(booksQuantity)).get();
-        List<Book> books = bookList.asList();
-        bookList.close();
-        CursorList<Person> personList = Query.many(Person.class,"SELECT * FROM Person LIMIT ?",String.valueOf(personsQuantity)).get();
-        List<Person> persons = personList.asList();
-        personList.close();
-        CursorList<Library> libraryList = Query.many(Library.class,"SELECT * FROM Library LIMIT ?",String.valueOf(librariesQuantity)).get();
-        List<Library> libraries = libraryList.asList();
-        for (Library lib:libraries){
-            Library.map.put(lib.getId(),lib);
+        Transaction t = new Transaction();
+
+        List<Book> books = null;
+        List<Person> persons = null;
+        List<Library> libraries = null;
+        try {
+            try (CursorList<Book> bookList = Query.many(Book.class, "SELECT * FROM Book LIMIT ?", String.valueOf(booksQuantity)).get()) {
+                books = bookList.asList();
+            }
+            for (Book book : books) {
+                book.setLibrary(Query.one(Library.class, "SELECT * FROM Library WHERE _id = ?",
+                        String.valueOf(book.getLibId())).get());
+            }
+            try (CursorList<Person> personList = Query.many(Person.class, "SELECT * FROM Person LIMIT ?", String.valueOf(personsQuantity)).get()) {
+                persons = personList.asList();
+            }
+            for (Person person : persons) {
+                person.setLibrary(Query.one(Library.class, "SELECT * FROM Library WHERE _id = ?",
+                        String.valueOf(person.getLibId())).get());
+            }
+            try (CursorList<Library> libraryList = Query.many(Library.class, "SELECT * FROM Library LIMIT ?", String.valueOf(librariesQuantity)).get()) {
+                libraries = libraryList.asList();
+            }
+            t.setSuccessful(true);
+        } finally {
+            t.finish();
         }
-        libraryList.close();
         return new Pair<>(libraries, new Pair<>(books, persons));
     }
 
