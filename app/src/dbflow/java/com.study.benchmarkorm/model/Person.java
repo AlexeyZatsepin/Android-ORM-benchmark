@@ -104,6 +104,14 @@ public class Person extends BaseModel{
     public void setPhone(long phone) {
         this.phone = phone;
     }
+    
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
+    }
 
     @Override
     public String toString() {
