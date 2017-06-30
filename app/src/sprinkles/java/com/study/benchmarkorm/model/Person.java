@@ -29,6 +29,8 @@ public class Person extends Model {
     @ForeignKey("Library(_id)")
     @Column("library_id")
     private long libId;
+    
+    private Library library;
 
     public Person() {
     }
@@ -99,6 +101,10 @@ public class Person extends Model {
     }
 
     public Library getLibrary(){
-        return Library.map.get(libId);
+        return library;
+    }
+    
+    public void setLibrary(Library library) {
+        this.library = library
     }
 }
