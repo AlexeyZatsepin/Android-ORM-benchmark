@@ -47,19 +47,17 @@ public class PersonDao extends AbstractDao<Person> {
 
     public List<Person> get(int limit) {
         List<Person> result = new ArrayList<>();
-        Cursor cursor = mDatabase.query(LibraryDbSchema.PersonTable.NAME, null, null, null, null, null, null, String.valueOf(limit));
-        PersonCursorWrapper personCursorWrapper = new PersonCursorWrapper(cursor);
-        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            Person person = personCursorWrapper.getPerson();
-            result.add(person);
-            if (Library.map.get(person.getLibraryId())==null){
-                LibraryCursorWrapper libraryCursor = new LibraryCursorWrapper(mDatabase.rawQuery("SELECT * FROM "+ LibraryDbSchema.LibraryTable.NAME+ " where "+ LibraryDbSchema.LibraryTable.Cols.ID +"="+ person.getLibraryId(),null));
-                libraryCursor.moveToFirst();
-                Library.map.put(person.getLibraryId(),libraryCursor.getLibrary());
+        try (Cursor cursor = mDatabase.query(LibraryDbSchema.PersonTable.NAME, null, null, null, null, null, null, String.valueOf(limit))) {
+            PersonCursorWrapper personCursorWrapper = new PersonCursorWrapper(cursor);
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                Person person = personCursorWrapper.getPerson();
+                result.add(person);
+                try (LibraryCursorWrapper libraryCursor = new LibraryCursorWrapper(mDatabase.rawQuery("SELECT * FROM " + LibraryDbSchema.LibraryTable.NAME + " where " + LibraryDbSchema.LibraryTable.Cols.ID + "=" + person.getLibraryId(), null))) {
+                    libraryCursor.moveToFirst();
+                    person.setLibrary(libraryCursor.getLibrary());
+                }
             }
-
         }
-        cursor.close();
         return result;
     }
 
