@@ -37,7 +37,7 @@ public class ORMTestImpl extends ORMTest{
         realm.beginTransaction();
         RealmResults<Book> result = realm.where(Book.class).findAll();
         realm.commitTransaction();
-        return result.subList(0, booksQuantity);
+        return result.subList(0, Math.min(booksQuantity, result.size()));
     }
 
     @Override
@@ -68,9 +68,12 @@ public class ORMTestImpl extends ORMTest{
     @Override
     public Pair<List<Library>, Pair<List<Book>, List<Person>>> readComplex(int librariesQuantity, int booksQuantity, int personsQuantity) {
         realm.beginTransaction();
-        List<Book> books = realm.where(Book.class).findAll().subList(0, booksQuantity);
-        List<Person> persons = realm.where(Person.class).findAll().subList(0, personsQuantity);
-        List<Library> libraries = realm.where(Library.class).findAll().subList(0, librariesQuantity);
+        List<Book> books = realm.where(Book.class).findAll();
+        books = books.subList(0, Math.min(booksQuantity, books.size()));
+        List<Person> persons = realm.where(Person.class).findAll();
+        persons = persons.subList(0, Math.min(personsQuantity, persons.size()));
+        List<Library> libraries = realm.where(Library.class).findAll();
+        libraries = libraries.subList(0, Math.min(librariesQuantity, libraries.size()));
         realm.commitTransaction();
         return new Pair<>(libraries, new Pair<>(books, persons));
     }
