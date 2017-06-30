@@ -13,8 +13,6 @@ public class Library{
     private List<Person> employees;
     private List<Book> books;
 
-    public static LongSparseArray<Library> map = new LongSparseArray<>();
-
     public Library() {
         this.books = new ArrayList<>();
         this.employees = new ArrayList<>();
@@ -38,7 +36,6 @@ public class Library{
         return id;
     }
     public void setId(long id) {
-        map.put(id,this);
         this.id = id;
 
     }
