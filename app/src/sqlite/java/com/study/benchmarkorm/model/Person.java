@@ -29,7 +29,7 @@ public class Person{
         this.gender = gender;
         this.phone = phone;
         this.libraryId = library.getId();
-        library.addPerson(this);
+        this.library = library;
     }
     public Person(long id, String firstName, String secondName, Date birthdayDate, String gender, long phone) {
         this.id = id;
