@@ -13,8 +13,6 @@ public class Library {
     private String address;
     private String name;
 
-    public static LongSparseArray<Library> map = new LongSparseArray<>();
-
     public Library() {
     }
 
