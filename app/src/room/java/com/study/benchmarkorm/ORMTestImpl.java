@@ -38,9 +38,7 @@ public class ORMTestImpl extends ORMTest {
         mDb.beginTransaction();
         List<Book> books = mDb.bookModel().findAll(booksQuantity);
         for (Book book: books){
-            if (book.getLibrary()==null){
-                Library.map.put(book.getLibraryId(),mDb.libraryModel().findById((int)(long)book.getLibraryId()));
-            }
+            book.setLibrary(mDb.libraryModel().findById((int)(long)book.getLibraryId()));
         }
         mDb.setTransactionSuccessful();
         mDb.endTransaction();
@@ -90,11 +88,14 @@ public class ORMTestImpl extends ORMTest {
     public Pair<List<Library>, Pair<List<Book>, List<Person>>> readComplex(int librariesQuantity, int booksQuantity, int personsQuantity) {
         mDb.beginTransaction();
         List<Library> libraries = mDb.libraryModel().findAll(librariesQuantity);
-        for (Library library:libraries){
-            Library.map.put(library.getId(),library);
-        } // bottleneck
         List<Book> books = mDb.bookModel().findAll(booksQuantity);
+        for (Book book: books){
+            book.setLibrary(mDb.libraryModel().findById((int)(long)book.getLibraryId()));
+        }
         List<Person> persons  = mDb.personModel().loadAll(personsQuantity);
+        for (Person person: persons){
+            person.setLibrary(mDb.libraryModel().findById((int)(long)person.getLibraryId()));
+        }
         mDb.setTransactionSuccessful();
         mDb.endTransaction();
         return new Pair<>(libraries, new Pair<>(books, persons));
