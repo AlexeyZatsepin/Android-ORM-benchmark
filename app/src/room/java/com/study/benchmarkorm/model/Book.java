@@ -18,6 +18,8 @@ public class Book {
     private int bookId;
     @ColumnInfo(name="library_id")
     private long libraryId;
+    @Ignore
+    private Library library;
 
     public Book() {
     }
@@ -29,6 +31,7 @@ public class Book {
         this.pagesCount = pagesCount;
         this.bookId = bookId;
         this.libraryId = library.id;
+        this.library = library;
     }
 
     public long getId() {
@@ -79,8 +82,12 @@ public class Book {
         this.libraryId = libraryId;
     }
 
-    public Library getLibrary(){
-        return Library.map.get(libraryId);
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 
     @Override
